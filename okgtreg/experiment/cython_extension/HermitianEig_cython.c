@@ -1,4 +1,3 @@
-# include "El.hpp"
-using namespace El;
+# include "El.h"
 
-void HermitianEig_cython(int uplo, double * A, )
+El::
