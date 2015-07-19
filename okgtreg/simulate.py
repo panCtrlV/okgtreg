@@ -39,6 +39,7 @@ def SimData_Wang04(n):
 
         y=log(4+sin(4 * X1) + |X1| + X2^2 + X3^3 + X4 + 0.1*\epsilon)
         Xi ~ Unif(-1, 1)
+        \epsilon ~ N(0, 1)
 
     This model can be found from: http://partofthething.com/ace/samples.html
 
