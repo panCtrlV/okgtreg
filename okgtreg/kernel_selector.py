@@ -38,10 +38,10 @@ def KernelSelector(name, **kwargs):
         return np.exp(- sigma * norm2)
 
     def ExponentialKernel(x, y):
-        '''
+        """
         Exponential kernel function: exp(-sigma * ||x - y||)
         Ref: http://crsouza.org/2010/03/kernel-functions-for-machine-learning-applications/
-        '''
+        """
         sigma = kwargs['sigma']
         norm = np.sqrt( np.power(x-y, 2).sum() )
         return np.exp(- sigma * norm)
@@ -54,68 +54,68 @@ def KernelSelector(name, **kwargs):
         absSum = np.abs(x-y).sum()
         return np.exp(- alpha * absSum)
 
-    def AnovaKernel(x,y):
-        pass
-
-    def RationalQuadraticKernel(x,y):
-        pass
-
-    def MultiquadricKernel(x,y):
-        pass
-
-    def InverseMultiquadricKernel(x,y):
-        pass
-
-    def CircularKernel(x,y):
-        pass
-
-    def SphericalKernel(x,y):
-        pass
-
-    def WaveKernel(x,y):
-        pass
-
-    def PowerKernel(x,y):
-        pass
-
-    def LogKernel(x,y):
-        pass
-
-    def SplineKernel(x,y):
-        pass
-
-    def BsplineKernel(x,y):
-        pass
-
-    def BesselKernel(x,y):
-        pass
-
-    def CauchyKernel(x,y):
-        pass
-
-    def ChiSquareKernel(x,y):
-        pass
-
-    def HistogramIntersectionKernel(x,y):
-        pass
-
-    def GeneralizedHistogramIntersectionKernel(x,y):
-        pass
-
-    def GeneralizedTstudentKernel(x,y):
-        pass
-
-    def BayesianKernel(x,y):
-        pass
-
-    def WaveletKernel(x,y):
-        pass
+    # def AnovaKernel(x,y):
+    #     pass
+    #
+    # def RationalQuadraticKernel(x,y):
+    #     pass
+    #
+    # def MultiquadricKernel(x,y):
+    #     pass
+    #
+    # def InverseMultiquadricKernel(x,y):
+    #     pass
+    #
+    # def CircularKernel(x,y):
+    #     pass
+    #
+    # def SphericalKernel(x,y):
+    #     pass
+    #
+    # def WaveKernel(x,y):
+    #     pass
+    #
+    # def PowerKernel(x,y):
+    #     pass
+    #
+    # def LogKernel(x,y):
+    #     pass
+    #
+    # def SplineKernel(x,y):
+    #     pass
+    #
+    # def BsplineKernel(x,y):
+    #     pass
+    #
+    # def BesselKernel(x,y):
+    #     pass
+    #
+    # def CauchyKernel(x,y):
+    #     pass
+    #
+    # def ChiSquareKernel(x,y):
+    #     pass
+    #
+    # def HistogramIntersectionKernel(x,y):
+    #     pass
+    #
+    # def GeneralizedHistogramIntersectionKernel(x,y):
+    #     pass
+    #
+    # def GeneralizedTstudentKernel(x,y):
+    #     pass
+    #
+    # def BayesianKernel(x,y):
+    #     pass
+    #
+    # def WaveletKernel(x,y):
+    #     pass
 
     def PolynomialKernel(x, y):
-        '''
+        """
         Polynomial kernel function
         Ref: http://scikit-learn.org/stable/modules/svm.html
-        '''
+        """
         slope = kwargs['slope']
         intercept = kwargs['intercept']
         degree = kwargs['degree']
@@ -129,10 +129,10 @@ def KernelSelector(name, **kwargs):
         return (slope * innerprod + intercept)**degree
 
     def SigmoidKernel(x,y):
-        '''
+        """
         Sigmoid kernel function: tanh(a * x*y + r)
         Ref: http://scikit-learn.org/stable/modules/svm.html
-        '''
+        """
         a = kwargs['a']
         r = kwargs['r']
         if hasattr(x, "__len__") and hasattr(y, "__len__"):

@@ -165,4 +165,9 @@ class TestOKGTReg(unittest.TestCase):
         # RowStackUandLambda is a member method, instantiate the object first
         okgt_obj = OKGTReg(x, y, ['Gaussian']*l, ['Gaussian'], [{'sigma':0.5}]*l, [{'sigma':0.5}])
         zeta, r2 = okgt_obj.TrainOKGT_ICD(y, x, [kernFn], [kernFn]*l, xGroup=xGroup)
-        print zeta, r2
+        # print zeta, r2
+        print r2, '\n'
+
+        # Use the old OKGT training method
+        g,f,r2  = okgt_obj.TrainOKGT(y, x, [kernFn], [kernFn]*l, xGroup=xGroup)
+        print r2

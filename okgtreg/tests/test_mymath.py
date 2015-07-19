@@ -68,5 +68,3 @@ class TestMyMath(unittest.TestCase):
 
         print 'U_y =\n', U_y, '\n'
         print 'Lambda_y =\n', Lambda_y, '\n'
-
-
