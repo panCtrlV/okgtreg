@@ -14,6 +14,8 @@ from sklearn.metrics.pairwise import pairwise_distances
 from mymath import *
 from kernel_selector import *
 
+from sklearn.kernel_approximation import Nystroem
+
 
 class OKGTReg(object):
     def __init__(self, x, y, xKernelNames, yKernelName, xKernelParams, yKernelParam, eps=1e-6, **kwargs):
@@ -80,7 +82,7 @@ class OKGTReg(object):
         # Construct kernel functions and specify their parameters
         if self.l == len(xKernelNames):
             self.xKernel_fns = OKGTReg.ConstructKernelFns(xKernelNames, xKernelParams)
-            self.yKernel_fn = OKGTReg.ConstructKernelFns(yKernelName, yKernelParam)
+            self.yKernel_fn = OKGTReg.ConstructKernelFns(yKernelName, yKernelParam) # list of one function
         else:
             raise Exception("[Error] Number of groups and number of kernel functions don't match!")
 
@@ -149,71 +151,6 @@ class OKGTReg(object):
             return (G + G.T)/2 # numerical issue cause asymmetry
         else:
             return G
-
-    # # -- GET ICD-REDUCED U AND LAMBDA FROM A GRAM MATRIX --- #
-    # def ReducedGramMatrix_ICD(self, x, kernel_fn):
-    #     """
-    #     Get U and Lambda from a Gram matrix.
-    #     The Gram matrix is constructed from the given data and kernel function.
-    #
-    #     :param x: numpy matrix.
-    #             (part of) the data matrix. If it is the reponse y, then it is a n*1 matrix (one column).
-    #             If it is the predictor, the number of columns of the matrix is the same as the size of a group.
-    #             For example,
-    #                 if x = (X_1, X_2), then it is a n*2 matrix.
-    #
-    #     :param kernel_fn: callable returne from <KernelSelector>. It is a bivariate kernel function.
-    #
-    #     :return:
-    #         U: numpy matrix, a n*m lower triangular matrix such that U^T * U = I.
-    #         Lambda: 1-d numpy array, vector of m leading eigen-values of K.
-    #     """
-    #     K = np.matrix(pairwise_distances(x, metric=kernel_fn))
-    #     U, Lambda, pind = ApplyICDonGramMatrix(K)
-    #     return U, Lambda
-    #
-    # def RowStackUandLambda(self, x, kernelFnsList, **kwargs):
-    #     """
-    #     Construct the row stack block matrix: [U_1, U_2, ..., U_l].
-    #
-    #     :param x: numpy matrix. Design matrix for predictor variables.
-    #     :param kernelFnsList: list of kernel functions, each is a callable returned from kernel_selector.KernelSelector.
-    #     :param kwargs: additional keyword arguments.
-    #                 If x is multivariate or high dimensional, provide the group information.
-    #                 List of lists, same as <xGroup>.
-    #
-    #     :return:
-    #         numpy.matrix
-    #         numpy.array
-    #     """
-    #     l = len(kernelFnsList)
-    #     n,p = x.shape
-    #
-    #     if p > 1:
-    #         if len(kwargs) == 0:
-    #             raise Exception("[Error] Data has more than one dimension, please provide the group structure 'xGroup'!")
-    #         else:
-    #             xGroup = kwargs['xGroup']
-    #     else:
-    #         xGroup = [[1]]
-    #
-    #     if len(xGroup) != l:
-    #         raise Exception("[Error] Number of groups is different from the number of kernels!")
-    #
-    #     U_list = []
-    #     Lambda_list = []
-    #     for i in range(l):
-    #         ind = [a-1 for a in xGroup[i]] # variable indices for group i
-    #         x_groupi = x[:,ind]
-    #         U_i, Lambda_i = self.ReducedGramMatrix_ICD(x_groupi, kernelFnsList[i])
-    #         U_list.append(U_i)
-    #         Lambda_list.append(Lambda_i)
-    #
-    #     URowStack = np.hstack(U_list)
-    #     LambdaStack = np.hstack(Lambda_list)
-    #
-    #     return URowStack, LambdaStack
-
 
     @staticmethod
     def CovOperator_directSum(x, kernelFnsList, **kwargs):
@@ -309,7 +246,7 @@ class OKGTReg(object):
 
 
     # --- TRAIN OKGT --- #
-    def TrainOKGT(self, y, x, yKernelFnList, xKernelFnsList, **kwargs):
+    def TrainOKGT(self):
         """
         Estimate the kernel optimal transformations.
 
@@ -322,21 +259,31 @@ class OKGTReg(object):
             **kwargs: optional named arguments, including
                 xGroup: list of lists. Group information for predictors. When x has >1 dimension, it must be provided.
         """
-        print "== Start OKGT Training ==="
+
+        x = self.x
+        y = self.y
+        yKernelFnList = self.yKernel_fn
+        xKernelFnsList = self.xKernel_fns
         eps = self.eps
-        n, p = x.shape
-        l = len(xKernelFnsList)
+        n = self.n
+        p = self.p
+        l = self.l
+        xGroup = self.xGroup
 
-        if p > 1:
-            if len(kwargs) == 0:
-                raise Exception("[Error] X has more than one dimension, group structure <xGroup> is missing!")
-            else:
-                xGroup = kwargs['xGroup']
-        else:
-            xGroup = [[1]]
+        print "== Start OKGT Training ==="
+        # n, p = x.shape
+        # l = len(xKernelFnsList)
 
-        if len(xGroup) != l:
-            raise Exception("[Error] Number of groups in 'xGroup' is different from the number of kernel functions in 'xKernelFnList'!")
+        # if p > 1:
+        #     if len(kwargs) == 0:
+        #         raise Exception("[Error] X has more than one dimension, group structure <xGroup> is missing!")
+        #     else:
+        #         xGroup = kwargs['xGroup']
+        # else:
+        #     xGroup = [[1]]
+        #
+        # if len(xGroup) != l:
+        #     raise Exception("[Error] Number of groups in 'xGroup' is different from the number of kernel functions in 'xKernelFnList'!")
 
         Rxx, Gx = OKGTReg.CovOperator_directSum(x, xKernelFnsList, xGroup = xGroup)
         Ryy, Gy = OKGTReg.CovOperator_directSum(y, yKernelFnList)
@@ -375,7 +322,7 @@ class OKGTReg(object):
 
         f_opt = np.column_stack(f_opt_ls)
 
-        return(g_opt, f_opt, float(r2))
+        return g_opt, f_opt, float(r2)
 
 
     # # --------------
@@ -464,6 +411,7 @@ class OKGTReg_ICD(OKGTReg):
         """
         K = np.matrix(pairwise_distances(x, metric=kernel_fn))
         U, Lambda, pind = ApplyICDonSymmetricMatrix(K)
+        # U, Lambda = ApplyICDonSymmetricMatrix(K)
         return U, Lambda
 
     @staticmethod
@@ -546,6 +494,75 @@ class OKGTReg_ICD(OKGTReg):
         f_opt = np.diag(Lambdax) * f_opt
         f_opt = Ux_dblock * f_opt
 
+        self.f = f_opt.reshape((self.n, self.l), order='F')
+
+        return
+
+# -----------------------------------------------------------
+# OKGT traning using Nystroem for kernel matrix approximation
+# -----------------------------------------------------------
+class OKGTReg_Nystroem(OKGTReg):
+    def __init__(self, x, y, xKernelNames, yKernelName, xKernelParams, yKernelParam, eps=1e-6, nComponents=10, **kwargs):
+        OKGTReg.__init__(self, x, y, xKernelNames, yKernelName, xKernelParams, yKernelParam, eps, **kwargs)
+        self.nNystroemComponents = nComponents
+        return
+
+    @staticmethod
+    def ApplyNystroemOnKernelMatrix(x, kernelFn, nComponents):
+        """
+        Given a data matrix (each row is an observation, each column is a variable) and a kernel function,
+        compute the Nystroem approximation of its uncentered Kernel matrix.
+
+        :param x: numpy matrix. Data matrix.
+        :param kernelFn: callable function. Returned by calling KernelSelector().
+        :param nComponents: integer. Number of ranks retained in Nystroem method.
+        :return
+            numpy matrix.
+        """
+        nystroem = Nystroem(kernelFn, n_components=nComponents)
+        return np.matrix(nystroem.fit_transform(x))
+
+    def TrainOKGT_Nystroem(self):
+        print "== Start OKGT Training (Nystroem method is used for Kernel matrix approximation) ==="
+
+        N0 = np.identity(self.n) - np.ones((self.n, self.n)) / self.n
+
+        Gy = OKGTReg_Nystroem.ApplyNystroemOnKernelMatrix(y, self.yKernel_fn[0], self.nNystroemComponents)
+        Uy, Gy_s, Gy_V = np.linalg.svd(N0 * Gy, full_matrices=0)
+        lambday = Gy_s**2
+        my = len(Gy_s)
+
+        Ux = []
+        lambdax = []
+        for i in range(self.l):
+            ind = [a-1 for a in self.xGroup[i]] # column index for i-th group
+            Gi = OKGTReg_Nystroem.ApplyNystroemOnKernelMatrix(x[:,ind], self.xKernel_fns[i], self.nNystroemComponents)
+            Ui, Gi_s, Gi_V = np.linalg.svd(N0 * Gi, full_matrices=0)
+            Ux.append(Ui)
+            lambdai = Gi_s**2
+            lambdax.append(lambdai)
+
+        lambdax_row = np.hstack(lambdax)
+        Ux_row = np.hstack(Ux)
+        Ux_diag = sp.sparse.block_diag(Ux)
+
+        T = np.diag(lambday / (lambday + self.eps)) * Uy.T * Ux_row * np.diag(lambdax_row)
+        R = np.diag((lambdax_row + self.eps)**2) + \
+                np.diag(lambdax_row) * (Ux_row.T * Ux_row - np.identity(len(lambdax_row))) * np.diag(lambdax_row)
+        R_inv = np.linalg.inv(R)
+        vv = T*R_inv*T.T
+
+        eigval, eigvec = sp.linalg.eigh(vv, eigvals=(my-1, my-1))
+        self.r2 = float(eigval)
+
+        g_opt = np.diag(lambday) * np.matrix(eigvec)
+        self.g = Uy * g_opt
+
+        f_opt = np.diag(np.sqrt(lambday**2 + self.eps) * lambday) * np.matrix(eigvec)
+        f_opt = T.T * f_opt
+        f_opt = R_inv * f_opt
+        f_opt = np.diag(lambdax_row) * f_opt
+        f_opt = Ux_diag * f_opt
         self.f = f_opt.reshape((self.n, self.l), order='F')
 
         return

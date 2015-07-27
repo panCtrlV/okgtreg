@@ -46,8 +46,6 @@ def SimData_Wang04(n):
     :param n:
     :return:
     """
-    import numpy as np
-
     x = [np.array([np.random.random() * 2.0 - 1.0 for i in range(n)]) for _i in range(0, 5)]
     noise = np.random.standard_normal(n)
     y = np.log(4.0 + np.sin(4 * x[0]) + np.abs(x[1]) + x[2] ** 2 +
@@ -57,3 +55,14 @@ def SimData_Wang04(n):
     ym = np.matrix(y).T
 
     return ym, xm
+
+def SimData_MultiplyNoise(n):
+    """
+    Y = X1 + X2 * eps
+    :param n:
+    :return:
+    """
+    x = np.random.normal(0, 1, 2*n).reshape((n,2))
+    noise = np.random.standard_normal(n)
+    y = x[:,0] + x[:,1] * noise
+    return np.matrix(y).T, np.matrix(x)
