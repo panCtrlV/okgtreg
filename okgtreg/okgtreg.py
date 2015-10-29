@@ -325,66 +325,6 @@ class OKGTReg(object):
         return g_opt, f_opt, float(r2)
 
 
-    # # --------------
-    # # OKGT traning using Incomplete Cholesky Decomposition
-    # # ---------------
-    # def TrainOKGT_ICD(self, y, x, yKernelFnList, xKernelFnsList, **kwargs):
-    #     """
-    #
-    #     :param y:
-    #     :param x:
-    #     :param yKernelFnList:
-    #     :param xKernelFnsList:
-    #     :param kwargs:
-    #     :return:
-    #     """
-    #     print "== Start OKGT Training with ICD Invoked ==="
-    #     eps = self.eps
-    #     n, p = x.shape
-    #     l = len(xKernelFnsList)
-    #
-    #     if p > 1:
-    #         if len(kwargs) == 0:
-    #             raise Exception("[Error] X has more than one dimension, group structure <xGroup> is missing!")
-    #         else:
-    #             xGroup = kwargs['xGroup']
-    #     else:
-    #         xGroup = [[1]]
-    #
-    #     if len(xGroup) != l:
-    #         raise Exception("[Error] Number of groups in 'xGroup' is different from the number of kernel functions in 'xKernelFnList'!")
-    #
-    #     U_y, Lambda_y = self.ReducedGramMatrix_ICD(y, yKernelFnList[0])
-    #     U_x, Lambda_x = self.RowStackUandLambda(x, xKernelFnsList, xGroup = xGroup)
-    #
-    #     R = np.matrix(np.diag(Lambda_x + eps)**2) + \
-    #         np.matrix(np.diag(Lambda_x)) * (U_x.T * U_x - np.identity(U_x.shape[1])) * np.matrix(np.diag(Lambda_x))
-    #     R_inv = np.linalg.inv(R)
-    #     A = np.matrix(np.diag(Lambda_x / (Lambda_x + eps)))
-    #     Uyx = U_y.T * U_x
-    #     Lmd_y = np.matrix(np.diag(Lambda_y / (Lambda_y + eps)))
-    #
-    #     # print Lmd_y.shape, Uyx.shape, A.shape, R_inv.shape, A.shape, Uyx.T.shape, Lmd_y.shape, '\n'
-    #     print U_y.T * U_y
-    #
-    #     # VV = U_y * Lmd_y * Uyx * A * R_inv * A * Uyx.T * Lmd_y * U_y.T
-    #     VV_reduced = Lmd_y * Uyx * A * R_inv * A * Uyx.T * Lmd_y
-    #     m = VV_reduced.shape[0]
-    #     # m = VV.shape[0]
-    #
-    #     # print VV_reduced, '\n'
-    #
-    #     r2, b = slinalg.eigh(VV_reduced, eigvals=(m-1, m-1))
-    #     # r2, b = slinalg.eigh(VV, eigvals=(m-1, m-1))
-    #     b = np.matrix(b)
-    #     # zeta = 0.
-    #     zeta = np.matrix(np.diag(1. / np.sqrt(Lambda_y))) * b
-    #     zeta = U_y * zeta
-    #     # g_opt = ?
-    #
-    #     return zeta, float(r2)
-    #     # pass
-
     # TODO: add plot methods
 
 class OKGTReg_ICD(OKGTReg):
@@ -409,7 +349,7 @@ class OKGTReg_ICD(OKGTReg):
             U: numpy matrix, a n*m lower triangular matrix such that U^T * U = I.
             Lambda: 1-d numpy array, vector of m leading eigen-values of K.
         """
-        K = np.matrix(pairwise_distances(x, metric=kernel_fn))
+        K = np.matrix(pairwise_distances(x, metric=kernel_fn)) # still need to construct the Gram matrix first
         U, Lambda, pind = ApplyICDonSymmetricMatrix(K)
         # U, Lambda = ApplyICDonSymmetricMatrix(K)
         return U, Lambda
@@ -527,7 +467,7 @@ class OKGTReg_Nystroem(OKGTReg):
 
         N0 = np.identity(self.n) - np.ones((self.n, self.n)) / self.n
 
-        Gy = OKGTReg_Nystroem.ApplyNystroemOnKernelMatrix(y, self.yKernel_fn[0], self.nNystroemComponents)
+        Gy = OKGTReg_Nystroem.ApplyNystroemOnKernelMatrix(self.y, self.yKernel_fn[0], self.nNystroemComponents)
         Uy, Gy_s, Gy_V = np.linalg.svd(N0 * Gy, full_matrices=0)
         lambday = Gy_s**2
         my = len(Gy_s)
@@ -536,7 +476,7 @@ class OKGTReg_Nystroem(OKGTReg):
         lambdax = []
         for i in range(self.l):
             ind = [a-1 for a in self.xGroup[i]] # column index for i-th group
-            Gi = OKGTReg_Nystroem.ApplyNystroemOnKernelMatrix(x[:,ind], self.xKernel_fns[i], self.nNystroemComponents)
+            Gi = OKGTReg_Nystroem.ApplyNystroemOnKernelMatrix(self.x[:,ind], self.xKernel_fns[i], self.nNystroemComponents)
             Ui, Gi_s, Gi_V = np.linalg.svd(N0 * Gi, full_matrices=0)
             Ux.append(Ui)
             lambdai = Gi_s**2
