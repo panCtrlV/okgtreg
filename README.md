@@ -39,4 +39,4 @@ plt.scatter(X[:, j], res['f'][:, j])
 
 # Reference
 
-[2015, Pan  Huang and Zhu, Optimal Kernel Transformation for Exploratory Regression Analysis and Graphics, KDD.](http://www.kdd.org/kdd2015/program.html#accepted-research-papers)  
+[Chao, Pan, Qiming Huang, and Michael Zhu. "Optimal Kernel Group Transformation for Exploratory Regression Analysis and Graphics." In Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 905-914. ACM, 2015.](http://www.stat.purdue.edu/~panc/research/publication/okgt_paper.pdf)  
