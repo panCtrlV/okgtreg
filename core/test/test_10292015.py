@@ -14,9 +14,14 @@ ykernel = Kernel('gaussian', sigma=0.1)
 xkernels = [Kernel('gaussian', sigma=0.5)]*5
 parameters = Parameters(group, ykernel, xkernels)  # construct parameters object
 # parameterizedData = ParameterizedData(data, parameters)
+# ykernel.gram_Nystroem(y[:, np.newaxis], 10).shape
+
 
 okgt = OKGTReg(data, parameters)  # construct okgt object
-res = okgt.train_Vanilla()  # training
+# res = okgt.train_Vanilla()  # training
+res = okgt.train_Nystroem(10)
+# res['g']
+# y.shape
 
 import matplotlib.pyplot as plt
 plt.scatter(y, res['g'])
