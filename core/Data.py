@@ -18,6 +18,33 @@ class Data(object):
         self.n = len(y)  # sample size
         self.p = X.shape[1]  # covariate dimension
 
+    def getGroupedData(self, group):
+        """
+
+        :type group: Group
+        :param group: a group structure
+
+        :return: grouped data
+        """
+        def flattenPartition(partition):
+            return [i for g in partition for i in g]
+
+        covariateInds = flattenPartition(group.partition)
+        subX = self.X[:, np.array(covariateInds)-1]
+        y = self.y
+        subData = Data(y, subX)
+
+        def normalizeCovariateIndicesForPartition(partition):
+            # partition is a tuple of lists
+            lens = [len(g) for g in partition]
+            offsets = np.array(lens).cumsum() - lens + 1
+            rawOrders = [np.arange(l)  for l in lens]
+            return tuple(list(rawOrders[i] + offsets[i]) for i in xrange(len(partition)))
+
+        normalizedPartition = normalizeCovariateIndicesForPartition(group.partition)
+        normalizedGroup = Group(*normalizedPartition)
+        return subData, normalizedGroup
+
 
     # def groupData(self, group):
     #     """

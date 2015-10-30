@@ -35,7 +35,7 @@ class DataSimulator(object):
         """
         modelName: Wang0
 
-            y=log(4 + sin(4 * X0) + |X1| + X2^2 + X3^3 + X4 + 0.1*\epsilon)
+            y=log(4 + sin(4 * X1) + |X2| + X3^2 + X4^3 + X5 + 0.1*\epsilon)
             Xi ~ Unif(-1, 1)
             \epsilon ~ N(0, 1)
 

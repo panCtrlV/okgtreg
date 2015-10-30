@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Group(object):
     def __init__(self, *args, **kwargs):
         # group with one covariate must input explicitly
@@ -9,17 +12,18 @@ class Group(object):
         uniqueInputs = set(inputs)
         if len(inputs) > len(uniqueInputs):
             raise ValueError("** Each index can only be in one group. "
-                             "Please remove duplication. **")
+                             "Please remove duplicates. **")
 
-        # check if groups are ordered by the first index
-        firstIndices = [g[0] for g in args]
-        isOrdered = all(firstIndices[i] <= firstIndices[i+1] for i in xrange(n - 1))
+        # Normalize group structure:
+        # check if within and between groups are ordered
+        leadingIndices = [np.array(g).min() for g in args]  # list of smallest ind of each group
+        isOrdered = all(leadingIndices[i] <= leadingIndices[i+1] for i in xrange(n-1))
 
         if not isOrdered:
-            orders = sorted(range(n), key=lambda k: firstIndices[k])
-            self.partition = tuple(args[order] for order in orders)
+            orders = sorted(range(n), key=lambda k: leadingIndices[k])
+            self.partition = tuple(list(np.sort(args[order])) for order in orders)
         else:
-            self.partition = args
+            self.partition = tuple(list(np.sort(args[i])) for i in xrange(n))
 
         self.size = n
 
@@ -53,11 +57,21 @@ class Group(object):
         if covariateIndex in [i for g in self.partition for i in g]:
             raise ValueError("** Covariate %d is already in the partition. **" % covariateIndex)
 
-        updatedGroup = self.partition[groupNumber-1] + [covariateIndex]
-        # print updatedGroup
-        unchangedGroups = tuple(self.partition[i] for i in range(self.size) if i is not groupNumber-1)
-        # print unchangedGroups
-        return Group(*(unchangedGroups + (updatedGroup,)))
+        updatedPart = self.partition[groupNumber-1] + [covariateIndex]
+        partitionList = list(self.partition)
+        partitionList[groupNumber - 1] = updatedPart
+        updatedPartition = tuple(partitionList)
+        return Group(*updatedPartition)
+
+        # print "updatedGroup: ", updatedGroup
+        #
+        # print "self.partition = ", self.partition
+        # print "self.size = ", self.size
+        # print "groupNumber = ", groupNumber
+        # print [self.partition[i] for i in range(self.size) if i is not groupNumber-1]
+        # unchangedGroups = tuple(self.partition[i] for i in range(self.size) if i is not groupNumber-1)
+        # print "unchangedGroups: ", unchangedGroups
+        # return Group(*(unchangedGroups + (updatedGroup,)))
 
     def addNewCovariateAsGroup(self, covariateIndex):
         # Add a new covariate as a new group in the structure

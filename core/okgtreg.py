@@ -89,7 +89,7 @@ class OKGTReg(object):
         n = self.getSampleSize()
         l = self.getGroupSize()
 
-        print "** Start OKGT Training (Vanilla)**"
+        # print "** Start OKGT Training (Vanilla)**"
 
         Rxx, Gx = self.parameterizedData.covarianceOperatorForX(returnAll=True)
         Ryy, Gy = self.parameterizedData.covarianceOperatorForY(returnAll=True)
@@ -129,7 +129,7 @@ class OKGTReg(object):
 
         f_opt = np.column_stack(f_opt_ls)
 
-        print "** Success **"
+        # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=float(r2))
 
     def train_Nystroem(self, nComponents):
