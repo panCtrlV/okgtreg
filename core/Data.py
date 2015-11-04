@@ -230,7 +230,7 @@ class ParameterizedData(object):
 
     def covarianceOperatorForY(self, returnAll=False):
         yGram = self.ykernel.gram(self.y[:, np.newaxis])
-        cov = yGram.dot(yGram.T)
+        cov = yGram.dot(yGram.T) / self.n
         if returnAll:
             return cov, yGram
         else:

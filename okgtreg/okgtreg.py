@@ -286,19 +286,26 @@ class OKGTReg(object):
         #     raise Exception("[Error] Number of groups in 'xGroup' is different from the number of kernel functions in 'xKernelFnList'!")
 
         Rxx, Gx = OKGTReg.CovOperator_directSum(x, xKernelFnsList, xGroup = xGroup)
+        # print Rxx
+        # print Gx
         Ryy, Gy = OKGTReg.CovOperator_directSum(y, yKernelFnList)
+        print Ryy
         Ryx = Gy * Gx.T / n
 
         D, P = np.linalg.eigh(Ryy + eps * np.identity(n))
         D = D[::-1]
         P = P[:, ::-1]
         D_inv = np.matrix(np.diag(1. / np.sqrt(D)))
+        # print D_inv
         Gy_inv = D_inv * P.T # Ryy^{-1/2}
+        # print Gy_inv
 
         Rxx_inv = np.linalg.inv(Rxx + eps * np.identity(n*l))
+        # print Rxx_inv
 
         VyxVxy = Gy_inv * Ryx * Rxx_inv * Ryx.T * Gy_inv.T
         #TODO: if Rxx is large, the inverse would be slow.
+        # print VyxVxy
 
         # g: optimal transformation for y
         r2, beta = slinalg.eigh(VyxVxy, eigvals=(n-1, n-1)) # only need the largest eigen value and vector

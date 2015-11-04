@@ -105,7 +105,6 @@ class OKGTReg(object):
         Rxx_inv = np.linalg.inv(Rxx + eps * np.identity(n * l))
 
         #TODO: if Rxx is large, the inverse would be slow.
-        # VyxVxy = Gy_inv * Ryx * Rxx_inv * Ryx.T * Gy_inv.T
         VyxVxy = reduce(np.dot, [Gy_inv, Ryx, Rxx_inv, Ryx.T, Gy_inv.T])
 
         # g: optimal transformation for y

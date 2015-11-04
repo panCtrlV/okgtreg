@@ -109,8 +109,6 @@ while len(covariatesPool):
     covariatesPool.remove(bestCovariateIndex)  # TODO: update in-place, good?
     oldGroup = newGroup
 
-
-
 """
 Using true structure
 """
@@ -119,6 +117,8 @@ xkernels = [kernel] * 5
 parameters = Parameters(group, ykernel, xkernels)
 okgt = OKGTReg(data, parameters)
 res = okgt.train_Vanilla()
+
+res['g']
 
 import matplotlib.pyplot as plt
 
@@ -129,3 +129,23 @@ j=4; plt.scatter(X[:, j], res['f'][:, j])
 resid = res['g'] - res['f'].sum(axis=1)[:, np.newaxis]
 plt.plot(resid)
 np.var(resid) / np.var(res['g'])
+
+
+"""
+Old implementation
+"""
+import okgtreg.okgtreg as oldokgt
+
+n, p = X.shape
+kname = 'Gaussian'
+kparam = dict(sigma=0.5)
+okgt_old = oldokgt.OKGTReg(X, y[:, np.newaxis], [kname]*p, [kname], [kparam]*p, [kparam])
+res_old = okgt_old.TrainOKGT()
+
+
+res_old[0]  # g
+
+import matplotlib.pyplot as plt
+
+plt.scatter(y, res['g'])
+plt.scatter(y, np.array(res_old[0]))
