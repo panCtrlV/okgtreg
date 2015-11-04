@@ -4,7 +4,7 @@ __author__ = 'panc'
 from setuptools import setup
 
 setup(
-    name='okgtreg',
+    name='okgtreg_primitive',
     version='0.1',
     description='Implementation of Optimal Kernel Group Optimization for regression',
     classifiers=[
@@ -15,7 +15,7 @@ setup(
     url='http://github.com/...',
     author='panc',
     authro_email='panc@purdue.edu',
-    packages=['okgtreg'],
+    packages=['okgtreg_primitive'],
     install_requires=[
         'numpy',
         'scipy',

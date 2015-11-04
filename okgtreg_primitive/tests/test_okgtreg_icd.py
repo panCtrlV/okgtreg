@@ -1,8 +1,8 @@
 __author__ = 'panc'
 
-from okgtreg.okgtreg import *
-from okgtreg.simulate import *
-import okgtreg.kernel_selector as ks
+from okgtreg_primitive.okgtreg import *
+from okgtreg_primitive.simulate import *
+import okgtreg_primitive.kernel_selector as ks
 
 import unittest
 import numpy as np

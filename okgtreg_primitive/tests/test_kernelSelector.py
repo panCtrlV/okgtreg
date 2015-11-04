@@ -2,7 +2,7 @@ __author__ = 'panc'
 
 #from unittest import TestCase
 import unittest
-import okgtreg.kernel_selector as ks
+import okgtreg_primitive.kernel_selector as ks
 
 class TestKernelSelector(unittest.TestCase):
     def testGaussian(self):

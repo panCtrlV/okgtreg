@@ -1,14 +1,14 @@
 __author__ = 'panc'
 
 import unittest
-from okgtreg.mymath import *
+from okgtreg_primitive.mymath import *
 from scipy import random, linalg
 import time
 
-from okgtreg.okgtreg import *
-from okgtreg.simulate import *
-import okgtreg.kernel_selector as ks
-import okgtreg.mymath as mymath
+from okgtreg_primitive.okgtreg import *
+from okgtreg_primitive.simulate import *
+import okgtreg_primitive.kernel_selector as ks
+import okgtreg_primitive.mymath as mymath
 
 class TestMyMath(unittest.TestCase):
     def setUp(self):

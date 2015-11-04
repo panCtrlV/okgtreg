@@ -33,7 +33,7 @@ While determining structure, kernel functions should be fixed.
 """
 # Test forward selection
 np.random.seed(25)
-y, X = DataSimulator.SimData_Wang04(100)  # Simulate data
+y, X = DataSimulator.SimData_Wang04(1000)  # Simulate data
 data = Data(y, X)
 ykernel = Kernel('gaussian', sigma=0.5)
 kernel = Kernel('gaussian', sigma=0.5)
@@ -63,7 +63,8 @@ while len(covariatesPool):
         xkernels = [kernel] * groupForOKGT.size
         parametersForOKGT = Parameters(groupForOKGT, ykernel, xkernels)
         currentOKGT = OKGTReg(dataForOKGT, parametersForOKGT)
-        res = currentOKGT.train_Vanilla()
+        # res = currentOKGT.train_Vanilla()
+        res = currentOKGT.train_Nystroem(10)
         currentR2 = res['r2']
         if currentR2 > bestR2:
             print("\t\t current R2 =\t %.10f \t *" % currentR2)
@@ -93,7 +94,8 @@ while len(covariatesPool):
                 xkernels = [kernel] * groupForOKGT.size
                 parametersForOKGT = Parameters(groupForOKGT, ykernel, xkernels)
                 currentOKGT = OKGTReg(dataForOKGT, parametersForOKGT)
-                res = currentOKGT.train_Vanilla()
+                # res = currentOKGT.train_Vanilla()
+                res = currentOKGT.train_Nystroem(10)
                 currentR2 = res['r2']
                 if currentR2 > bestR2:
                     print("\t\t current R2 =\t %.10f \t *" % currentR2)
@@ -118,6 +120,8 @@ parameters = Parameters(group, ykernel, xkernels)
 okgt = OKGTReg(data, parameters)
 res = okgt.train_Vanilla()
 
+res['r2']
+
 res['g']
 
 import matplotlib.pyplot as plt
@@ -131,21 +135,22 @@ plt.plot(resid)
 np.var(resid) / np.var(res['g'])
 
 
-"""
-Old implementation
-"""
-import okgtreg.okgtreg as oldokgt
-
-n, p = X.shape
-kname = 'Gaussian'
-kparam = dict(sigma=0.5)
-okgt_old = oldokgt.OKGTReg(X, y[:, np.newaxis], [kname]*p, [kname], [kparam]*p, [kparam])
-res_old = okgt_old.TrainOKGT()
-
-
-res_old[0]  # g
-
-import matplotlib.pyplot as plt
-
-plt.scatter(y, res['g'])
-plt.scatter(y, np.array(res_old[0]))
+# """
+# Old implementation
+# """
+# import okgtreg_primitive.okgtreg_primitive as oldokgt
+#
+# n, p = X.shape
+# kname = 'Gaussian'
+# kparam = dict(sigma=0.5)
+# okgt_old = oldokgt.OKGTReg(X, y[:, np.newaxis], [kname]*p, [kname], [kparam]*p, [kparam])
+# res_old = okgt_old.TrainOKGT()
+#
+# res_old[2]  # R2
+#
+# res_old[0]  # g
+#
+# import matplotlib.pyplot as plt
+#
+# plt.scatter(y, res['g'])
+# plt.scatter(y, np.array(res_old[0]))

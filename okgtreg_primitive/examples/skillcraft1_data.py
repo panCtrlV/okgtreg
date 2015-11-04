@@ -1,6 +1,6 @@
 __author__ = 'panc'
 
-from okgtreg.okgtreg import *
+from okgtreg_primitive.okgtreg import *
 import pandas as pd
 import numpy as np
 import time
@@ -9,7 +9,7 @@ from scipy.interpolate import spline
 from scipy import interpolate
 
 # load data as a Pandas DataFrames
-scdata = pd.read_csv('okgtreg/data/SkillCraft1_Dataset.csv')
+scdata = pd.read_csv('okgtreg_primitive/data/SkillCraft1_Dataset.csv')
 
 # Prepare data for OKGT
 y = scdata['LeagueIndex']

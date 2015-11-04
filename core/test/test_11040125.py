@@ -1,4 +1,4 @@
-import okgtreg.okgtreg as oldokgt
+import okgtreg_primitive.okgtreg as oldokgt
 from core.okgtreg import *
 from core.DataSimulator import *
 
