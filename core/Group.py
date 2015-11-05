@@ -1,14 +1,19 @@
 import numpy as np
+import itertools
 
 
 class Group(object):
     def __init__(self, *args, **kwargs):
         # group with one covariate must input explicitly
 
-        n = len(args)  # number of input groups
+        # Remove any empty groups
+        isEmpty = [len(x) != 0 for x in args]
+        filteredArgs = tuple(itertools.compress(args, isEmpty))
+
+        n = len(filteredArgs)  # number of non-empty input groups
 
         # check duplicates
-        inputs = [i for g in args for i in g]  # flatten args
+        inputs = [i for g in filteredArgs for i in g]  # flatten args
         uniqueInputs = set(inputs)
         if len(inputs) > len(uniqueInputs):
             raise ValueError("** Each index can only be in one group. "
@@ -16,14 +21,14 @@ class Group(object):
 
         # Normalize group structure:
         # check if within and between groups are ordered
-        leadingIndices = [np.array(g).min() for g in args]  # list of smallest ind of each group
+        leadingIndices = [np.array(g).min() for g in filteredArgs]  # list of smallest ind of each group
         isOrdered = all(leadingIndices[i] <= leadingIndices[i+1] for i in xrange(n-1))
 
         if not isOrdered:
             orders = sorted(range(n), key=lambda k: leadingIndices[k])
-            self.partition = tuple(list(np.sort(args[order])) for order in orders)
+            self.partition = tuple(list(np.sort(filteredArgs[order])) for order in orders)
         else:
-            self.partition = tuple(list(np.sort(args[i])) for i in xrange(n))
+            self.partition = tuple(list(np.sort(filteredArgs[i])) for i in xrange(n))
 
         self.size = n
 
@@ -33,6 +38,9 @@ class Group(object):
             for key in ('p'): setattr(self, key, kwargs.get(key))
         else:
             self.p = len(inputs)
+
+        # fields:
+        #   partition, size, p
 
     def getPartition(self, partitionNumber=None):
         # partitionNumber start from 1
@@ -80,3 +88,13 @@ class Group(object):
             raise ValueError("** Covariate %d is already in the partition. **" % covariateIndex)
 
         return Group(*(self.partition + ([covariateIndex],)) )
+
+    def removeOneCovariate(self, covariateIndex):
+        # Remove `covariateIndex`-th covariate from the group it belongs
+        try:
+            ind = int(np.where([covariateIndex in part for part in self.partition])[0])  # where covariateIndex belongs
+        except ValueError:
+            print("** Covariate %d is not in the group structure. **" % covariateIndex)
+
+        self.partition[ind].remove(covariateIndex)
+        return Group(*self.partition)

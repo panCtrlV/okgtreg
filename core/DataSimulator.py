@@ -31,9 +31,21 @@ class DataSimulator(object):
         return y, x
 
     @staticmethod
+    def SimData_MultiplyNoise(n):
+        """
+        Y = X1 + X2 * eps
+        :param n:
+        :return:
+        """
+        x = np.random.normal(0, 1, 2*n).reshape((n,2))
+        noise = np.random.standard_normal(n)
+        y = x[:,0] + x[:,1] * noise
+        return y, x
+
+    @staticmethod
     def SimData_Wang04(n):
         """
-        modelName: Wang0
+        Model Name: Wang04
 
             y=log(4 + sin(4 * X1) + |X2| + X3^2 + X4^3 + X5 + 0.1*\epsilon)
             Xi ~ Unif(-1, 1)
@@ -52,13 +64,19 @@ class DataSimulator(object):
         return y, x
 
     @staticmethod
-    def SimData_MultiplyNoise(n):
+    def SimData_Wang04WithInteraction(n):
         """
-        Y = X1 + X2 * eps
+        Model Name: Wang04 With Interaction
+
+            y=log(4 + sin(4 * X1) + |X2| + X3^2 + X4^3 + X5 + X6*X7 0.1*\epsilon)
+            Xi ~ Unif(-1, 1)
+            \epsilon ~ N(0, 1)
+
         :param n:
         :return:
         """
-        x = np.random.normal(0, 1, 2*n).reshape((n,2))
+        x = np.vstack(np.random.random(n) * 2.0 - 1.0 for j in range(7)).T
         noise = np.random.standard_normal(n)
-        y = x[:,0] + x[:,1] * noise
+        y = np.log(4.0 + np.sin(4 * x[:, 0]) + np.abs(x[:, 1]) + x[:, 2]**2 +
+                    x[:, 3]**3 + x[:, 4] + x[:, 5] * x[:, 6] + 0.1 * noise)
         return y, x
