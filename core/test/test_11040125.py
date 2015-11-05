@@ -2,6 +2,7 @@ import okgtreg_primitive.okgtreg as oldokgt
 from core.okgtreg import *
 from core.DataSimulator import *
 
+
 # Simulate data
 np.random.seed(25)
 y, X = DataSimulator.SimData_Wang04(10)  # Simulate data
