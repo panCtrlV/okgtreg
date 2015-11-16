@@ -146,6 +146,26 @@ class Group(object):
         # http://stackoverflow.com/questions/25118798/python-how-to-call-the-constructor-from-within-member-function
         return Group(*partition)
 
+    def __add__(self, other):
+        """
+        Add two Group objects to return a bigger Group.
+
+        :type other: Group or list
+        :param other:
+
+        :type return: Group
+        :return:
+        """
+        if isinstance(other, list):
+            otherPartition = (other,)
+        elif isinstance(other, tuple):
+            otherPartition = other
+        else:
+            otherPartition = other.partition
+
+        biggerPartition = self.partition + otherPartition
+        return Group(*biggerPartition)
+
     def __str__(self):
         return("%s" % (self.partition,))
 
@@ -171,3 +191,21 @@ class Group(object):
 # g.getPartitions([1], True)   # get only one group
 # g.getPartitions([2, 4], True)  # two groups apart from each other
 # g.getPartitions([g.size + 1], True)  # out of bounds, fail
+
+# Test `__add__` overriding
+# Group + Group
+# g1 = Group([1], [3,4])
+# g2 = Group([2], [5,6])
+# g1 + g2
+#
+# g1 = Group([1], [3,4])
+# g2 = Group([2], [3,5])
+# g1 + g2  # fail because 3 occurs twice
+
+# Group + list
+# g1 = Group([1], [3,4])
+# g1 + [2,5]
+
+# Group + tuple
+# g1 = Group([1], [3,4])
+# g1 + ([2,5], [6,7])
