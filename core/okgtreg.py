@@ -135,7 +135,7 @@ class OKGTReg(object):
         n = self.getSampleSize()
         l = self.getGroupSize()
 
-        print "** Start OKGT Training (Nystroem) **"
+        # print "** Start OKGT Training (Nystroem) **"
 
         N0 = np.identity(n) - np.ones((n, n)) / n
         ykernel = self.getKernels('y')
