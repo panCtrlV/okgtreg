@@ -43,6 +43,9 @@ class Group(object):
         # fields:
         #   partition, size, p
 
+    def __getitem__(self, index):
+        return self.getPartition(index)
+
     def getPartition(self, partitionNumber=None):
         # partitionNumber start from 1
         if partitionNumber is None:
@@ -53,8 +56,13 @@ class Group(object):
 
             return self.partition[partitionNumber - 1]
 
-    def __getitem__(self, index):
-        return self.getPartition(index)
+    def getMembership(self, covariateIndex):
+        # Return which group a given `covariateIndex`-th covariate belongs
+        try:
+            return int(np.where([covariateIndex in part for part in self.partition])[0]) + 1
+        except TypeError:
+            print("** Failed to find covariate %d in the group structure. **" % covariateIndex)
+
 
     def addNewCovariateToGroup(self, covariateIndex, groupNumber):
         # Add a new covariate to an existing group in the structure
@@ -98,6 +106,8 @@ class Group(object):
             print("** Covariate %d is not in the group structure. **" % covariateIndex)
 
         partition = copy.deepcopy(self.partition)
+        # We cannot use `partition = self.partition`, since it still reference to `self.partition`.
+        # So any change we make on `partition` will also affect `self.partition`.
         partition[ind].remove(covariateIndex)
         # Calling the class name creates a new Group object out of the current scope.
         # Alternatively, we can just call __init__ to change the self object in place.
@@ -111,6 +121,9 @@ class Group(object):
 
 # g = Group([1], [2,3])
 # print g
-# g2 = g.removeOneCovariate(1)  // `removeOneCovariate` creates a new Group object
+# g2 = g.removeOneCovariate(1)  # `removeOneCovariate` creates a new Group object
 # print g2
 # print g
+
+g = Group([1], [2,3])
+g.getMembership(4)

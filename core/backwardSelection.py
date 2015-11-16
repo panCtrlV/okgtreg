@@ -47,11 +47,55 @@ pool.
 y, x = DataSimulator.SimData_Wang04(500)
 data = Data(y, x)
 
+# Same kernel for all groups
+kernel = Kernel('gaussian', sigma=0.5)
+
+# ------------------------
+# Start forward selection
+# ------------------------
+useLowRankApproximation = False
+rank = 10
+
+ykernel = kernel
 
 proceed = True  # flag if the algorithm continues
 covariatesPool = list(np.arange(data.p) + 1)
 oldGroup = Group(covariatesPool)
+bestR2 = 0.
 
 while proceed:
+    # Create a new group
     for covariateInd in covariatesPool:
-        currentGroup = old.remove
+        print("\t Create a new group with covariate %d ..." % covariateInd)
+        _currentGroup = oldGroup.removeOneCovariate(covariateInd)
+        currentGroup = _currentGroup.addNewCovariateAsGroup(covariateInd)
+        # Contrary to forward selection, the data matrix doesn't
+        # change.
+        xkernels = [kernel] * currentGroup.size
+        parameters = Parameters(currentGroup, ykernel, xkernels)
+        currentOKGT = OKGTReg(data, parameters)
+
+        if useLowRankApproximation:
+            res = currentOKGT.train_Nystroem(rank)
+        else:
+            res = currentOKGT.train_Vanilla()
+
+        currentR2 = res['r2']
+        if currentR2 > bestR2:
+            print("\t\t current R2 =\t %.10f \t *" % currentR2)
+            bestR2 = currentR2
+            newGroup = currentGroup
+        else:
+            print("\t\t current R2 =\t %.10f" % currentR2)
+        print("\t\t best R2 =\t\t %.10f" % bestR2)
+
+    print("** updated group structure is: %s" % (newGroup.partition, ))
+
+    # If there are already new groups, a chosen variable can join one of the
+    # new groups instead of creating a new group.
+    if oldGroup.size > 1:
+        print "** Add to an existing group: **"
+        for covariateInd in covariatesPool:
+            for groupInd in np.arange(oldGroup.size)+1:  # exclude the pool group
+                pass
+

@@ -66,7 +66,7 @@ def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
             if currentR2 > bestR2:
                 print("\t\t current R2 =\t %.10f \t *" % currentR2)
                 bestR2 = currentR2
-                bestOKGT = currentOKGT
+                # bestOKGT = currentOKGT
                 bestCovariateIndex = covariateInd
                 newGroup = currentGroup
             else:

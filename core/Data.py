@@ -24,7 +24,10 @@ class Data(object):
         :type group: Group
         :param group: a group structure
 
-        :return: grouped data
+        :type return: tuple(Data, Group)
+        :return: grouped data, i.e. Data(y, subset of X), and
+                 a group structure with covariate indices being
+                 normalized.
         """
         def flattenPartition(partition):
             return [i for g in partition for i in g]
