@@ -118,6 +118,8 @@ class Group(object):
     def __str__(self):
         return("%s" % (self.partition,))
 
+    def __repr__(self):
+        return("%s" % (self.partition,))
 
 # g = Group([1], [2,3])
 # print g

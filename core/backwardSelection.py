@@ -96,6 +96,9 @@ while proceed:
     if oldGroup.size > 1:
         print "** Add to an existing group: **"
         for covariateInd in covariatesPool:
-            for groupInd in np.arange(oldGroup.size)+1:  # exclude the pool group
+            # Remove the chosen covariate from the pool.
+            currentGroupBeforeJoin = oldGroup.removeOneCovariate(covariateInd)
+            # The chosen covariate will be added to each of the non-pool group one-by-one.
+            for groupInd in np.arange(currentGroupBeforeJoin.size)+1:  # exclude the pool group
                 pass
 
