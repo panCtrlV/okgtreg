@@ -1,5 +1,6 @@
 import numpy as np
 import itertools
+import copy
 
 
 class Group(object):
@@ -96,5 +97,20 @@ class Group(object):
         except ValueError:
             print("** Covariate %d is not in the group structure. **" % covariateIndex)
 
-        self.partition[ind].remove(covariateIndex)
-        return Group(*self.partition)
+        partition = copy.deepcopy(self.partition)
+        partition[ind].remove(covariateIndex)
+        # Calling the class name creates a new Group object out of the current scope.
+        # Alternatively, we can just call __init__ to change the self object in place.
+        # More details can be found at:
+        # http://stackoverflow.com/questions/25118798/python-how-to-call-the-constructor-from-within-member-function
+        return Group(*partition)
+
+    def __str__(self):
+        return("%s" % (self.partition,))
+
+
+# g = Group([1], [2,3])
+# print g
+# g2 = g.removeOneCovariate(1)  // `removeOneCovariate` creates a new Group object
+# print g2
+# print g
