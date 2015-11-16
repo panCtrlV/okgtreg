@@ -59,7 +59,7 @@ class Group(object):
 
             return self.partition[partitionNumber - 1]
 
-    def getPartitions(self, partitionNumbers=None):
+    def getPartitions(self, partitionNumbers=None, returnAsGroup=False):
         """
         Return one or more partitions from the current group structure as a tuple,
         e.g. ([1], ), ([1], [2,3])
@@ -68,12 +68,17 @@ class Group(object):
         :return:
         """
         if partitionNumbers is None:
-            return self.partition
+            returnPartition = self.partition
         else:
             if np.any([i <=0 or i > self.size for i in partitionNumbers]):
                 raise ValueError("** One or more partition numbers are out of bounds. **")
             else:
-                return tuple([self.partition[i-1] for i in partitionNumbers])
+                returnPartition = tuple([self.partition[i-1] for i in partitionNumbers])
+
+        if returnAsGroup:
+            return Group(*returnPartition)
+        else:
+            return returnPartition
 
     def getMembership(self, covariateIndex):
         """
@@ -145,7 +150,7 @@ class Group(object):
         return("%s" % (self.partition,))
 
     def __repr__(self):
-        return("%s" % (self.partition,))
+        return("Group structure %s" % (self.partition,))
 
 # Test removeOneCovariate
 # g = Group([1], [2,3])
@@ -161,3 +166,8 @@ class Group(object):
 # g.getPartitions([1])   # get only one group
 # g.getPartitions([2, 4])  # two groups apart from each other
 # g.getPartitions([g.size + 1])  # out of bounds, fail
+
+# g.getPartitions([1,2], True)
+# g.getPartitions([1], True)   # get only one group
+# g.getPartitions([2, 4], True)  # two groups apart from each other
+# g.getPartitions([g.size + 1], True)  # out of bounds, fail
