@@ -179,5 +179,5 @@ class OKGTReg(object):
         _f_opt = Ux_diag.dot(_f_opt)
         f_opt =  _f_opt.reshape((n, l), order='F')
 
-        print "** Success **"
+        # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=r2)

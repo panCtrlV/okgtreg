@@ -64,6 +64,7 @@ class Group(object):
         Return one or more partitions from the current group structure as a tuple,
         e.g. ([1], ), ([1], [2,3])
 
+        :type partitionNumbers: list or None
         :param partitionNumbers:
         :return:
         """

@@ -44,6 +44,7 @@ pool.
 """
 
 # Simulate data
+np.random.seed(25)
 y, x = DataSimulator.SimData_Wang04(500)
 data = Data(y, x)
 
@@ -53,7 +54,7 @@ kernel = Kernel('gaussian', sigma=0.5)
 # ------------------------
 # Start forward selection
 # ------------------------
-useLowRankApproximation = False
+useLowRankApproximation = True
 rank = 10
 
 ykernel = kernel
@@ -62,8 +63,9 @@ proceed = True  # flag if the algorithm continues
 covariatesPool = list(np.arange(data.p) + 1)
 oldGroup = Group(covariatesPool)
 bestR2 = 0.
+bestCovariateIndex = None
 
-while proceed:
+while len(covariatesPool) > 1:
     # Create a new group
     for covariateInd in covariatesPool:
         print("\t Create a new group with covariate %d ..." % covariateInd)
@@ -74,7 +76,7 @@ while proceed:
         xkernels = [kernel] * currentGroup.size
         parameters = Parameters(currentGroup, ykernel, xkernels)
         currentOKGT = OKGTReg(data, parameters)
-
+        # Train OKGT
         if useLowRankApproximation:
             res = currentOKGT.train_Nystroem(rank)
         else:
@@ -85,6 +87,7 @@ while proceed:
             print("\t\t current R2 =\t %.10f \t *" % currentR2)
             bestR2 = currentR2
             newGroup = currentGroup
+            bestCovariateIndex = covariateInd
         else:
             print("\t\t current R2 =\t %.10f" % currentR2)
         print("\t\t best R2 =\t\t %.10f" % bestR2)
@@ -96,9 +99,48 @@ while proceed:
     if oldGroup.size > 1:
         print "** Add to an existing group: **"
         for covariateInd in covariatesPool:
-            # Remove the chosen covariate from the pool.
-            currentGroupBeforeJoin = oldGroup.removeOneCovariate(covariateInd)
-            # The chosen covariate will be added to each of the non-pool group one-by-one.
-            for groupInd in np.arange(currentGroupBeforeJoin.size)+1:  # exclude the pool group
-                pass
+            print("\t try adding covariate %d " % covariateInd)
+            # Remove `covariateInd`-th covariate from the pool,
+            # which will be added into one of the other groups.
+            updatedCovariatesPool = copy.deepcopy(covariatesPool)
+            updatedCovariatesPool.remove(covariateInd)
+            # Get the group number of the chosen `covariateInd`
+            covariateMember = oldGroup.getMembership(covariateInd)
+            # Take all other groups as a Group object
+            otherGroupInds = list(np.arange(oldGroup.size)+1)
+            otherGroupInds.remove(covariateMember)
 
+            # print type(otherGroupInds), ": ", otherGroupInds
+
+            otherGroup = oldGroup.getPartitions(otherGroupInds, True)
+            # Try adding the chosen `covariateInd` to each of the other groups
+            for groupInd in np.arange(otherGroup.size) + 1:
+                print("\t in other group %d ..." % groupInd)
+                updatedOtherGroup = otherGroup.addNewCovariateToGroup(covariateInd, groupInd)
+                currentGroup = updatedOtherGroup + updatedCovariatesPool
+                print("\t\t current group structure: %s " % (currentGroup.partition,))
+                xkernels = [kernel] * currentGroup.size
+                parameters = Parameters(currentGroup, ykernel, xkernels)
+                currentOKGT = OKGTReg(data, parameters)
+                # Train OKGT
+                if useLowRankApproximation:
+                    res = currentOKGT.train_Nystroem(rank)
+                else:
+                    res = currentOKGT.train_Vanilla()
+
+                currentR2 = res['r2']
+                # Check if there is improvement
+                if currentR2 > bestR2:
+                    print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                    bestR2 = currentR2
+                    newGroup = currentGroup
+                    bestCovariateIndex = covariateInd
+                else:
+                    print("\t\t current R2 =\t %.10f" % currentR2)
+                print("\t\t best R2 =\t\t %.10f" % bestR2)
+
+    print("** updated group structure is: %s \n" % (newGroup.partition, ))
+    covariatesPool.remove(bestCovariateIndex)
+    oldGroup = newGroup
+
+print ("** SELECTED GROUP STRUCTURE: %s \n" % (oldGroup.partition, ))

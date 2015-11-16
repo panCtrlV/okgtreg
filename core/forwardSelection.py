@@ -56,13 +56,14 @@ def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
             xkernels = [kernel] * groupForOKGT.size
             parametersForOKGT = Parameters(groupForOKGT, ykernel, xkernels)
             currentOKGT = OKGTReg(dataForOKGT, parametersForOKGT)
-
+            # Train OKGT
             if useLowRankApproximation:
                 res = currentOKGT.train_Nystroem(rank)
             else:
                 res = currentOKGT.train_Vanilla()
 
             currentR2 = res['r2']
+            # Check if there is improvement
             if currentR2 > bestR2:
                 print("\t\t current R2 =\t %.10f \t *" % currentR2)
                 bestR2 = currentR2
@@ -79,9 +80,9 @@ def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
             print "** Add to an existing group: **"
             # can add new covariate to existing group
             for covariateInd in covariatesPool:
+                print("\t try adding covariate %d " % covariateInd)
                 for groupInd in np.arange(oldGroup.size)+1:
                     # print oldGroup.partition
-                    print("\t try adding covariate %d " % covariateInd)
                     print("\t in group %d ..." % groupInd)
                     currentGroup = oldGroup.addNewCovariateToGroup(covariateInd, groupInd)
                     print("\t\t current group structure: %s " % (currentGroup.partition,))
@@ -91,13 +92,14 @@ def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
                     xkernels = [kernel] * groupForOKGT.size
                     parametersForOKGT = Parameters(groupForOKGT, ykernel, xkernels)
                     currentOKGT = OKGTReg(dataForOKGT, parametersForOKGT)
-
+                    # Train OKGT
                     if useLowRankApproximation:
                         res = currentOKGT.train_Nystroem(rank)
                     else:
                         res = currentOKGT.train_Vanilla()
 
                     currentR2 = res['r2']
+                    # Check if there is improvement
                     if currentR2 > bestR2:
                         print("\t\t current R2 =\t %.10f \t *" % currentR2)
                         bestR2 = currentR2
