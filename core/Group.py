@@ -47,17 +47,39 @@ class Group(object):
         return self.getPartition(index)
 
     def getPartition(self, partitionNumber=None):
-        # partitionNumber start from 1
+        """
+        Return one partition from the group structure as a list, e.g. [1] or [1,2].
+        The `partitionNumber` start from 1.
+        """
         if partitionNumber is None:
             return self.partition
         else:
             if partitionNumber <= 0 or partitionNumber > self.size:
-                raise ValueError("** 'partitionNumber' is is out of bounds. **")
+                raise ValueError("** 'partitionNumber' is out of bounds. **")
 
             return self.partition[partitionNumber - 1]
 
+    def getPartitions(self, partitionNumbers=None):
+        """
+        Return one or more partitions from the current group structure as a tuple,
+        e.g. ([1], ), ([1], [2,3])
+
+        :param partitionNumbers:
+        :return:
+        """
+        if partitionNumbers is None:
+            return self.partition
+        else:
+            if np.any([i <=0 or i > self.size for i in partitionNumbers]):
+                raise ValueError("** One or more partition numbers are out of bounds. **")
+            else:
+                return tuple([self.partition[i-1] for i in partitionNumbers])
+
     def getMembership(self, covariateIndex):
-        # Return which group a given `covariateIndex`-th covariate belongs
+        """
+        Return which group a given `covariateIndex`-th covariate belongs.
+        The first group number is 1.
+        """
         try:
             return int(np.where([covariateIndex in part for part in self.partition])[0]) + 1
         except TypeError:
@@ -91,15 +113,19 @@ class Group(object):
         # return Group(*(unchangedGroups + (updatedGroup,)))
 
     def addNewCovariateAsGroup(self, covariateIndex):
-        # Add a new covariate as a new group in the structure
-        # covariateIndex starts from 1
+        """
+        Add a new covariate as a new group in the structure
+        covariateIndex starts from 1
+        """
         if covariateIndex in [i for g in self.partition for i in g]:
             raise ValueError("** Covariate %d is already in the partition. **" % covariateIndex)
 
         return Group(*(self.partition + ([covariateIndex],)) )
 
     def removeOneCovariate(self, covariateIndex):
-        # Remove `covariateIndex`-th covariate from the group it belongs
+        """
+        Remove `covariateIndex`-th covariate from the group it belongs
+        """
         try:
             ind = int(np.where([covariateIndex in part for part in self.partition])[0])  # where covariateIndex belongs
         except ValueError:
@@ -121,11 +147,17 @@ class Group(object):
     def __repr__(self):
         return("%s" % (self.partition,))
 
+# Test removeOneCovariate
 # g = Group([1], [2,3])
 # print g
 # g2 = g.removeOneCovariate(1)  # `removeOneCovariate` creates a new Group object
 # print g2
 # print g
 
-g = Group([1], [2,3])
-g.getMembership(4)
+# Test getPartitions
+# g = Group([1,4], [2,3], [5], [8,7,10], [6, 9])
+# g
+# g.getPartitions([1,2])  # get two groups
+# g.getPartitions([1])   # get only one group
+# g.getPartitions([2, 4])  # two groups apart from each other
+# g.getPartitions([g.size + 1])  # out of bounds, fail
