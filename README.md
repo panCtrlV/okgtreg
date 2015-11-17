@@ -6,8 +6,9 @@ Optimal Kernel Group Transformation for Exploratory Regression and Graphics Pyth
 This Python package implements our paper accepted by SIGKDD 2015 (ID: fp410)
 
 # Installation
-
-`pip install okgtreg` 
+<!--
+`pip install okgtreg`
+ -->
 
 # Usage
 
@@ -36,6 +37,29 @@ plt.scatter(y, res['g'])
 j=4
 plt.scatter(X[:, j], res['f'][:, j])
 ```
+
+## Example of using forward and backward selection procedure to discover group structure
+
+```python
+from okgtreg.core import *
+
+# Simulate data
+np.random.seed(25)
+# y, x = DataSimulator.SimData_Wang04(500)
+y, x = DataSimulator.SimData_Wang04WithInteraction(500)
+data = Data(y, x)
+
+# Same kernel for all groups
+kernel = Kernel('gaussian', sigma=0.5)
+
+
+# Forward selection (with low rank approximation for Gram matrix)
+fGroup = forwardSelection(data, kernel, True, 10)
+
+# Backward selection (with low rank approximation for Gram matrix)
+bGroup = backwardSelection(data, kernel, True, 10)
+```
+
 
 # Reference
 
