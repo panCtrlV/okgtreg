@@ -147,6 +147,19 @@ class Group(object):
         # http://stackoverflow.com/questions/25118798/python-how-to-call-the-constructor-from-within-member-function
         return Group(*partition)
 
+    def removeOneGroup(self, groupNumber):
+        """
+        Remove from the current group structure the `groupNumber`-th group and return a new
+        Group object.
+
+        :type groupNumber: int
+        :param groupNumber: the index of the group to be removed. The first group number is 1.
+
+        :type return: Group
+        :return: group structure with one fewer group
+        """
+        pass
+
     def __add__(self, other):
         """
         Add two Group objects to return a bigger Group.

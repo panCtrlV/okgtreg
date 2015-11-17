@@ -13,7 +13,7 @@ Determining group structure by forward selection.
 
 def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
     """
-    Step-wise forward selection procedure for determining group structure for OKGT
+    Forward selection procedure for determining group structure for OKGT
     assuming:
      1) all covariates are used
      2) same kernel function (including parameters) is used
