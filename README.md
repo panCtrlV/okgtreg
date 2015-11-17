@@ -41,6 +41,7 @@ plt.scatter(X[:, j], res['f'][:, j])
 ## Example of using forward and backward selection procedure to discover group structure
 
 ```python
+from okgtreg.core.DataSimulator import *
 from okgtreg.core.forwardSelection import *
 from okgtreg.core.backwardSelection import *
 
