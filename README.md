@@ -12,7 +12,7 @@ This Python package implements our paper accepted by SIGKDD 2015 (ID: fp410)
 # Usage
 
 ```python
-from okgtreg.core import *
+from okgtreg import *
 
 """
 p = 5
@@ -40,9 +40,9 @@ plt.scatter(X[:, j], res['f'][:, j])
 ## Example of using forward and backward selection procedure to discover group structure
 
 ```python
-from okgtreg.core.DataSimulator import *
-from okgtreg.core.forwardSelection import *
-from okgtreg.core.backwardSelection import *
+from okgtreg.DataSimulator import *
+from okgtreg.forwardSelection import *
+from okgtreg.backwardSelection import *
 
 # Simulate data
 np.random.seed(25)
