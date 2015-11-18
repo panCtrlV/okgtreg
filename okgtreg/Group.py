@@ -46,6 +46,18 @@ class Group(object):
     def __getitem__(self, index):
         return self.getPartition(index)
 
+    def __eq__(self, other):
+        """
+        Compare two Group objects.
+
+        :type other: Group
+        :param other: the other group structure to compare to.
+
+        :rtype: boolean
+        :return:
+        """
+        return self.partition == other.partition
+
     def getPartition(self, partitionNumber=None):
         """
         Return one partition from the group structure as a list, e.g. [1] or [1,2].

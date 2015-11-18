@@ -18,11 +18,23 @@ class Data(object):
 
     def getGroupedData(self, group):
         """
+        Given a group structure, either a full partition or a structure consisting of
+        a subset of the available covariates, return the corresponding data set and
+        the group structure after normalizing the covariate indices.
+
+        The purpose of index normalization is to make the grouped data set look as if
+        it is a standalone data set for the subsequent operations. To implement the
+        normalization, the smallest covaraite index in the given group is forced to
+        be 1 and all the other indices are adjusted accordingly, so that the relative
+        differences are not changed. For example:
+
+            ([3, 5], [4], [7, 8])] -> ([1, 3], [2], [5, 6])
 
         :type group: Group
-        :param group: a group structure
+        :param group: a group structure, either a full partition or a structure consisting
+                      of a subset of the available covariates.
 
-        :type return: tuple(Data, Group)
+        :rtype: tuple(Data, Group)
         :return: grouped data, i.e. Data(y, subset of X), and
                  a group structure with covariate indices being
                  normalized.
@@ -39,146 +51,12 @@ class Data(object):
             # partition is a tuple of lists
             lens = [len(g) for g in partition]
             offsets = np.array(lens).cumsum() - lens + 1
-            rawOrders = [np.arange(l)  for l in lens]
+            rawOrders = [np.arange(l) for l in lens]
             return tuple(list(rawOrders[i] + offsets[i]) for i in xrange(len(partition)))
 
         normalizedPartition = normalizeCovariateIndicesForPartition(group.partition)
         normalizedGroup = Group(*normalizedPartition)
         return subData, normalizedGroup
-
-
-    # def groupData(self, group):
-    #     """
-    #     Creating grouped data by giving group structure information for the covariates.
-    #
-    #     :type group: Group
-    #     :param group: group structure of covariates
-    #
-    #     :type return: GroupedData
-    #     :return: data with group structure information
-    #     """
-    #     if group.p != self.p:
-    #         raise ValueError("** Group structure is not conformable to X. **")
-    #
-    #     return GroupedData(self.y, self.X, group)
-
-
-# class GroupedData(Data):
-#     """
-#     Encapsulating data with group structure information.
-#     """
-#     def __init__(self, y, X, group):
-#         """
-#
-#         :type y: 1d ndarry
-#         :param y: response vector
-#
-#         :type X: 1d or 2d ndarry
-#         :param X: covariate matrix
-#
-#         :type group: Group
-#         :param group: group structure of covariates
-#
-#         :return: nothing
-#         """
-#         if group.p != X.shape[1]:
-#             raise ValueError("** Group structure is not conformable to X. **")
-#
-#         Data.__init__(self, y, X)
-#         self.group = group
-#         self.partition = group.partition
-#         self.groupSize = group.size
-#
-#     def getGroup(self, groupNumber = None):
-#         """
-#         Return the data sub-matrix of the covariate matrix, corresponding to
-#         the given group number. The group number starts from 1.
-#
-#         :type groupNumber: None or int
-#         :param groupNumber: the group number whose covariate sub-matrix is returned. If None, by default,
-#                             the whole covariate matrix is returned.
-#
-#         :type return: 1d or 2d ndarray
-#         :return: covariate sub-matrix
-#         """
-#         if groupNumber is None:
-#             return self.X
-#         else:
-#             if groupNumber <= 0 or groupNumber > self.groupSize:
-#                 raise ValueError("** 'groupNumber' is out of bound. **")
-#
-#             cols = np.array(self.partition[groupNumber - 1])  # group number start from 1
-#             return self.X[:, cols - 1]
-#
-#     def equipKernels(self, ykernel, xkernels):
-#         """
-#         Associate each group in a group structure with a kernel.
-#
-#         :type ykernel: Kernel
-#         :param ykernel: kernel for response
-#
-#         :param xkernels: list of Kernel objects
-#         :param xkernels: a list of kernels for covariates, one for each group
-#
-#         :type return: GroupedDataWithKernels
-#         :return: data with group structure information and each group is associated with a kernel
-#         """
-#         if len(xkernels) != self.groupSize:
-#             raise ValueError("** The number of kernels is not conformable to the group size. "
-#                              "There are %d kernels and %d groups. **" % (len(xkernels), self.groupSize))
-#
-#         return GroupedDataWithKernels(self.y, self.X, self.group, ykernel, xkernels)
-
-
-# class GroupedDataWithKernels(GroupedData):
-#     """
-#     Encapsulating data with group and kernel information.
-#     """
-#     def __init__(self, y, X, group, ykernel, xkernels):
-#         """
-#
-#         :type y: 1d ndarray
-#         :param y: response vector
-#
-#         :type X: 1d or 2d ndarray
-#         :param X: covariate matrix
-#
-#         :type group: Group
-#         :param group: group structure
-#
-#         :type ykernel: Kernel
-#         :param ykernel: kernel for response
-#
-#         :type xkernels: list of Kernel objects
-#         :param xkernels: one kernel for each group of covariates
-#
-#         :return: nothing
-#         """
-#         if len(xkernels) != group.size:
-#             raise ValueError("** The number of x kernels is not conformable to the group size."
-#                              "There are %d kernels and %d groups. **" % (len(xkernels), group.size))
-#
-#         GroupedData.__init__(self, y, X, group)
-#         self.ykernel = ykernel
-#         self.xkernels = xkernels
-#
-#     # used to construct covariance and cross-covariance operators
-#     # private methods
-#     def _stackGramsForX(self):
-#         grams = [kernel.gram(self.getGroup(i+1)) for (i, kernel) in enumerate(self.xkernels)]
-#         return np.vstack(grams)
-#
-#     def covarianceOperator(self):
-#         vstackedGrams = self._stackGramsForX()
-#         cov = vstackedGrams.dot(vstackedGrams.T) / self.n
-#         return cov
-#
-#     def crossCovarianceOperator(self):
-#         # return R_yx: H_x -> H_y
-#         yGram = self.ykernel.gram(self.y[:, np.newaxis])  # need kernel for y
-#         xStackedGrams = self._stackGramsForX()
-#         crossCov = yGram.dot(xStackedGrams.T) / self.n
-#         return crossCov
 
 
 class ParameterizedData(object):
@@ -205,7 +83,7 @@ class ParameterizedData(object):
         :param groupNumber: the group number whose covariate sub-matrix is returned. If None, by default,
                             the whole covariate matrix is returned.
 
-        :type return: 1d or 2d ndarray
+        :rtype: 1d or 2d ndarray
         :return: covariate sub-matrix
         """
         if groupNumber is None:

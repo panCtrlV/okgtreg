@@ -1,8 +1,8 @@
 import pickle
 
 from okgtreg.DataSimulator import *
-from okgtreg.Data import *
-from okgtreg.Kernel import *
+# from okgtreg.Data import *
+# from okgtreg.Kernel import *
 from okgtreg.forwardSelection import *
 
 
@@ -52,12 +52,11 @@ model = "Wang04WithInteraction"
 structures = []
 r2s = []
 
-for s in seeds:
+for s in seeds:  # had problem at seed=21
     # Generate data
     np.random.seed(s)
     y, x = DataSimulator.SimData_Wang04WithInteraction(nSample)
     data = Data(y, x)
-
 
     selectionRes = forwardSelection(data, kernel, True, 10)
     structures.append(selectionRes['group'])
@@ -65,3 +64,22 @@ for s in seeds:
 
 pickle.dump(structures, open("./" + model + "-structures.pkl", "wb"))
 pickle.dump(r2s, open("./" + model + "-r2s.pkl", "wb"))
+
+
+"""
+The following example will run into error
+
+    nSim = 100
+    nSample = 500
+    kernel = Kernel('gaussian', sigma=0.5)
+
+    s = 21
+    np.random.seed(s)
+    y, x = DataSimulator.SimData_Wang04WithInteraction(nSample)
+    data = Data(y, x)
+    selectionRes = forwardSelection(data, kernel, True, 10)
+
+It is because while reaching the stage when [6, 7] are the only
+two covarates to be added to the structure, none of them would
+improve R2 for OKGT.
+"""

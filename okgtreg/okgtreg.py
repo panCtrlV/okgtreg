@@ -47,8 +47,11 @@ class OKGTReg(object):
 
         :type data: Data
         :param data:
+
         :type params: Parameters
         :param params:
+
+        :rtype: OKGTReg
         :return:
         """
         # private field, not to accessed directly
