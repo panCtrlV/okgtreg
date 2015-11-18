@@ -1,10 +1,7 @@
-__author__ = 'panc'
-
-
 from setuptools import setup
 
 setup(
-    name='okgtreg_primitive',
+    name='okgtreg',
     version='0.1',
     description='Implementation of Optimal Kernel Group Optimization for regression',
     classifiers=[
@@ -12,14 +9,15 @@ setup(
       'Programming Language :: Python :: 2.7',
     ],
     keywords='OKGT regression exploratory data analysis',
-    url='http://github.com/...',
-    author='panc',
+    url='http://www.stat.purdue.edu/~panc',
+    author='Pan Chao',
     authro_email='panc@purdue.edu',
-    packages=['okgtreg_primitive'],
+    packages=['okgtreg'],
     install_requires=[
         'numpy',
         'scipy',
-        'scikit-learn'
+        'scikit-learn',
+        'pickle'
     ],
     include_package_data=True,
     zip_safe=False,

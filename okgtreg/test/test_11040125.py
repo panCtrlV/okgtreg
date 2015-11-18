@@ -1,6 +1,6 @@
 import okgtreg_primitive.okgtreg as oldokgt
-from core.okgtreg import *
-from core.DataSimulator import *
+from okgtreg.okgtreg import *
+from okgtreg.DataSimulator import *
 
 
 # Simulate data

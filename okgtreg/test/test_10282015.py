@@ -1,5 +1,5 @@
-from core.okgtreg import *
-from core.DataSimulator import *
+from okgtreg.okgtreg import *
+from okgtreg.DataSimulator import *
 
 # simulate
 X = np.arange(50).reshape((10, 5))

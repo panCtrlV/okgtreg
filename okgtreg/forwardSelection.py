@@ -1,7 +1,7 @@
 import numpy as np
 
-from core.Group import *
-from core.okgtreg import *
+from okgtreg.Group import *
+from okgtreg.okgtreg import *
 
 
 """
@@ -103,9 +103,9 @@ def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
                     if currentR2 > bestR2:
                         print("\t\t current R2 =\t %.10f \t *" % currentR2)
                         bestR2 = currentR2
-                        bestOKGT = currentOKGT
+                        # bestOKGT = currentOKGT
                         bestCovariateIndex = covariateInd
-                        bestGroupIndex = groupInd
+                        # bestGroupIndex = groupInd
                         newGroup = currentGroup
                     else:
                         print("\t\t current R2 =\t %.10f" % currentR2)
@@ -115,4 +115,5 @@ def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
         oldGroup = newGroup
 
     print ("** SELECTED GROUP STRUCTURE: %s \n" % (oldGroup.partition, ))
-    return oldGroup
+    # return oldGroup
+    return dict(group=oldGroup, r2=bestR2)

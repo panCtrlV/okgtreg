@@ -1,5 +1,5 @@
-from core.okgtreg import *
-from core.DataSimulator import *
+from okgtreg.okgtreg import *
+from okgtreg.DataSimulator import *
 
 """
 p = 5

@@ -1,6 +1,6 @@
 import numpy as np
 
-from core.Group import *
+from okgtreg.Group import *
 
 
 """

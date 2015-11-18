@@ -1,8 +1,8 @@
 import numpy as np
 
-from core.Group import *
-from core.okgtreg import *
-from core.DataSimulator import *
+from okgtreg.Group import *
+from okgtreg.okgtreg import *
+from okgtreg.DataSimulator import *
 
 
 """

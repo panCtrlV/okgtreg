@@ -2,10 +2,10 @@ import numpy as np
 import scipy as sp
 import scipy.linalg as slin
 
-from core.Group import *
-from core.Data import *
-from core.Kernel import *
-from core.Parameters import *
+from okgtreg.Group import *
+from okgtreg.Data import *
+from okgtreg.Kernel import *
+from okgtreg.Parameters import *
 
 
 """

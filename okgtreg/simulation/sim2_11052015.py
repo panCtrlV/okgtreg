@@ -1,5 +1,5 @@
-from core.forwardSelection import *
-from core.DataSimulator import *
+from okgtreg.forwardSelection import *
+from okgtreg.DataSimulator import *
 
 
 """
