@@ -1,7 +1,7 @@
-import numpy as np
+# import numpy as np
 
-from okgtreg.Group import *
-from okgtreg.okgtreg import *
+from .okgtreg import *
+from .Parameters import *
 
 
 """

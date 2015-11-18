@@ -1,7 +1,5 @@
-import numpy as np
-
-from okgtreg.Group import *
-
+# from okgtreg.Group import *
+from .Group import *
 
 """
 Classes for data

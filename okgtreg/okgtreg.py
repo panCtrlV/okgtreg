@@ -1,11 +1,8 @@
-import numpy as np
 import scipy as sp
 import scipy.linalg as slin
 
-from okgtreg.Group import *
-from okgtreg.Data import *
-from okgtreg.Kernel import *
-from okgtreg.Parameters import *
+from .Data import *
+from .Kernel import *
 
 
 """

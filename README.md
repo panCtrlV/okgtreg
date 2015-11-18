@@ -6,9 +6,8 @@ Optimal Kernel Group Transformation for Exploratory Regression and Graphics Pyth
 This Python package implements our paper accepted by SIGKDD 2015 (ID: fp410)
 
 # Installation
-<!--
+
 `pip install okgtreg`
- -->
 
 # Usage
 

@@ -1,3 +1,11 @@
+import pickle
+
+from okgtreg.DataSimulator import *
+from okgtreg.Data import *
+from okgtreg.Kernel import *
+from okgtreg.forwardSelection import *
+
+
 """
 Simulation for forward selection to determine group structure.
 Two models: Wang04 and Wang04WithInteraction
@@ -8,10 +16,6 @@ Setting:
     - Sample size 500
 """
 
-import pickle
-
-from okgtreg.DataSimulator import *
-from okgtreg.forwardSelection import *
 
 nSim = 100
 nSample = 500
