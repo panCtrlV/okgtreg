@@ -26,7 +26,7 @@ from setuptools import setup
 
 setup(
     name='okgtreg',
-    version='0.13',
+    version='0.14',
     description='Implementation of Optimal Kernel Group Optimization for regression',
     classifiers=[
       'Development Status :: 3 - Alpha',

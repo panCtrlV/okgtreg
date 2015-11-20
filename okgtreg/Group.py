@@ -192,11 +192,43 @@ class Group(object):
         biggerPartition = self.partition + otherPartition
         return Group(*biggerPartition)
 
+    def has(self, g):
+        """
+        Check if any group in the group structure has the given
+        covariate / set of covariates as a subset. For example, if
+        the group structure is given by:
+
+            ([1, 2], [3, 6, 7], [4], [5, 8])
+
+        then the following should be True:
+
+            has([1, 2]), has([6, 7]), has(4), has([4]), has(5)
+
+        :type g: int or list of int
+        :param g: the covariate or set of covariates
+
+        :rtype: bool
+        :return: if the current group structure has the given covariate(s)
+                 as a subset.
+        """
+        if isinstance(g, int):
+            glist = [g]
+        else:
+            glist = g
+        # TODO: Otherwise, I assume g is already a list. Need to check the input.
+
+        if len(glist) > len(set(glist)):
+            raise ValueError("** There shouldn't be duplicates in the provided covariate list. **")
+
+        return np.any([set(glist).issubset(set(group)) for group in self.partition])
+
+
     def __str__(self):
         return("%s" % (self.partition,))
 
     def __repr__(self):
         return("Group structure %s" % (self.partition,))
+
 
 # Test removeOneCovariate
 # g = Group([1], [2,3])
@@ -235,3 +267,12 @@ class Group(object):
 # Group + tuple
 # g1 = Group([1], [3,4])
 # g1 + ([2,5], [6,7])
+
+
+# Test `has`
+# g = Group([1, 2], [3, 6, 7], [4], [5, 8])
+# g.has(1)
+# g.has([1])
+# g.has([6, 7])
+# g.has([6, 8])
+# g.has([3])

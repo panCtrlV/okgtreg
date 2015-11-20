@@ -83,3 +83,53 @@ It is because while reaching the stage when [6, 7] are the only
 two covarates to be added to the structure, none of them would
 improve R2 for OKGT.
 """
+
+
+"""Simmulation result
+
+"""
+import pickle
+
+structuresWang04 = pickle.load(open("/Users/panc25/sshfs_map/Wang04-structures.pkl"))
+structuresWang04
+
+trueGroup = Group([1], [2], [3], [4], [5])
+np.array([group == trueGroup for group in structuresWang04]).sum() / 100.
+
+
+structuresWang04WithInteraction = pickle.load(open("/Users/panc25/sshfs_map/Wang04WithInteraction-structures.pkl"))
+structuresWang04WithInteraction
+trueGroup = Group([1], [2], [3], [4], [5], [6, 7])
+np.array([group == trueGroup for group in structuresWang04WithInteraction]).sum() / 100.
+
+def hasGroup(groupList, groupStructure):
+    return groupList in groupStructure.partition
+
+np.sum([hasGroup([6,7], group) for group in structuresWang04WithInteraction]) / 100.
+
+
+def hasCovaraitesAsGroup(): pass  # [6,7] should be a subset of a group in the selected group structure
+
+
+
+s = 21
+np.random.seed(s)
+nSample = 500
+y, x = DataSimulator.SimData_Wang04WithInteraction(nSample)
+data = Data(y, x)
+
+group = Group([1], [2, 5], [3], [4], [6, 7])
+kernel = Kernel('gaussian', sigma=0.5)
+ykernel = kernel
+xkernels = [kernel]*group.size
+parameters = Parameters(group, ykernel, xkernels)
+
+
+# No low rank
+okgt = OKGTReg(data, parameters)
+res = okgt.train_Vanilla()
+res['r2']
+
+# With low rank
+res2 = okgt.train_Nystroem(10)
+res2['r2']
