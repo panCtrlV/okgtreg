@@ -222,6 +222,16 @@ class Group(object):
 
         return np.any([set(glist).issubset(set(group)) for group in self.partition])
 
+    def hasAsAGroup(self, g):
+        if isinstance(g, int):
+            glist = [g]
+        else:
+            glist = g
+
+        if len(glist) > len(set(glist)):
+            raise ValueError("** There shouldn't be duplicates in the provided covariate list. **")
+
+        return g in self.partition
 
     def __str__(self):
         return("%s" % (self.partition,))
@@ -276,3 +286,7 @@ class Group(object):
 # g.has([6, 7])
 # g.has([6, 8])
 # g.has([3])
+
+# Test `hasAsAGroup`
+# g = Group([1, 2], [3, 6, 7], [4], [5, 8])
+# g.hasAsAGroup([1])

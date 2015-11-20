@@ -1,3 +1,5 @@
+from okgtreg.DataSimulator import *
+
 """
 Instead of using R2 as the selection criterion, this implementation
 uses HS norm of the cross-covariance operator and joint cross-covariance
@@ -5,7 +7,7 @@ operator.
 
 Motivated by R2 formula:
 
-    R2 = Cov(Y, \hat{Y}) / Var(Y),
+    R2 = Var(\hat{Y}) / Var(Y),
 
 we can define the non-parametric version of R2 for OKGT as
 
@@ -28,6 +30,11 @@ where R^+_{YX} is the column stack of R_{YX_j}'s.
 
 ...
 """
+
+
+# Simulate data
+nSample = 500
+y, x = DataSimulator.SimData_Wang04(nSample)
 
 # Calculate covariance operator R_{YY}
 
