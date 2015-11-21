@@ -58,6 +58,46 @@ class Group(object):
         """
         return self.partition == other.partition
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __lt__(self, other):
+        """
+        Specify the relative order, strictly smaller, between two Group objects. If each
+        group of covariates in `self` is a subset of a group in `other`, and at least one
+        is a proper subset, then `self` < `other`. For example, with the following group
+        structures:
+
+            g1: ([1], [2,3])
+            g2: ([1,4], [2,3])
+            g3: ([1], [2,3,4])
+            g4: ([1], [2,3], [4])
+            g5: ([1], [4], [2,3])
+
+        we have the relationships:
+
+            g1 < g2,
+            g1 < g3,
+            g1 < g4,
+            g1 < g5
+
+        while g4 == g5, so g4 < g5 false False.
+
+        If g1 < g2 and g2 is the true group structure, then g1 is called a "correct"
+        in our OKGT paper.
+
+        :type other: Group
+        :param other: the other group structure to compare to.
+
+        :rtype: bool
+        :return: if `self` is strictly smaller than `other`.
+        """
+        return np.all([np.any([set(g1) <= set(g2) for g2 in other.partition]) for g1 in self.partition]) and \
+               self != other
+
+    def __le__(self, other):
+        return self.__lt__(other) or self.__eq__(other)
+
     def getPartition(self, partitionNumber=None):
         """
         Return one partition from the group structure as a list, e.g. [1] or [1,2].
@@ -290,3 +330,20 @@ class Group(object):
 # Test `hasAsAGroup`
 # g = Group([1, 2], [3, 6, 7], [4], [5, 8])
 # g.hasAsAGroup([1])
+
+g1 = Group([1], [2,3])
+g2 = Group([1,4], [2,3])
+# g3 = Group([1], [2,3,4])
+# g4 = Group([1], [2,3], [4])
+# g5 = Group([1], [4], [2,3])
+#
+# print g1 < g2
+# print g1 < g3
+# print g1 < g4
+# print g1 < g5
+# print g2 < g3
+# print g3 < g2
+# print g4 <= g5, ": ", g4, "<=", g5
+# print g4 < g5, ": ", g4, "<", g5
+
+

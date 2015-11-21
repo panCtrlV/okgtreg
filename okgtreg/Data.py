@@ -100,6 +100,17 @@ class ParameterizedData(object):
         return np.vstack(grams)
 
     def covarianceOperatorForX(self, returnAll=False):
+        """
+        Calculate the covariance for X under the given group structure.
+
+        :type returnAll: bool
+        :param returnAll: if the column stack of the gram matrices (one for each group in the group structure)
+                          is returned along with the covariance operator
+
+        :rtype: 2d array or tuple of two 2d arrays
+        :return: either the covariance oeprator by itself or the covariance operator together with
+                 the column stack of the gram matrices.
+        """
         vstackedGrams = self._stackGramsForX()
         cov = vstackedGrams.dot(vstackedGrams.T) / self.n
         if returnAll:

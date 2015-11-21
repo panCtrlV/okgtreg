@@ -139,9 +139,7 @@ plt.boxplot(np.array(r2Wang04WithInteraction))
    If we consider a perfect match being successful, then the percentage is 50%.
 
    In terms of R2, the average is 0.9806, with the range [0.9027, 0.9927] and std dev 0.0176.
-
 """
-
 
 
 s = 21
