@@ -11,38 +11,9 @@ y: response vector (univariate)
 groupStructure: partition of variables into groups
 """
 
-####################
-# Classes for Data #
-####################
-
-# Moved to Data.py
-
-#############################
-# Class for Group Structure #
-#############################
-
-# Moved to Group.py
-
-################
-# Kernel Class #
-################
-
-# Moved to Kernel.py
-
-####################
-# Parameters class #
-####################
-
-# Moved to Parameters.py
-
-
-#################
-# OKGTReg class #
-#################
-eps=1e-6
 
 class OKGTReg(object):
-    def __init__(self, data, parameters):
+    def __init__(self, data, parameters, eps=1e-6):
         """
 
         :type data: Data
@@ -56,6 +27,7 @@ class OKGTReg(object):
         """
         # private field, not to accessed directly
         self.parameterizedData = ParameterizedData(data, parameters)
+        self.eps = eps
 
     def getX(self):
         return self.parameterizedData.X
@@ -96,13 +68,13 @@ class OKGTReg(object):
         # Ryx = self.parameterizedData.crossCovarianceOperator()
         Ryx = Gy.dot(Gx.T) / n
 
-        D, P = np.linalg.eigh(Ryy + eps * np.identity(n))
+        D, P = np.linalg.eigh(Ryy + self.eps * np.identity(n))
         D = D[::-1]
         P = P[:, ::-1]
         D_inv = np.diag(1. / np.sqrt(D))
         Gy_inv = D_inv.dot(P.T) # Ryy^{-1/2}
 
-        Rxx_inv = np.linalg.inv(Rxx + eps * np.identity(n * l))
+        Rxx_inv = np.linalg.inv(Rxx + self.eps * np.identity(n * l))
 
         #TODO: if Rxx is large, the inverse would be slow.
         VyxVxy = reduce(np.dot, [Gy_inv, Ryx, Rxx_inv, Ryx.T, Gy_inv.T])
@@ -159,8 +131,8 @@ class OKGTReg(object):
         Ux_row = np.hstack(Ux)
         Ux_diag = sp.sparse.block_diag(Ux)
 
-        T = reduce(np.dot, [np.diag(lambday / (lambday + eps)), Uy.T, Ux_row, np.diag(lambdax_row)])
-        R = np.diag((lambdax_row + eps)**2) + \
+        T = reduce(np.dot, [np.diag(lambday / (lambday + self.eps)), Uy.T, Ux_row, np.diag(lambdax_row)])
+        R = np.diag((lambdax_row + self.eps)**2) + \
                 reduce(np.dot, [np.diag(lambdax_row),
                                Ux_row.T.dot(Ux_row) - np.identity(len(lambdax_row)),
                                np.diag(lambdax_row)])
@@ -172,7 +144,7 @@ class OKGTReg(object):
         _g_opt = np.diag(lambday).dot(eigvec)
         g_opt = Uy.dot(_g_opt)
 
-        _f_opt = np.diag(np.sqrt(lambday**2 + eps) * lambday).dot(eigvec)
+        _f_opt = np.diag(np.sqrt(lambday**2 + self.eps) * lambday).dot(eigvec)
         _f_opt = T.T.dot(_f_opt)
         _f_opt = R_inv.dot(_f_opt)
         _f_opt = np.diag(lambdax_row).dot(_f_opt)

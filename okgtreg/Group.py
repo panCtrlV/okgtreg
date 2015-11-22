@@ -36,12 +36,19 @@ class Group(object):
         # accept number of covariates from keyword argument
         # or set automatically as the size of the flattened args if not given
         if len(kwargs) > 0:
-            for key in ('p'): setattr(self, key, kwargs.get(key))
-        else:
-            self.p = len(inputs)
+            # for key in ('p'): setattr(self, key, kwargs.get(key))
+            if 'p' in kwargs.keys():
+                setattr(self, 'p', kwargs.get('p'))
+            else:
+                self.p = len(inputs)
+
+            if 'name' in kwargs.keys():
+                setattr(self, 'name', kwargs.get('name'))
+            else:
+                self.name = None
 
         # fields:
-        #   partition, size, p
+        #   partition, size, p, name
 
     def __getitem__(self, index):
         return self.getPartition(index)
@@ -331,8 +338,8 @@ class Group(object):
 # g = Group([1, 2], [3, 6, 7], [4], [5, 8])
 # g.hasAsAGroup([1])
 
-g1 = Group([1], [2,3])
-g2 = Group([1,4], [2,3])
+# g1 = Group([1], [2,3])
+# g2 = Group([1,4], [2,3])
 # g3 = Group([1], [2,3,4])
 # g4 = Group([1], [2,3], [4])
 # g5 = Group([1], [4], [2,3])
@@ -345,5 +352,3 @@ g2 = Group([1,4], [2,3])
 # print g3 < g2
 # print g4 <= g5, ": ", g4, "<=", g5
 # print g4 < g5, ": ", g4, "<", g5
-
-
