@@ -1,6 +1,5 @@
-from okgtreg.forwardSelection import *
 from okgtreg.DataSimulator import *
-
+from okgtreg.groupStructureDetection.forwardSelection import *
 
 """
 Another example of OKGT group structure determination by

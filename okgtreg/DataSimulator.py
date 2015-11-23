@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.special import cbrt
 
+from okgtreg.Data import Data
+
 """
 Create synthetic data
 
@@ -28,7 +30,8 @@ class DataSimulator(object):
         x3 = np.random.randn(n)
         y = np.exp(x3 + epsilon)
         x = cbrt(x3)
-        return y, x
+        # return y, x
+        return Data(y, x)
 
     @staticmethod
     def SimData_MultiplyNoise(n):
@@ -40,7 +43,8 @@ class DataSimulator(object):
         x = np.random.normal(0, 1, 2*n).reshape((n,2))
         noise = np.random.standard_normal(n)
         y = x[:,0] + x[:,1] * noise
-        return y, x
+        # return y, x
+        return Data(y, x)
 
     @staticmethod
     def SimData_Wang04(n):
@@ -61,7 +65,8 @@ class DataSimulator(object):
         noise = np.random.standard_normal(n)
         y = np.log(4.0 + np.sin(4 * x[:, 0]) + np.abs(x[:, 1]) + x[:, 2]**2 +
                     x[:, 3]**3 + x[:, 4] + 0.1 * noise)
-        return y, x
+        # return y, x
+        return Data(y, x)
 
     @staticmethod
     def SimData_Wang04WithInteraction(n):
@@ -79,4 +84,5 @@ class DataSimulator(object):
         noise = np.random.standard_normal(n)
         y = np.log(4.0 + np.sin(4 * x[:, 0]) + np.abs(x[:, 1]) + x[:, 2]**2 +
                     x[:, 3]**3 + x[:, 4] + x[:, 5] * x[:, 6] + 0.1 * noise)
-        return y, x
+        # return y, x
+        return Data(y, x)

@@ -1,5 +1,5 @@
 from okgtreg.DataSimulator import *
-from okgtreg.forwardSelection import *
+from okgtreg.groupStructureDetection.forwardSelection import *
 # from okgtreg.Data import *
 # from okgtreg.Kernel import *
 
