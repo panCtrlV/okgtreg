@@ -20,6 +20,8 @@ arg = sys.argv[1]  #
 
 from okgtreg.Parameters import *
 from okgtreg.okgtreg import *
+# from ..Parameters import *
+# from ..okgtreg import *
 
 # import threading
 # import time
@@ -163,8 +165,6 @@ if __name__ == '__main__':
     group4 = Group([1, 2, 3], [4, 5, 6], [7, 8, 9, 10], name='group4')
     group5 = Group([1, 2, 3, 4, 5], [6, 7, 8, 9, 10], name='group5')
     group6 = Group([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], name='group6')
-
-    print group6.name
 
     # Value grid for regularization coefficient on log-scale
     lnEpsGrid = (np.arange(30) + 1) * (-1.)
