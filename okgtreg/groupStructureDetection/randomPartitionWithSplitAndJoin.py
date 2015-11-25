@@ -1,6 +1,7 @@
 from okgtreg.DataSimulator import DataSimulator
 
 
+
 """
 We start with a random partition of the predictor variables. The corresponding
 OKGT is fitted with R2 being recorded. Then perform the following split and join
@@ -29,4 +30,5 @@ Question:
 # Simulate data
 data = DataSimulator.SimData_Wang04(100)
 
-
+# Random partition to start with
+group0 = Rando

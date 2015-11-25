@@ -287,68 +287,50 @@ class Group(object):
         return("Group structure %s" % (self.partition,))
 
 
-# Test removeOneCovariate
-# g = Group([1], [2,3])
-# print g
-# g2 = g.removeOneCovariate(1)  # `removeOneCovariate` creates a new Group object
-# print g2
-# print g
+class RandomGroup(Group):
+    """
+    Given a list of covariate indices or total number of covariates and
+    the desired number of groups, randomly partition the covariates into
+    groups.
+    """
+    def __init__(self, size, covariateIndices=None, nCovariates=None):
+        """
+        Two constructors. Either `covariateIndices` or `nCovariates` is provided,
+        not both.
 
-# Test getPartitions
-# g = Group([1,4], [2,3], [5], [8,7,10], [6, 9])
-# g
-# g.getPartitions([1,2])  # get two groups
-# g.getPartitions([1])   # get only one group
-# g.getPartitions([2, 4])  # two groups apart from each other
-# g.getPartitions([g.size + 1])  # out of bounds, fail
+        :type size: int
+        :param size: desired number of groups
 
-# g.getPartitions([1,2], True)
-# g.getPartitions([1], True)   # get only one group
-# g.getPartitions([2, 4], True)  # two groups apart from each other
-# g.getPartitions([g.size + 1], True)  # out of bounds, fail
+        :type covariateIndices: list
+        :param covariateIndices: all covariate indices as a list
 
-# Test `__add__` overriding
-# Group + Group
-# g1 = Group([1], [3,4])
-# g2 = Group([2], [5,6])
-# g1 + g2
-#
-# g1 = Group([1], [3,4])
-# g2 = Group([2], [3,5])
-# g1 + g2  # fail because 3 occurs twice
+        :type nCovariates: int
+        :param nCovariates: number of total covariates
 
-# Group + list
-# g1 = Group([1], [3,4])
-# g1 + [2,5]
+        :rtype: Group
+        :return: Group object with randomly partitioned structure
+        """
+        # TODO: check `covariateIndices` and `nCovariates` cannot be both given
+        if covariateIndices is not None:
+            p = len(covariateIndices)  # total number of covariates
+        else:
+            p = nCovariates
+            covariateIndices = list(np.arange(p) + 1)
 
-# Group + tuple
-# g1 = Group([1], [3,4])
-# g1 + ([2,5], [6,7])
+        groupIndices = np.random.randint(1, size+1, p)
+
+        indexedCovariates = zip(groupIndices, covariateIndices)
+        indexedCovariates.sort(key=lambda x: x[0])
+
+        partition = []
+        for k, g in itertools.groupby(indexedCovariates, lambda x: x[0]):
+            partition.append([pair[1] for pair in g])
+
+        Group.__init__(self, *tuple(partition))
 
 
-# Test `has`
-# g = Group([1, 2], [3, 6, 7], [4], [5, 8])
-# g.has(1)
-# g.has([1])
-# g.has([6, 7])
-# g.has([6, 8])
-# g.has([3])
+# randomGroup = RandomGroup(size=4, covariateIndices=[1,2,3,4,5,6,7,8,9,10])
+# randomGroup
 
-# Test `hasAsAGroup`
-# g = Group([1, 2], [3, 6, 7], [4], [5, 8])
-# g.hasAsAGroup([1])
-
-# g1 = Group([1], [2,3])
-# g2 = Group([1,4], [2,3])
-# g3 = Group([1], [2,3,4])
-# g4 = Group([1], [2,3], [4])
-# g5 = Group([1], [4], [2,3])
-#
-# print g1 < g2
-# print g1 < g3
-# print g1 < g4
-# print g1 < g5
-# print g2 < g3
-# print g3 < g2
-# print g4 <= g5, ": ", g4, "<=", g5
-# print g4 < g5, ": ", g4, "<", g5
+# randomGroup = RandomGroup(size=4, nCovariates=10)
+# randomGroup
