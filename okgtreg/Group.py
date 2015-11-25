@@ -35,17 +35,17 @@ class Group(object):
 
         # accept number of covariates from keyword argument
         # or set automatically as the size of the flattened args if not given
-        if len(kwargs) > 0:
+        # if len(kwargs) > 0:
             # for key in ('p'): setattr(self, key, kwargs.get(key))
-            if 'p' in kwargs.keys():
-                setattr(self, 'p', kwargs.get('p'))
-            else:
-                self.p = len(inputs)
+        if 'p' in kwargs.keys():
+            setattr(self, 'p', kwargs.get('p'))
+        else:
+            self.p = len(inputs)
 
-            if 'name' in kwargs.keys():
-                setattr(self, 'name', kwargs.get('name'))
-            else:
-                self.name = None
+        if 'name' in kwargs.keys():
+            setattr(self, 'name', kwargs.get('name'))
+        else:
+            self.name = None
 
         # fields:
         #   partition, size, p, name
