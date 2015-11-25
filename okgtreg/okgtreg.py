@@ -153,3 +153,13 @@ class OKGTReg(object):
 
         # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=r2)
+
+    def train(self, method='vanilla', nComponents=None):
+        trainFunctions = {'vanilla': self.train_Vanilla,
+                          'nystroem': lambda: self.train_Nystroem(nComponents=nComponents)}
+
+        try:
+            return trainFunctions[method]()
+        except KeyError:
+            print("** Method \"%s\" could not be found. **")
+

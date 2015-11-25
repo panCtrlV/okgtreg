@@ -1,7 +1,8 @@
 import numpy as np
 from scipy.special import cbrt
 
-from okgtreg import Data
+from .Data import Data
+
 
 """
 Create synthetic data

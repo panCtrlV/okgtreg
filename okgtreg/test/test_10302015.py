@@ -1,6 +1,6 @@
 from okgtreg.Group import *
 from okgtreg.DataSimulator import *
-from okgtreg.okgtreg import *
+from okgtreg.OKGTReg import *
 
 #
 # group = Group([1,2], [3], [4,5,6])

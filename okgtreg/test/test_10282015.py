@@ -1,4 +1,4 @@
-from okgtreg.okgtreg import *
+from okgtreg.OKGTReg import *
 from okgtreg.DataSimulator import *
 
 # simulate

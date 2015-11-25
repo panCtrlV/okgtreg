@@ -1,5 +1,5 @@
 import okgtreg_primitive.okgtreg as oldokgt
-from okgtreg.okgtreg import *
+from okgtreg.OKGTReg import *
 from okgtreg.DataSimulator import *
 
 

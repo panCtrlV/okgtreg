@@ -1,6 +1,6 @@
 # import numpy as np
 
-from okgtreg.okgtreg import *
+from okgtreg.OKGTReg import *
 from okgtreg.Parameters import *
 
 

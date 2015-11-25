@@ -19,7 +19,7 @@ arg = sys.argv[1]  #
 
 
 from okgtreg.Parameters import *
-from okgtreg.okgtreg import *
+from okgtreg.OKGTReg import *
 
 # import threading
 # import time
