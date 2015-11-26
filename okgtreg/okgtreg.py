@@ -1,8 +1,14 @@
+import numpy as np
 import scipy as sp
 import scipy.linalg as slin
+import warnings
 
-from .Data import *
-from .Kernel import *
+# from .Data import *
+# from .Kernel import *
+
+from .Data import Data, ParameterizedData
+from .Parameters import Parameters
+from .Group import Group
 
 
 """
@@ -28,6 +34,7 @@ class OKGTReg(object):
         # private field, not to accessed directly
         self.parameterizedData = ParameterizedData(data, parameters)
         self.eps = eps
+        self.data = data
 
     def getX(self):
         return self.parameterizedData.X
@@ -35,12 +42,20 @@ class OKGTReg(object):
     def getY(self):
         return self.parameterizedData.y
 
+    def getGroupStructure(self):
+        """
+
+        :rtype: Group
+        :return:
+        """
+        return self.parameterizedData.group
+
     def getKernels(self, yOrX):
         """
 
         :param yOrX:
 
-        :type return: Kernel or list of Kernel objects
+        :rtype: Kernel or list of Kernel objects
         :return:
         """
         if yOrX is 'y':
@@ -163,3 +178,29 @@ class OKGTReg(object):
         except KeyError:
             print("** Method \"%s\" could not be found. **")
 
+    # Assume all groups share the same kernel function
+    def splitOptimalGroup(self, kernel, method='vanilla'):
+        if self.getGroupSize() == self.parameterizedData.p:
+            warnings.warn("** All groups are univariate. No need to split. **")
+            return self
+        else:
+            # Train OKGT for the current group structure
+            res = self.train(method=method)
+            bestR2 = res['r2']
+            bestOkgt = self
+
+            # For each possible split, train the corresponding OKGT.
+            # Note it is possible that the current group structure is still the best.
+            currentGroup = self.getGroupStructure()
+            for i in np.arange(currentGroup.size) + 1:
+                if len(currentGroup.getPartition(i)) > 1:
+                    newGroup = currentGroup._splitOneGroup(i)
+                    newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
+                    newOkgt = OKGTReg(self.data, newParameters)  # create a new OKGTReg object
+                    res = newOkgt.train(method=method)
+                    if res['r2'] > bestR2:
+                        print("** New best group: %s **" % newGroup)
+                        bestR2 = res['r2']
+                        bestOkgt = newOkgt
+
+            return bestOkgt

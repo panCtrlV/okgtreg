@@ -135,7 +135,13 @@ class Group(object):
 
         :type partitionNumbers: list or None
         :param partitionNumbers:
-        :return:
+
+        :type returnAsGroup: bool
+        :param returnAsGroup: if the extracted partitions are extracted as a tuple
+                              or a Group object.
+
+        :rtype: tuple or Group
+        :return: extracted partitions as a tuple or a Group object.
         """
         if partitionNumbers is None:
             returnPartition = self.partition
@@ -153,7 +159,13 @@ class Group(object):
     def getMembership(self, covariateIndex):
         """
         Return which group a given `covariateIndex`-th covariate belongs.
-        The first group number is 1.
+        The first group number is 1. The index for the first covariate is 1.
+
+        :type covaraiteIndex: int
+        :param covariateIndex: the index of the covariate whose membership is returned
+
+        :rtype: int
+        :return: group membership of the `covariateIndex`-th covariate.
         """
         try:
             return int(np.where([covariateIndex in part for part in self.partition])[0]) + 1
@@ -188,8 +200,15 @@ class Group(object):
 
     def addNewCovariateAsGroup(self, covariateIndex):
         """
-        Add a new covariate as a new group in the structure
-        covariateIndex starts from 1
+        Add a new covariate as a new group in the structure, where
+        covariateIndex starts from 1.
+
+        :type covariateIndex: int
+        :param covariateIndex: the index of the new covaraite to be added into the exsiting
+                               group structure as a new (univariate) group.
+
+        :rtype: Group
+        :return: a new group structure with the new covariate added as a new group.
         """
         if covariateIndex in [i for g in self.partition for i in g]:
             raise ValueError("** Covariate %d is already in the partition. **" % covariateIndex)
@@ -223,7 +242,7 @@ class Group(object):
         :type groupNumber: int
         :param groupNumber: the index of the group to be removed. The first group number is 1.
 
-        :type return: Group
+        :rtype: Group
         :return: group structure with one fewer group
         """
         pass
@@ -290,10 +309,10 @@ class Group(object):
         return g in self.partition
 
     def __str__(self):
-        return("%s" % (self.partition,))
+        return "%s" % (self.partition,)
 
     def __repr__(self):
-        return("Group structure %s" % (self.partition,))
+        return "Group structure %s" % (self.partition,)
 
     def _splitOneGroup(self, partitionNumber):
         """
