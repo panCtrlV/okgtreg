@@ -74,6 +74,7 @@ class ParameterizedData(object):
         self.groupSize = parameters.groupSize
         self.ykernel = parameters.ykernel
         self.xkernels = parameters.xkernels
+        self.group = parameters.group
 
     def getXFromGroup(self, groupNumber = None):
         """

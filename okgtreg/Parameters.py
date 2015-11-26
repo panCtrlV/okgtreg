@@ -20,4 +20,4 @@ class Parameters(object):
             self.groupSize = group.size
             self.ykernel = ykernel
             self.xkernels = xkernels
-
+            self.group = group
