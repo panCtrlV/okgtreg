@@ -16,3 +16,10 @@ res1
 
 res2 = okgt.train(method='nystroem')
 res2
+
+
+# Test Group._splitOneGroup
+group = Group([1,2], [3,4,5], [6])
+group._splitOneGroup(1)
+group._splitOneGroup(2)
+res = group._splitOneGroup(3)  # return None

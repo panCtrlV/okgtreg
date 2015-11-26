@@ -57,7 +57,7 @@ class OKGTReg(object):
     def getGroupSize(self):
         return self.parameterizedData.groupSize
 
-    def train_Vanilla(self):
+    def _train_Vanilla(self):
         n = self.getSampleSize()
         l = self.getGroupSize()
 
@@ -103,7 +103,7 @@ class OKGTReg(object):
         # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=float(r2))
 
-    def train_Nystroem(self, nComponents):
+    def _train_Nystroem(self, nComponents):
         n = self.getSampleSize()
         l = self.getGroupSize()
 
@@ -155,8 +155,8 @@ class OKGTReg(object):
         return dict(g=g_opt, f=f_opt, r2=r2)
 
     def train(self, method='vanilla', nComponents=None):
-        trainFunctions = {'vanilla': self.train_Vanilla,
-                          'nystroem': lambda: self.train_Nystroem(nComponents=nComponents)}
+        trainFunctions = {'vanilla': self._train_Vanilla,
+                          'nystroem': lambda: self._train_Nystroem(nComponents=nComponents)}
 
         try:
             return trainFunctions[method]()

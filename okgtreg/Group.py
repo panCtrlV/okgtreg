@@ -1,6 +1,7 @@
 import numpy as np
 import itertools
 import copy
+import warnings
 
 
 class Group(object):
@@ -109,12 +110,18 @@ class Group(object):
         """
         Return one partition from the group structure as a list, e.g. [1] or [1,2].
         The `partitionNumber` start from 1.
+
+        :type partitionNumber: int
+        :param partitionNumber: index of the group to extract
+
+        :rtype: list
+        :return: group of indices as a list
         """
         if partitionNumber is None:
             return self.partition
         else:
             if partitionNumber <= 0 or partitionNumber > self.size:
-                raise ValueError("** 'partitionNumber' is out of bounds. **")
+                raise ValueError("** \"partitionNumber\" %d is out of bounds. **" % partitionNumber)
 
             return self.partition[partitionNumber - 1]
 
@@ -285,6 +292,35 @@ class Group(object):
 
     def __repr__(self):
         return("Group structure %s" % (self.partition,))
+
+    def _splitOneGroup(self, partitionNumber):
+        """
+        :type partitionNumber: int
+        :param partitionNumber: start from 1
+
+        :rtype: Group
+        :return:
+        """
+        if partitionNumber > self.size or partitionNumber < 1:
+            raise ValueError("** \"partitionNumber\" %d is out of bound. **" % partitionNumber)
+        else:
+            selectedPart = self.getPartition(partitionNumber)
+            if len(selectedPart) == 1:
+                warnings.warn("** Group %d is univariate. No need to split. **" % partitionNumber)
+                return None
+            else:
+                selectedPartAfterSplit = [[i] for i in selectedPart]
+                partitionList = list(self.partition)
+                partitionList.pop(partitionNumber - 1)
+                partitionList.extend(selectedPartAfterSplit)
+                return Group(*tuple(partitionList))
+
+    def _findGroupToSplit(self):
+        if self.size == self.p:
+            Warning("** All groups are univariate. No need to split. **")
+            return 0  # 0 to indicate no group index found
+        else:
+            pass
 
 
 class RandomGroup(Group):
