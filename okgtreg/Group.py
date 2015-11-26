@@ -109,6 +109,32 @@ class Group(object):
     def __le__(self, other):
         return self.__lt__(other) or self.__eq__(other)
 
+    def __add__(self, other):
+        """
+        Add two Group objects to return a bigger Group.
+
+        :type other: Group or list
+        :param other:
+
+        :type return: Group
+        :return:
+        """
+        if isinstance(other, list):
+            otherPartition = (other,)
+        elif isinstance(other, tuple):
+            otherPartition = other
+        else:
+            otherPartition = other.partition
+
+        biggerPartition = self.partition + otherPartition
+        return Group(*biggerPartition)
+
+    def __str__(self):
+        return "%s" % (self.partition,)
+
+    def __repr__(self):
+        return "Group structure %s" % (self.partition,)
+
     def getPartition(self, partitionNumber=None):
         """
         Return one partition from the group structure as a list, e.g. [1] or [1,2].
@@ -247,26 +273,6 @@ class Group(object):
         """
         pass
 
-    def __add__(self, other):
-        """
-        Add two Group objects to return a bigger Group.
-
-        :type other: Group or list
-        :param other:
-
-        :type return: Group
-        :return:
-        """
-        if isinstance(other, list):
-            otherPartition = (other,)
-        elif isinstance(other, tuple):
-            otherPartition = other
-        else:
-            otherPartition = other.partition
-
-        biggerPartition = self.partition + otherPartition
-        return Group(*biggerPartition)
-
     def has(self, g):
         """
         Check if any group in the group structure has the given
@@ -307,12 +313,6 @@ class Group(object):
             raise ValueError("** There shouldn't be duplicates in the provided covariate list. **")
 
         return g in self.partition
-
-    def __str__(self):
-        return "%s" % (self.partition,)
-
-    def __repr__(self):
-        return "Group structure %s" % (self.partition,)
 
     def _splitOneGroup(self, partitionNumber):
         """
