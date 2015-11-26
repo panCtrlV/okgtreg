@@ -179,7 +179,7 @@ class OKGTReg(object):
             print("** Method \"%s\" could not be found. **")
 
     # Assume all groups share the same kernel function
-    def splitOptimalGroup(self, kernel, method='vanilla'):
+    def optimalSplit(self, kernel, method='vanilla'):
         if self.getGroupSize() == self.parameterizedData.p:
             warnings.warn("** All groups are univariate. No need to split. **")
             return self
@@ -204,3 +204,14 @@ class OKGTReg(object):
                         bestOkgt = newOkgt
 
             return bestOkgt
+
+    def optimalMerge(self):
+        """
+        Combine two groups which results in the most improvement in OKGT fitting.
+
+        :return:
+        """
+        if self.getGroupSize() == 1:
+            warnings.warn("** There is only one group. No need to merge. **")
+        else:
+            pass

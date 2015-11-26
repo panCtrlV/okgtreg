@@ -260,13 +260,13 @@ class Group(object):
         # http://stackoverflow.com/questions/25118798/python-how-to-call-the-constructor-from-within-member-function
         return Group(*partition)
 
-    def removeOneGroup(self, groupNumber):
+    def removeOneGroup(self, partitionNumber):
         """
         Remove from the current group structure the `groupNumber`-th group and return a new
         Group object.
 
-        :type groupNumber: int
-        :param groupNumber: the index of the group to be removed. The first group number is 1.
+        :type partitionNumber: int
+        :param partitionNumber: the index of the group to be removed. The first group number is 1.
 
         :rtype: Group
         :return: group structure with one fewer group
@@ -362,6 +362,36 @@ class Group(object):
     #                     bestGroup = newGroup
     #
     #         return bestGroup
+
+    def _mergeTwoGroups(self, partitionNumber1, partitionNumber2):
+        """
+        Combine `partitionNumber1`-th and `partitionNumber2`-th groups into one group.
+
+        :param partitionNumber1:
+        :param partitionNumber2:
+        :return:
+        """
+        # Check if two partition numbers are identical
+        if partitionNumber1 == partitionNumber2:
+            raise ValueError("** Partition numbers must be different. **")
+
+        # Check if partition numbers are out of bounds
+        if np.any(np.array([partitionNumber1, partitionNumber2]) < 1) or \
+                np.any(np.array([partitionNumber1, partitionNumber2]) > self.size):
+            raise ValueError("** Partition numbers are out of bounds. **")
+
+        # Merger two groups
+        part1 = self.getPartition(partitionNumber1)
+        part2 = self.getPartition(partitionNumber2)
+
+        remainingParts = list(self.getPartition())
+        remainingParts.remove(part1)
+        remainingParts.remove(part2)
+
+        mergedPart = part1 + part2
+
+        remainingParts.append(mergedPart)
+        return Group(*tuple(remainingParts))
 
 
 class RandomGroup(Group):

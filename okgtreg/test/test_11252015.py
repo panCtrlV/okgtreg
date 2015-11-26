@@ -39,3 +39,10 @@ res['r2']
 okgt2 = okgt.splitOptimalGroup(kernel)
 res2 = okgt2.train(method='vanilla')
 res2['r2']
+
+
+# test Group._mergeTwoGroups
+group = Group([1,2], [3], [4], [5], [6,7])
+group._mergeTwoGroups(1, 2)
+group._mergeTwoGroups(2, 3)
+group._mergeTwoGroups(1, 3)
