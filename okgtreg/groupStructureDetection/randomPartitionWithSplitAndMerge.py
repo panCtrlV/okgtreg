@@ -44,21 +44,24 @@ trueOkgt = OKGTReg(data, trueParameter)
 res = trueOkgt.train()
 res['r2']
 
-# Random partition to start with
+# Random partition to start with, where
+# the number of groups are pre-determined.
 group0 = RandomGroup(4, [i+1 for i in range(data.p)])
 parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
 okgt0 = OKGTReg(data, parameters0)
 
-# Group structure detection by split and merge
-counter = 0
-okgt_beforeSplit = okgt0
+# # Detecting group structure by split and merge
+# counter = 0
+# okgt_beforeSplit = okgt0
+#
+# while counter < 4:
+#     print("=== counter: %d ====" % counter)
+#     okgt_afterSplit = okgt_beforeSplit.optimalSplit(kernel)
+#     okgt_afterMerge = okgt_afterSplit.optimalMerge(kernel)
+#     res = okgt_afterMerge.train()
+#     print res['r2']
+#     okgt_beforeSplit = okgt_afterMerge
+#     counter+=1
 
-while counter < 4:
-    print("=== counter: %d ====" % counter)
-    okgt_afterSplit = okgt_beforeSplit.optimalSplit(kernel)
-    okgt_afterMerge = okgt_afterSplit.optimalMerge(kernel)
-    res = okgt_afterMerge.train()
-    print res['r2']
-    okgt_beforeSplit = okgt_afterMerge
-    counter+=1
-
+# --- split ---
+okgt_afterSplit = okgt0.optimalSplit(kernel, method='vanilla')

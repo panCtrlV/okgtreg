@@ -170,6 +170,8 @@ class OKGTReg(object):
         return dict(g=g_opt, f=f_opt, r2=r2)
 
     def train(self, method='vanilla', nComponents=None):
+        # Use Python dictionary to implement switch-case structure. Details can be found at:
+        #   http://bytebaker.com/2008/11/03/switch-case-statement-in-python/
         trainFunctions = {'vanilla': self._train_Vanilla,
                           'nystroem': lambda: self._train_Nystroem(nComponents=nComponents)}
 
@@ -205,7 +207,7 @@ class OKGTReg(object):
 
             return bestOkgt
 
-    def optimalMerge(self):
+    def optimalMerge(self, kernel, method='vanilla'):
         """
         Combine two groups which results in the most improvement in OKGT fitting.
 
@@ -214,4 +216,22 @@ class OKGTReg(object):
         if self.getGroupSize() == 1:
             warnings.warn("** There is only one group. No need to merge. **")
         else:
-            pass
+            # Train OKGT for the current group structure
+            res = self.train(method=method)
+            bestR2 = res['r2']
+            bestOkgt = self
+
+            # Try to merger every two groups
+            currentGroup = self.getGroupStructure()
+            for i in np.arange(1, self.getGroupSize()):
+                for j in np.arange(i+1, self.getGroupSize()+1):
+                    newGroup = currentGroup._mergeTwoGroups(i, j)
+                    newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
+                    newOkgt = OKGTReg(self.data, newParameters)
+                    res = newOkgt.train(method=method)
+                    if res['r2'] > bestR2:
+                        print("** New best group: %s, R2 = %.04f. **" % (newGroup, res['r2']))
+                        bestR2 = res['r2']
+                        bestOkgt = newOkgt
+
+        return bestOkgt

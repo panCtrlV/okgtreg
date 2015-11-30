@@ -100,8 +100,14 @@ class DataSimulator(object):
         :param n:
         :return:
         """
-        x = np.vstack(np.random.random(n) * 2.0 - 1.0 for j in range(8)).T
+        x = np.random.uniform(-1., 1., (n, 8))
         noise = np.random.standard_normal(n)
-        y = np.log(4.0 + np.sin(4 * x[:, 0]) + np.abs(x[:, 1]) + x[:, 2]**2 +
-                    x[:, 3]**3 + x[:, 4] + x[:, 5] * x[:, 6] * x[:, 7] + 0.1 * noise)
+        y = np.log(4.0 +
+                   np.sin(4 * x[:, 0]) +
+                   np.abs(x[:, 1]) +
+                   x[:, 2]**2 +
+                   x[:, 3]**3 +
+                   x[:, 4] +
+                   x[:, 5] * x[:, 6] * x[:, 7] +
+                   0.1 * noise)
         return Data(y, x)
