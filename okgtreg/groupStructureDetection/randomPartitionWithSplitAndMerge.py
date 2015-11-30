@@ -1,10 +1,13 @@
 """
+This simulation illustrate step-by-step the procedure of group structure determination
+proposed by Michael.
+
 We start with a random partition of the predictor variables. The corresponding
-OKGT is fitted with R2 being recorded. Then perform the following split and join
-operators:
+OKGT is fitted with R2 being recorded. Then we perform the following split and
+merge operators until there is no further improvement in R2:
 
 1. For each group of size > 1, split it into individual covariates and fit
-   the corresponding OKGT and record its R2.
+   the resulting OKGT and record its R2.
 
    Compare R2 under each scenario in (2) with the R2 we started with. Pick the
    the scenario with gives the largest improvement in R2 and randomly pick a
@@ -35,20 +38,22 @@ kernel = Kernel('gaussian', sigma=0.5)
 
 # Simulate data
 np.random.seed(25)
-data = DataSimulator.SimData_Wang04WithInteraction2(100)
+data = DataSimulator.SimData_Wang04WithInteraction2(500)
 
 # True group
 trueGroup = Group([1], [2], [3], [4], [5], [6,7,8])
 trueParameter = Parameters(trueGroup, kernel, [kernel]*trueGroup.size)
 trueOkgt = OKGTReg(data, trueParameter)
-res = trueOkgt.train()
+res = trueOkgt.train('nystroem', 10)
 res['r2']
 
 # Random partition to start with, where
 # the number of groups are pre-determined.
+np.random.seed(25)
 group0 = RandomGroup(4, [i+1 for i in range(data.p)])
 parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
 okgt0 = OKGTReg(data, parameters0)
+okgt0.getGroupStructure()
 
 # # Detecting group structure by split and merge
 # counter = 0
@@ -63,5 +68,63 @@ okgt0 = OKGTReg(data, parameters0)
 #     okgt_beforeSplit = okgt_afterMerge
 #     counter+=1
 
-# --- split ---
-okgt_afterSplit = okgt0.optimalSplit(kernel, method='vanilla')
+
+# --- 1 ---
+okgt_afterSplit = okgt0.optimalSplit(kernel, method='nystroem', nComponents=10)
+okgt_afterSplit.getGroupStructure()
+fit = okgt_afterSplit.train(method='nystroem', nComponents=10)
+fit['r2']
+
+okgt_afterMerge = okgt0.optimalMerge(kernel, method='nystroem', nComponents=10)
+okgt_afterMerge.getGroupStructure()
+fit = okgt_afterMerge.train(method='nystroem', nComponents=10)
+fit['r2']
+
+# >>> split is more optimal
+okgt1 = okgt_afterSplit
+
+
+# --- 2 ---
+okgt_afterSplit = okgt1.optimalSplit(kernel, method='nystroem', nComponents=10)
+okgt_afterSplit.getGroupStructure()
+fit = okgt_afterSplit.train(method='nystroem', nComponents=10)
+fit['r2']
+
+okgt_afterMerge = okgt1.optimalMerge(kernel, method='nystroem', nComponents=10)
+okgt_afterMerge.getGroupStructure()
+fit = okgt_afterMerge.train(method='nystroem', nComponents=10)
+fit['r2']
+
+# >>> split is more optimal
+okgt2 = okgt_afterSplit
+
+# --- 3 ---
+okgt_afterMerge = okgt2.optimalMerge(kernel, method='nystroem', nComponents=10)
+okgt_afterMerge.getGroupStructure()
+
+# >>> merge is the only option, and R2 improves
+okgt3 = okgt_afterMerge
+
+# --- 4 ---
+okgt_afterSplit = okgt3.optimalSplit(kernel, method='nystroem', nComponents=10)
+okgt_afterSplit.getGroupStructure()
+fit = okgt_afterSplit.train(method='nystroem', nComponents=10)
+fit['r2']
+
+okgt_afterMerge = okgt3.optimalMerge(kernel, method='nystroem', nComponents=10)
+okgt_afterMerge.getGroupStructure()
+fit = okgt_afterMerge.train(method='nystroem', nComponents=10)
+fit['r2']
+
+# >>> merge is more optimal
+okgt4 = okgt_afterMerge
+
+# --- 5 ---
+okgt_afterSplit = okgt4.optimalSplit(kernel, method='nystroem', nComponents=10)
+okgt_afterSplit.getGroupStructure()  # no change
+
+okgt_afterMerge = okgt4.optimalMerge(kernel, method='nystroem', nComponents=10)
+okgt_afterMerge.getGroupStructure()  # no change either
+
+# >>> no change after split and merge, stop.
+
