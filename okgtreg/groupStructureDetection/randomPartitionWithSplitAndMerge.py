@@ -26,6 +26,7 @@ Question:
 1. If different random partitions, do they result in the same optimal group structure?
 """
 
+
 import numpy as np
 
 from okgtreg.DataSimulator import DataSimulator
@@ -33,6 +34,7 @@ from okgtreg.Group import Group, RandomGroup
 from okgtreg.OKGTReg import OKGTReg
 from okgtreg.Kernel import Kernel
 from okgtreg.Parameters import Parameters
+
 
 kernel = Kernel('gaussian', sigma=0.5)
 
@@ -55,76 +57,55 @@ parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
 okgt0 = OKGTReg(data, parameters0)
 okgt0.getGroupStructure()
 
-# # Detecting group structure by split and merge
-# counter = 0
-# okgt_beforeSplit = okgt0
-#
-# while counter < 4:
-#     print("=== counter: %d ====" % counter)
-#     okgt_afterSplit = okgt_beforeSplit.optimalSplit(kernel)
-#     okgt_afterMerge = okgt_afterSplit.optimalMerge(kernel)
-#     res = okgt_afterMerge.train()
-#     print res['r2']
-#     okgt_beforeSplit = okgt_afterMerge
-#     counter+=1
 
-
+################################
+# Split and merge step-by-step #
+################################
+# Nystroem is a random projection method, so without fixing seed,
+# the model fitting (i.e. R2) is different each time.
+seed = 25
 # --- 1 ---
-okgt_afterSplit = okgt0.optimalSplit(kernel, method='nystroem', nComponents=10)
-okgt_afterSplit.getGroupStructure()
-fit = okgt_afterSplit.train(method='nystroem', nComponents=10)
-fit['r2']
-
-okgt_afterMerge = okgt0.optimalMerge(kernel, method='nystroem', nComponents=10)
-okgt_afterMerge.getGroupStructure()
-fit = okgt_afterMerge.train(method='nystroem', nComponents=10)
-fit['r2']
+# if split
+okgt_afterSplit = okgt0.optimalSplit(kernel, method='nystroem', nComponents=10, seed=seed)
+# if merge
+okgt_afterMerge = okgt0.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
 
 # >>> split is more optimal
 okgt1 = okgt_afterSplit
 
-
 # --- 2 ---
-okgt_afterSplit = okgt1.optimalSplit(kernel, method='nystroem', nComponents=10)
-okgt_afterSplit.getGroupStructure()
-fit = okgt_afterSplit.train(method='nystroem', nComponents=10)
-fit['r2']
-
-okgt_afterMerge = okgt1.optimalMerge(kernel, method='nystroem', nComponents=10)
-okgt_afterMerge.getGroupStructure()
-fit = okgt_afterMerge.train(method='nystroem', nComponents=10)
-fit['r2']
+# if split
+okgt_afterSplit = okgt1.optimalSplit(kernel, method='nystroem', nComponents=10, seed=seed)
+# if merge
+okgt_afterMerge = okgt1.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
 
 # >>> split is more optimal
 okgt2 = okgt_afterSplit
 
 # --- 3 ---
-okgt_afterMerge = okgt2.optimalMerge(kernel, method='nystroem', nComponents=10)
-okgt_afterMerge.getGroupStructure()
+okgt_afterMerge = okgt2.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
 
 # >>> merge is the only option, and R2 improves
 okgt3 = okgt_afterMerge
 
 # --- 4 ---
-okgt_afterSplit = okgt3.optimalSplit(kernel, method='nystroem', nComponents=10)
-okgt_afterSplit.getGroupStructure()
-fit = okgt_afterSplit.train(method='nystroem', nComponents=10)
-fit['r2']
-
-okgt_afterMerge = okgt3.optimalMerge(kernel, method='nystroem', nComponents=10)
-okgt_afterMerge.getGroupStructure()
-fit = okgt_afterMerge.train(method='nystroem', nComponents=10)
-fit['r2']
+# if split
+okgt_afterSplit = okgt3.optimalSplit(kernel, method='nystroem', nComponents=10, seed=seed)
+# if merge
+okgt_afterMerge = okgt3.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
 
 # >>> merge is more optimal
 okgt4 = okgt_afterMerge
 
 # --- 5 ---
-okgt_afterSplit = okgt4.optimalSplit(kernel, method='nystroem', nComponents=10)
-okgt_afterSplit.getGroupStructure()  # no change
-
-okgt_afterMerge = okgt4.optimalMerge(kernel, method='nystroem', nComponents=10)
-okgt_afterMerge.getGroupStructure()  # no change either
+# if split
+okgt_afterSplit = okgt4.optimalSplit(kernel, method='nystroem', nComponents=10, seed=seed)
+# if merge
+okgt_afterMerge = okgt4.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
 
 # >>> no change after split and merge, stop.
 
+
+##############
+# While loop #
+##############

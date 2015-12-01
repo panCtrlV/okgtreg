@@ -68,9 +68,13 @@ class Kernel(object):
         else:
             return G
 
-    def gram_Nystroem(self, x, nComponents):
+    def gram_Nystroem(self, x, nComponents, seed=None):
         """
         Nystroem approximation of the kernel matrix given data. No centering.
+        This method constructs an approximate feature map for an arbitrary kernel
+        using a subset of the data as basis. For more details, please refer to:
+
+            http://scikit-learn.org/stable/modules/generated/sklearn.kernel_approximation.Nystroem.html#sklearn.kernel_approximation.Nystroem
 
         :type x: 2d array, with size n * p
         :param x: data matrix for the covariates belonging to the same group, associated
@@ -79,9 +83,14 @@ class Kernel(object):
         :type nComponents: int
         :param nComponents: number of rank to retain
 
+        :type seed: int, optional
+        :param seed: Since Nystroem method constructs the matrix approximation by selecting a
+                     random subset of the data, fixing the seed for the random number generator
+                     will enable creating a reproducible example.
+
         :return: approximated kernel matrix with reduced rank, with size n * nComponents
         """
-        nystroem = Nystroem(self.fn, n_components=nComponents)
+        nystroem = Nystroem(self.fn, n_components=nComponents, random_state=seed)
         return nystroem.fit_transform(x)
 
 
