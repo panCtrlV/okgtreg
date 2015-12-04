@@ -109,3 +109,10 @@ okgt_afterMerge = okgt4.optimalMerge(kernel, method='nystroem', nComponents=10, 
 ##############
 # While loop #
 ##############
+seed = 25
+okgt_old = okgt0
+
+proceed = True
+
+while proceed:
+    pass

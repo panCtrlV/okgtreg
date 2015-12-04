@@ -118,7 +118,22 @@ class OKGTReg(object):
         # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=float(r2))
 
-    def _train_Nystroem(self, nComponents):
+    def _train_Nystroem(self, nComponents, seed=None):
+        """
+        Training an OKGT where the kernel matrices are approximated by low rank matrices
+        using Nystroem method.
+
+        :type nComponents: int
+        :param nComponents: How many data points will be used to construct the mapping for
+                            kernel matrix low rank approximation.
+
+        :type seed: int, optional
+        :param seed: seed for the random number generator for Nystroem method.
+
+        :rtype: dict
+        :return: optimal g, optimal f, and R2
+        """
+
         n = self.getSampleSize()
         l = self.getGroupSize()
 
@@ -126,8 +141,8 @@ class OKGTReg(object):
 
         N0 = np.identity(n) - np.ones((n, n)) / n
         ykernel = self.getKernels('y')
-        Gy = ykernel.gram_Nystroem(self.getY()[:, np.newaxis], nComponents)
-        Uy, Gy_s, Gy_V = np.linalg.svd(N0.dot(Gy), full_matrices=0)
+        Gy = ykernel.gram_Nystroem(self.getY()[:, np.newaxis], nComponents, seed)
+        Uy, Gy_s, Gy_V = np.linalg.svd(N0.dot(Gy), full_matrices=False)
         lambday = Gy_s**2
         my = len(Gy_s)
 
@@ -136,8 +151,8 @@ class OKGTReg(object):
         xkernels = self.getKernels('x')  # list of Kernels for X, one for each group
         for i in range(l):
             inds = [ind - 1 for ind in self.getPartition()[i]] # column index for i-th group
-            Gi = xkernels[i].gram_Nystroem(self.getX()[:, inds], nComponents)
-            Ui, Gi_s, Gi_V = np.linalg.svd(N0.dot(Gi), full_matrices=0)
+            Gi = xkernels[i].gram_Nystroem(self.getX()[:, inds], nComponents, seed)
+            Ui, Gi_s, Gi_V = np.linalg.svd(N0.dot(Gi), full_matrices=False)
             Ux.append(Ui)
             lambdai = Gi_s**2
             lambdax.append(lambdai)
@@ -169,11 +184,14 @@ class OKGTReg(object):
         # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=r2)
 
-    def train(self, method='vanilla', nComponents=None):
+    def train(self, method='vanilla', nComponents=None, seed=None):
+        if method is 'nystroem' and nComponents is None:
+            raise ValueError("** \"nComponent\" is not provided for \"nystroem\" method.")
+
         # Use Python dictionary to implement switch-case structure. Details can be found at:
         #   http://bytebaker.com/2008/11/03/switch-case-statement-in-python/
         trainFunctions = {'vanilla': self._train_Vanilla,
-                          'nystroem': lambda: self._train_Nystroem(nComponents=nComponents)}
+                          'nystroem': lambda: self._train_Nystroem(nComponents=nComponents, seed=seed)}
 
         try:
             return trainFunctions[method]()
@@ -181,15 +199,16 @@ class OKGTReg(object):
             print("** Method \"%s\" could not be found. **")
 
     # Assume all groups share the same kernel function
-    def optimalSplit(self, kernel, method='vanilla'):
+    def optimalSplit(self, kernel, method='vanilla', nComponents=None, seed=None):
         if self.getGroupSize() == self.parameterizedData.p:
             warnings.warn("** All groups are univariate. No need to split. **")
             return self
         else:
             # Train OKGT for the current group structure
-            res = self.train(method=method)
+            res = self.train(method=method, nComponents=nComponents, seed=seed)
             bestR2 = res['r2']
             bestOkgt = self
+            print("** Current group structure: %s, R2 = %.04f. **" % (bestOkgt.getGroupStructure(), bestR2))
 
             # For each possible split, train the corresponding OKGT.
             # Note it is possible that the current group structure is still the best.
@@ -199,15 +218,17 @@ class OKGTReg(object):
                     newGroup = currentGroup._splitOneGroup(i)
                     newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
                     newOkgt = OKGTReg(self.data, newParameters)  # create a new OKGTReg object
-                    res = newOkgt.train(method=method)
+                    res = newOkgt.train(method=method, nComponents=nComponents, seed=seed)
                     if res['r2'] > bestR2:
-                        print("** New best group: %s **" % newGroup)
+                        print("** New best group structure: %s, R2 = %.04f. **" % (newGroup, res['r2']))
                         bestR2 = res['r2']
                         bestOkgt = newOkgt
 
+            print("Group structure after optimal split: %s, R2 = %.04f." % (bestOkgt.getGroupStructure(), bestR2))
             return bestOkgt
 
-    def optimalMerge(self, kernel, method='vanilla'):
+    # Assume all groups share the same kernel function
+    def optimalMerge(self, kernel, method='vanilla', nComponents=None, seed=None):
         """
         Combine two groups which results in the most improvement in OKGT fitting.
 
@@ -215,23 +236,31 @@ class OKGTReg(object):
         """
         if self.getGroupSize() == 1:
             warnings.warn("** There is only one group. No need to merge. **")
+            return self
         else:
+            print self.getGroupStructure()
             # Train OKGT for the current group structure
-            res = self.train(method=method)
+            res = self.train(method=method, nComponents=nComponents, seed=seed)
             bestR2 = res['r2']
             bestOkgt = self
+            print("** Current group structure: %s, R2 = %.04f. **" % (bestOkgt.getGroupStructure(), bestR2))
 
-            # Try to merger every two groups
+            # Try to merger two groups
             currentGroup = self.getGroupStructure()
-            for i in np.arange(1, self.getGroupSize()):
+            for i in np.arange(1, self.getGroupSize()):  # excluding the last group
                 for j in np.arange(i+1, self.getGroupSize()+1):
-                    newGroup = currentGroup._mergeTwoGroups(i, j)
-                    newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
-                    newOkgt = OKGTReg(self.data, newParameters)
-                    res = newOkgt.train(method=method)
-                    if res['r2'] > bestR2:
-                        print("** New best group: %s, R2 = %.04f. **" % (newGroup, res['r2']))
-                        bestR2 = res['r2']
-                        bestOkgt = newOkgt
+                    if len(currentGroup.getPartition(i)) > 1 and len(currentGroup.getPartition(j)) > 1:
+                        continue
+                    else:
+                        newGroup = currentGroup._mergeTwoGroups(i, j)
+                        newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
+                        newOkgt = OKGTReg(self.data, newParameters)
+                        res = newOkgt.train(method=method, nComponents=nComponents, seed=seed)
+                        if res['r2'] > bestR2:
+                            print("** New best group structure: %s, R2 = %.04f. **" % (newGroup, res['r2']))
+                            bestR2 = res['r2']
+                            bestOkgt = newOkgt
 
-        return bestOkgt
+            print("Group structure after optimal merge: %s, R2 = %.04f." % (bestOkgt.getGroupStructure(), bestR2))
+            return bestOkgt
+
