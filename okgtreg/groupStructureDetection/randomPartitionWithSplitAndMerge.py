@@ -109,10 +109,14 @@ okgt_afterMerge = okgt4.optimalMerge(kernel, method='nystroem', nComponents=10, 
 ##############
 # While loop #
 ##############
+kernel = Kernel('gaussian', sigma=0.5)
+
 seed = 25
-okgt_old = okgt0
+okgt_old = okgt0  # start with a random partition
 
 proceed = True
 
 while proceed:
-    pass
+    okgt_afterSplit = okgt_old.optimalSplit(kernel, 'nystroem', 10, seed)
+    okgt_afterMerge = okgt_old.optimalMerge(kernel, 'nystroem', 10, seed)
+    okgt_afterSplit.get

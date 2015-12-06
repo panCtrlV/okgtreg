@@ -17,6 +17,7 @@ from okgtreg.Kernel import Kernel
 from okgtreg.Group import Group
 from okgtreg.Parameters import Parameters
 from okgtreg.OKGTReg import OKGTReg
+from okgtreg.Data import Data
 
 import pandas as pd
 from pandas import DataFrame
@@ -30,6 +31,20 @@ np.random.seed(25)
 data = DataSimulator.SimData_Wang04WithInteraction2(n)
 # data = DataSimulator.SimData_Wang04WithInteraction(n)
 
+# Standardize data
+dfX = DataFrame(data.X)
+dfX_stand = (dfX - dfX.mean()) / dfX.std()
+X_stand = np.array(dfX_stand)
+
+dfy = DataFrame(data.y)
+dfy_stand = (dfy - dfy.mean()) / dfy.std()
+y_stand = np.array(dfy_stand)
+y_stand.shape = (n, )
+
+[dfy_stand[0].corr(dfX[i]) for i in range(data.p)]
+
+data_stand = Data(y_stand, X_stand)
+
 # Kernel
 kernel = Kernel('gaussian', sigma=0.5)
 
@@ -41,18 +56,26 @@ group = Group(*tuple([[i+1] for i in range(data.p)]))
 parameters = Parameters(group, kernel, [kernel]*group.size)
 
 # Fit OKGT
-okgt = OKGTReg(data, parameters)
-fit = okgt.train('nystroem', 10, 25)
+# okgt = OKGTReg(data, parameters)
+okgt_stand = OKGTReg(data_stand, parameters)
+# fit = okgt.train('nystroem', 10, 25)
 # fit = okgt.train()
-fit['r2']
+fit_stand = okgt_stand.train()
+# fit['r2']
+fit_stand['r2']
 
 # Correlation matrix for the transformed covariates
-df = DataFrame(fit['f'])
+# df = DataFrame(fit['f'])
+df = DataFrame(fit_stand['f'])
 df.corr()
 df.cov()
 
 df2 = DataFrame(data.X)
 df2.corr()
+
+# Correlation between f_\ell(x_\ell) and g(y)
+# [DataFrame(fit['g'])[0].corr(df[i]) for i in range(group.size)]
+[DataFrame(fit_stand['g'])[0].corr(df[i]) for i in range(group.size)]
 
 # Plot
 import matplotlib.pyplot as plt
@@ -126,14 +149,14 @@ the covariance for the tri-variate transformation is also small.
 
 Then, I changed the model to:
 
-    y = np.log(4.0 +
-                   np.sin(4 * x[:, 0]) +
-                   np.abs(x[:, 1]) +
-                   x[:, 2]**2 +
-                   x[:, 3]**3 +
-                   x[:, 4] +
-                   100. * abs(x[:, 5] * x[:, 6] * x[:, 7]) +
-                   0.1 * noise).
+    y = np.log( 4.0 +
+                np.sin(4 * x[:, 0]) +
+                np.abs(x[:, 1]) +
+                x[:, 2]**2 +
+                x[:, 3]**3 +
+                x[:, 4] +
+                100. * abs(x[:, 5] * x[:, 6] * x[:, 7]) +
+                0.1 * noise).
 
 That is, the tri-variate transformation is multiplied by 100 to increase its magnitude.
 By fiiting the simulated data with a fully additive group structure, we have the following
@@ -162,3 +185,9 @@ covariance matrix:
 which is against the observation we had before. This time the variance of the last three
 transformed covariates are actually much larger than the other covariates.
 """
+
+
+# TODO: Found magnitude of the original data will affect the correlation between g and each f.
+# todo: For example, by multiplying the tri-variate group by 100, the correlations between the
+# todo: transformation of each of those three covariates and g are increased. This is true even
+# todo: after the original data are standardized.
