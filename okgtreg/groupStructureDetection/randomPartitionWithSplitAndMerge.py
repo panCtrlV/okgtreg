@@ -34,6 +34,17 @@ from okgtreg.Parameters import Parameters
 
 
 def splitAndMergeWithRandomInitial(seed, data, kernel, useLowRankApproximation=True, rank=10):
+    """
+
+    :type seed: int
+    :param seed: seed for Nystroem method of low rank approximation
+
+    :param data:
+    :param kernel:
+    :param useLowRankApproximation:
+    :param rank:
+    :return:
+    """
     method = 'nystroem' if useLowRankApproximation else 'vanilla'
 
     np.random.seed(seed)
