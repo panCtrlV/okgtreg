@@ -32,7 +32,7 @@ import pickle
 
 from okgtreg.DataSimulator import DataSimulator
 from okgtreg.Kernel import Kernel
-from okgtreg.groupStructureDetection.randomPartitionWithSplitAndMerge import splitAndMergeWithRandomInitial
+from okgtreg.groupStructureDetection.splitAndMergeWithRandomInitial import splitAndMergeWithRandomInitial
 
 
 nSim = 100
