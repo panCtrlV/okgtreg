@@ -26,97 +26,56 @@ Question:
 1. If different random partitions, do they result in the same optimal group structure?
 """
 
-
 import numpy as np
 
-from okgtreg.DataSimulator import DataSimulator
-from okgtreg.Group import Group, RandomGroup
-from okgtreg.OKGTReg import OKGTReg
-from okgtreg.Kernel import Kernel
+from okgtreg.Group import RandomGroup
+from okgtreg.OKGTReg import OKGTRegForDetermineGroupStructure
 from okgtreg.Parameters import Parameters
 
 
-kernel = Kernel('gaussian', sigma=0.5)
+def splitAndMergeWithRandomInitial(seed, data, kernel, useLowRankApproximation=True, rank=10):
+    method = 'nystroem' if useLowRankApproximation else 'vanilla'
 
-# Simulate data
-np.random.seed(25)
-data = DataSimulator.SimData_Wang04WithInteraction2(500)
+    np.random.seed(seed)
+    group0 = RandomGroup(4, [i+1 for i in range(data.p)])
+    parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
+    okgt = OKGTRegForDetermineGroupStructure(data, parameters0)
 
-# True group
-trueGroup = Group([1], [2], [3], [4], [5], [6,7,8])
-trueParameter = Parameters(trueGroup, kernel, [kernel]*trueGroup.size)
-trueOkgt = OKGTReg(data, trueParameter)
-res = trueOkgt.train('nystroem', 10)
-res['r2']
+    proceed = True
+    counter = 0
+    while proceed:
+        counter += 1
+        print("\n=== %d ===" % counter)
 
-# Random partition to start with, where
-# the number of groups are pre-determined.
-np.random.seed(25)
-group0 = RandomGroup(4, [i+1 for i in range(data.p)])
-parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
-okgt0 = OKGTReg(data, parameters0)
-okgt0.getGroupStructure()
+        print "[Split]"
+        okgtAfterSplit = okgt.optimalSplit(kernel, method, rank, seed)
+        print "[Merge]"
+        okgtAfterMerge = okgt.optimalMerge(kernel, method, rank, seed)
 
+        if okgtAfterSplit.r2 == okgtAfterMerge.r2:
+            proceed = False
+        elif okgtAfterSplit.r2 > okgtAfterMerge.r2:
+            okgt = okgtAfterSplit
+        else:
+            okgt = okgtAfterMerge
 
-################################
-# Split and merge step-by-step #
-################################
-# Nystroem is a random projection method, so without fixing seed,
-# the model fitting (i.e. R2) is different each time.
-seed = 25
-# --- 1 ---
-# if split
-okgt_afterSplit = okgt0.optimalSplit(kernel, method='nystroem', nComponents=10, seed=seed)
-# if merge
-okgt_afterMerge = okgt0.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
+        print("\n** Updated group structure: %s, %.04f. **" % (okgt.getGroupStructure(), okgt.r2))
 
-# >>> split is more optimal
-okgt1 = okgt_afterSplit
-
-# --- 2 ---
-# if split
-okgt_afterSplit = okgt1.optimalSplit(kernel, method='nystroem', nComponents=10, seed=seed)
-# if merge
-okgt_afterMerge = okgt1.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
-
-# >>> split is more optimal
-okgt2 = okgt_afterSplit
-
-# --- 3 ---
-okgt_afterMerge = okgt2.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
-
-# >>> merge is the only option, and R2 improves
-okgt3 = okgt_afterMerge
-
-# --- 4 ---
-# if split
-okgt_afterSplit = okgt3.optimalSplit(kernel, method='nystroem', nComponents=10, seed=seed)
-# if merge
-okgt_afterMerge = okgt3.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
-
-# >>> merge is more optimal
-okgt4 = okgt_afterMerge
-
-# --- 5 ---
-# if split
-okgt_afterSplit = okgt4.optimalSplit(kernel, method='nystroem', nComponents=10, seed=seed)
-# if merge
-okgt_afterMerge = okgt4.optimalMerge(kernel, method='nystroem', nComponents=10, seed=seed)
-
-# >>> no change after split and merge, stop.
+    print("** Best group structure: %s. **" % okgt.getGroupStructure())
+    return okgt
 
 
-##############
-# While loop #
-##############
-kernel = Kernel('gaussian', sigma=0.5)
+if __name__=='__main__':
+    from okgtreg.DataSimulator import DataSimulator
+    from okgtreg.Kernel import Kernel
 
-seed = 25
-okgt_old = okgt0  # start with a random partition
 
-proceed = True
+    n = 500
 
-while proceed:
-    okgt_afterSplit = okgt_old.optimalSplit(kernel, 'nystroem', 10, seed)
-    okgt_afterMerge = okgt_old.optimalMerge(kernel, 'nystroem', 10, seed)
-    okgt_afterSplit.get
+    np.random.seed(25)
+    data = DataSimulator.SimData_Wang04WithInteraction2(n)
+    kernel = Kernel('gaussian', sigma=0.5)
+
+    optimalOkgt = splitAndMergeWithRandomInitial(25, data, kernel)
+    optimalGroupStructure = optimalOkgt.getGroupStructure()
+    print optimalGroupStructure

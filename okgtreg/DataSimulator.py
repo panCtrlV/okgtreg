@@ -108,6 +108,6 @@ class DataSimulator(object):
                    x[:, 2]**2 +
                    x[:, 3]**3 +
                    x[:, 4] +
-                   100. * abs(x[:, 5] * x[:, 6] * x[:, 7]) +
+                   abs(x[:, 5] * x[:, 6] * x[:, 7]) +
                    0.1 * noise)
         return Data(y, x)
