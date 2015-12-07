@@ -1,4 +1,9 @@
 """
+** This simulation is similar to "sim5", except that the grouped covariates
+are multiplied by 100 to make it dominant in the structure. Based on the pilot
+simulation, it seems that the magnitude of the groups will affect the group
+structure recovery. **
+
 This simulation test if the Split and Merger with Random Initial can recover
 the true group structure.
 
@@ -10,7 +15,7 @@ The model used here is:
                    x[:, 2]**2 +
                    x[:, 3]**3 +
                    x[:, 4] +
-                   abs(x[:, 5] * x[:, 6] * x[:, 7]) +
+                   100. * abs(x[:, 5] * x[:, 6] * x[:, 7]) +    <- here is the difference
                    0.1 * noise)
 """
 
@@ -37,7 +42,7 @@ seeds = range(nSim)
 n = 500
 
 np.random.seed(25)
-data = DataSimulator.SimData_Wang04WithInteraction2(500)
+data = DataSimulator.SimData_Wang04WithInteraction2_100(500)
 
 # Same kernel
 kernel = Kernel('gaussian', sigma=0.5)
@@ -55,7 +60,3 @@ for seed in seeds:
 
 pickle.dump(estimatedGroupStructures, open("estimatedGroupStructures.pkl", 'wb'))
 pickle.dump(estimatedR2s, open("estimatedR2s.pkl", 'wb'))
-
-
-
-

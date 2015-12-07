@@ -111,3 +111,27 @@ class DataSimulator(object):
                    abs(x[:, 5] * x[:, 6] * x[:, 7]) +
                    0.1 * noise)
         return Data(y, x)
+
+    @staticmethod
+    def SimData_Wang04WithInteraction2_100(n):
+        """
+        Modification of Wang04WithInteraction where the interaction is 3-way:
+
+            y=log(4 + sin(4 * X1) + |X2| + X3^2 + X4^3 + X5 + X6*X7*X8 0.1*\epsilon)
+            Xi ~ Unif(-1, 1)
+            \epsilon ~ N(0, 1)
+
+        :param n:
+        :return:
+        """
+        x = np.random.uniform(-1., 1., (n, 8))
+        noise = np.random.standard_normal(n)
+        y = np.log(4.0 +
+                   np.sin(4 * x[:, 0]) +
+                   np.abs(x[:, 1]) +
+                   x[:, 2]**2 +
+                   x[:, 3]**3 +
+                   x[:, 4] +
+                   100. * abs(x[:, 5] * x[:, 6] * x[:, 7]) +
+                   0.1 * noise)
+        return Data(y, x)
