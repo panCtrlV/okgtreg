@@ -336,33 +336,6 @@ class Group(object):
                 partitionList.extend(selectedPartAfterSplit)
                 return Group(*tuple(partitionList))
 
-    # def splitOptimalGroup(self, data, kernel):
-    #     if self.size == self.p:
-    #         warnings.warn("** All groups are univariate. No need to split. **")
-    #         return None
-    #     else:
-    #         # Train OKGT for the current group structure
-    #         parameters = Parameters(self, kernel, [kernel]*self.size)
-    #         okgt = OKGTReg(data, parameters)
-    #         res = okgt.train(method='vanilla')
-    #         bestR2 = res['r2']
-    #         bestGroup = self
-    #
-    #         # For each possible split, train the corresponding OKGT.
-    #         # Note it is possible that the current group structure is still the best.
-    #         for i in np.arange(self.size) + 1:
-    #             if len(self.getPartitions(i)) > 1:
-    #                 newGroup = self._splitOneGroup(i)
-    #                 parameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
-    #                 okgt = OKGTReg(data, parameters)
-    #                 res = okgt.train(method='vanilla')
-    #                 if res['r2'] > bestR2:
-    #                     print("** New best group: %s **" % newGroup)
-    #                     bestR2 = res['r2']
-    #                     bestGroup = newGroup
-    #
-    #         return bestGroup
-
     def _mergeTwoGroups(self, partitionNumber1, partitionNumber2):
         """
         Combine `partitionNumber1`-th and `partitionNumber2`-th groups into one group.
