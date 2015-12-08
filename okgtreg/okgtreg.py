@@ -279,6 +279,10 @@ class OKGTReg(object):
     #         return bestOkgt
 
 
+# TODO: For optimal split and merge methods, they can either using the existing kernel
+# todo: or a new kennel function. The current implementation provides a new kernel. An
+# todo: alternative is to use the kernel in the parameters if all groups share the same
+# todo: kernel function.
 class OKGTRegForDetermineGroupStructure(OKGTReg):
     def __init__(self, data, parameters, eps=1e-6):
         OKGTReg.__init__(self, data, parameters, eps)
@@ -376,8 +380,9 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
 
     def optimalSplit2(self, kernel, method='vanilla', nComponents=None, seed=None):
         """
-        A less aggressive split procedure, comparing to `optimalSplit`.
+        A less aggressive split procedure. That is, random split instead of complete split.
 
+        :rtype: OKGTRegForDetermineGroupStructure
         :return:
         """
         if self.r2 is None:
@@ -391,17 +396,38 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
             bestR2 = self.r2
             print("** Current group structure: %s, R2 = %.04f. **" % (bestOkgt.getGroupStructure(), bestR2))
 
+            # Update group structure
             currentGroup = self.getGroupStructure()
             for i in np.arange(currentGroup.size) + 1:
                 if len(currentGroup.getPartition(i)) > 1:
-                    newGroup = currentGroup._splitOneGroup(i)
-                    newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
-                    newOkgt = OKGTRegForDetermineGroupStructure(self.data, newParameters)
-                    newOkgt.train(method=method, nComponents=nComponents, seed=seed)
-                    if newOkgt.r2 > bestR2:
-                        # randomly split one covariate from the current group
-                        pass
-        pass
+                    testGroup = currentGroup._splitOneGroup(i)
+                    testParameters = Parameters(testGroup, kernel, [kernel]*testGroup.size)
+                    testOkgt = OKGTRegForDetermineGroupStructure(self.data, testParameters)
+                    testOkgt.train(method=method, nComponents=nComponents, seed=seed)
+                    print("** Tested group structure by complete split: "
+                          "%s, R2 = %.04f." % (testOkgt.getGroupStructure(), testOkgt.r2))
+                    if testOkgt.r2 > bestR2:
+                        bestR2 = testOkgt.r2
+                        # Randomly split one covariate from as the group structure (less aggressive)
+                        newGroup = currentGroup.split(i, randomSplit=True)
+                        # print("** Updated group structure by random split: "
+                        #       "%s. **" % newGroup)
+                        newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
+                        newOkgt = OKGTRegForDetermineGroupStructure(self.data, newParameters)
+                        newOkgt.train(method=method, nComponents=nComponents, seed=seed)
+                        print("** Updated group structure by random split: "
+                              "%s, R2 = %.04f." % (newOkgt.getGroupStructure(), newOkgt.r2))
+
+            # Return result
+            if self.r2 == bestR2:  # no improvement
+                print "** No split can improve R2. **"
+                return self
+            else:
+                print("\nNew group structure after optimal random split: "
+                      "%s." % newGroup)
+                bestParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
+                bestOkgt = OKGTRegForDetermineGroupStructure(self.data, bestParameters)
+                return bestOkgt
 
     def optimalMerge(self, kernel, method='vanilla', nComponents=None, seed=None):
         # Check if current OKGT is already trained
