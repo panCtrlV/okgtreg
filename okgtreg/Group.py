@@ -425,13 +425,13 @@ class RandomGroup(Group):
     the desired number of groups, randomly partition the covariates into
     groups.
     """
-    def __init__(self, size, covariateIndices=None, nCovariates=None):
+    def __init__(self, size, covariateIndices=None, nCovariates=None, seed=None):
         """
         Two constructors. Either `covariateIndices` or `nCovariates` is provided,
         not both.
 
         :type size: int
-        :param size: desired number of groups
+        :param size: desired number of groups in the random group structure
 
         :type covariateIndices: list
         :param covariateIndices: all covariate indices as a list
@@ -442,14 +442,23 @@ class RandomGroup(Group):
         :rtype: Group
         :return: Group object with randomly partitioned structure
         """
-        # TODO: check `covariateIndices` and `nCovariates` cannot be both given
+        # TODO: Check `covariateIndices` and `nCovariates` cannot be both given.
+        # TODO: Partition in to n groups where each has at least one variable.
         if covariateIndices is not None:
             p = len(covariateIndices)  # total number of covariates
         else:
             p = nCovariates
             covariateIndices = list(np.arange(p) + 1)
 
-        groupIndices = np.random.randint(1, size+1, p)
+        # Create a random number generator
+        if seed is None:
+            rg = random.Random()
+        else:
+            rg = random.Random(seed)
+        # Generate random memberships
+        # groupIndices = np.random.randint(1, size+1, p)  # size + 1 <= p
+                                                        # It is possible that some group number is not sampled
+        groupIndices = np.array([rg.choice(range(size)) for i in range(p)]) + 1
 
         indexedCovariates = zip(groupIndices, covariateIndices)
         indexedCovariates.sort(key=lambda x: x[0])
