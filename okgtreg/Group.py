@@ -2,9 +2,7 @@ import numpy as np
 import itertools
 import copy
 import warnings
-
-# from okgtreg.Parameters import Parameters
-# from okgtreg.OKGTReg import OKGTReg
+import random
 
 
 class Group(object):
@@ -316,6 +314,8 @@ class Group(object):
 
     def _splitOneGroup(self, partitionNumber):
         """
+        Split a group in the current group structure into univariate groups.
+
         :type partitionNumber: int
         :param partitionNumber: start from 1
 
@@ -328,13 +328,61 @@ class Group(object):
             selectedPart = self.getPartition(partitionNumber)
             if len(selectedPart) == 1:
                 warnings.warn("** Group %d is univariate. No need to split. **" % partitionNumber)
-                return None
+                # return None
+                return self
             else:
                 selectedPartAfterSplit = [[i] for i in selectedPart]
                 partitionList = list(self.partition)
                 partitionList.pop(partitionNumber - 1)
                 partitionList.extend(selectedPartAfterSplit)
                 return Group(*tuple(partitionList))
+
+    def _randomSplitOneGroup(self, partitionNumber, seed=None):
+        if partitionNumber > self.size or partitionNumber < 1:
+            raise ValueError("** \"partitionNumber\" %d is out of bound. **" % partitionNumber)
+        else:
+            selectedPart = self.getPartition(partitionNumber)  # list
+            if len(selectedPart) == 1:
+                warnings.warn("** Group %d is univariate. No need to split. **" % partitionNumber)
+                return self
+            else:
+                # Random number generator for picking a covariate
+                if seed is None:
+                    rg = random.Random()
+                else:
+                    rg = random.Random(seed)
+                chosenCovariate = rg.choice(selectedPart)  # randomly choose a covariate
+                return self.removeOneCovariate(chosenCovariate).addNewCovariateAsGroup(chosenCovariate)
+
+    def split(self, partNumber, covariates, randomSplit, seed):
+        """
+        Split a grouped set of covariates from the current group structure.
+        There are three possibilities:
+            1) Complete splitting. Each covariate in a group becomes a
+               univariate group by itself. For example, [1,2,3] -> [1],[2],[3].
+            2) Deterministic splitting. The user specifies the covariate id(s)
+               to split and form a new group. For example, given the current group
+               [1,2,3], we cah choose to separate 3 from the other two, thus having
+               ([1,2],[3]).
+            3) Random splitting. A covariate is randomly chosen to be split from a
+               group.
+
+        :type partNumber: int
+        :param partNumber: which group / part in the current group structure to be split
+
+        :type covariates: int or list of ints
+        :param covariates: the covariate or the set of covariates to be separated from
+                           the current group, which will form a new group.
+
+        :type randomSplit: bool
+        :param randomSplit: whether a covariate is split randomly
+
+        :type seed: int
+        :param seed:
+        :return:
+        """
+        pass
+
 
     def _mergeTwoGroups(self, partitionNumber1, partitionNumber2):
         """
@@ -365,6 +413,7 @@ class Group(object):
 
         remainingParts.append(mergedPart)
         return Group(*tuple(remainingParts))
+
 
 
 class RandomGroup(Group):
