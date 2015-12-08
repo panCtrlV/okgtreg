@@ -354,7 +354,7 @@ class Group(object):
                 chosenCovariate = rg.choice(selectedPart)  # randomly choose a covariate
                 return self.removeOneCovariate(chosenCovariate).addNewCovariateAsGroup(chosenCovariate)
 
-    def split(self, partNumber, covariates, randomSplit, seed):
+    def split(self, partNumber, randomSplit=False, seed=None):
         """
         Split a grouped set of covariates from the current group structure.
         There are three possibilities:
@@ -381,8 +381,11 @@ class Group(object):
         :param seed:
         :return:
         """
-        pass
-
+        # TODO: (2) has not implemented yet.
+        if randomSplit:
+            return self._randomSplitOneGroup(partNumber, seed)
+        else:
+            return self._splitOneGroup(partNumber)
 
     def _mergeTwoGroups(self, partitionNumber1, partitionNumber2):
         """
