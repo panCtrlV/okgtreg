@@ -33,22 +33,27 @@ from okgtreg.OKGTReg import OKGTRegForDetermineGroupStructure
 from okgtreg.Parameters import Parameters
 
 
-def splitAndMergeWithRandomInitial(seed, data, kernel, useLowRankApproximation=True, rank=10):
+def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, rank=10, seed=None):
     """
+    with aggressive split.
 
     :type seed: int
-    :param seed: seed for Nystroem method of low rank approximation
+    :param seed: seed for random group initialization and Nystroem method
+                 of low rank approximation
 
     :param data:
     :param kernel:
     :param useLowRankApproximation:
     :param rank:
+
+    :rtype: OKGTRegForDetermineGroupStructure
     :return:
     """
     method = 'nystroem' if useLowRankApproximation else 'vanilla'
 
-    np.random.seed(seed)
-    group0 = RandomGroup(4, [i+1 for i in range(data.p)])
+    # np.random.seed(seed)
+    # group0 = RandomGroup(4, [i+1 for i in range(data.p)])
+    group0 = RandomGroup(4, nCovariates=data.p, seed=seed)
     parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
     okgt = OKGTRegForDetermineGroupStructure(data, parameters0)
 
@@ -69,24 +74,85 @@ def splitAndMergeWithRandomInitial(seed, data, kernel, useLowRankApproximation=T
             okgt = okgtAfterSplit
         else:
             okgt = okgtAfterMerge
+        print("\n**** Updated group structure: %s, %.04f. ****\n" % (okgt.getGroupStructure(), okgt.r2))
 
-        print("\n** Updated group structure: %s, %.04f. **" % (okgt.getGroupStructure(), okgt.r2))
+    print("\n=== Final ===")
+    print(">>>> Best group structure: %s." % okgt.getGroupStructure())
+    return okgt
 
-    print("** Best group structure: %s. **" % okgt.getGroupStructure())
+def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None):
+    """
+    Less aggressive verison.
+
+    :param seed:
+    :param data:
+    :param kernel:
+    :param useLowRankApproximation:
+    :param rank:
+    :return:
+    """
+    method = 'nystroem' if useLowRankApproximation else 'vanilla'
+
+    # Random group initialization
+    group0 = RandomGroup(4, nCovariates=data.p, seed=seed)
+    parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
+    okgt = OKGTRegForDetermineGroupStructure(data, parameters0)
+
+    # Start group structure detection procedure
+    proceed = True
+    counter = 0
+    while proceed:
+        counter += 1
+        print("\n=== %d ===" % counter)
+
+        print "[Split]"
+        okgtAfterSplit = okgt.optimalSplit2(kernel, method, rank, seed)  # less aggressive split
+        print "[Merge]"
+        okgtAfterMerge = okgt.optimalMerge(kernel, method, rank, seed)
+
+        if okgtAfterSplit.r2 == okgtAfterMerge.r2:  # no split or merge can improve fitting
+            proceed = False
+        elif okgtAfterSplit.r2 > okgtAfterMerge.r2:
+            okgt = okgtAfterSplit
+        else:
+            okgt = okgtAfterMerge
+        print("\n**** Updated group structure after split and merge: "
+              "%s, R2 = %.04f. ****\n" % (okgt.getGroupStructure(), okgt.r2))
+
+    print("\n=== Final ===")
+    print(">>>> Best group structure: %s." % okgt.getGroupStructure())
     return okgt
 
 
 if __name__=='__main__':
+    import numpy as np
+
     from okgtreg.DataSimulator import DataSimulator
     from okgtreg.Kernel import Kernel
 
-
+    # Simulate data
     n = 500
-
     np.random.seed(25)
     data = DataSimulator.SimData_Wang04WithInteraction2(n)
     kernel = Kernel('gaussian', sigma=0.5)
 
-    optimalOkgt = splitAndMergeWithRandomInitial(25, data, kernel)
-    optimalGroupStructure = optimalOkgt.getGroupStructure()
-    print optimalGroupStructure
+    # Aggressive split
+    print("=== Aggressive split ===")
+    optimalOkgt = splitAndMergeWithRandomInitial(data, kernel, seed=25)
+    print optimalOkgt.getGroupStructure(), '\n'
+    #
+    # # -----------------
+    # from okgtreg.Group import Group
+    # from okgtreg.OKGTReg import OKGTReg
+    #
+    # trueGroup = Group([1], [2], [3], [4], [5], [6,7,8])
+    # trueParameters = Parameters(trueGroup, kernel, [kernel]*trueGroup.size)
+    # trueOkgt = OKGTReg(data, trueParameters)
+    # fit = trueOkgt.train('nystroem', 10, 25)
+    # fit['r2']
+    # # -----------------
+
+    # Less aggressive split
+    print "=== Less aggressive split ==="
+    optimalOkgt2 = splitAndMergeWithRandomInitial2(data, kernel, seed=25)
+    print optimalOkgt2.getGroupStructure(), '\n'
