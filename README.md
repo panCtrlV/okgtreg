@@ -5,6 +5,9 @@ Optimal Kernel Group Transformation for Exploratory Regression and Graphics Pyth
 
 This Python package implements our paper accepted by SIGKDD 2015 (ID: fp410)
 
+The main functionality of this package is to estimate an OKGT given a data set, desired group structure and kernel
+functions. 
+
 # Installation
 
 `pip install okgtreg`
