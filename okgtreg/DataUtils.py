@@ -19,16 +19,24 @@ def readSkillCraft1():
     :rtype: Data
     :return:
     """
-    sc_df = pd.read_csv('okgtreg/data/SkillCraft1.csv')
+    scDF = pd.read_csv('okgtreg/data/SkillCraft1.csv')
+    n1 = len(scDF.index)
+    names = scDF.columns.values
     # Remove rows with missing values
     # and covert data type to float
-    for c in sc_df.columns:
-        if sc_df[c].dtype == object:
-            sc_df = sc_df[sc_df[c] != '?']
-            sc_df[c] = sc_df[c].astype(float)
+    for c in scDF.columns:
+        if scDF[c].dtype == object:
+            scDF = scDF[scDF[c] != '?']
+            scDF[c] = scDF[c].astype(float)
+    n2 = len(scDF.index)
+    print("** Rows with missing values are removed. %d => %d. **" % (n1, n2))
 
     # Separate response and predictors
-    y = sc_df['LeagueIndex']
-    x = sc_df.ix[:, 2:]
+    y = scDF['LeagueIndex']
+    x = scDF.ix[:, 2:]
 
-    return Data(np.array(y), np.array(x))
+    scData = Data(np.array(y), np.array(x))
+    scData.setYName(names[1])
+    scData.setXNames(names[2:])
+
+    return scData
