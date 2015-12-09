@@ -16,6 +16,8 @@ class Data(object):
         self.X = X
         self.n = len(y)  # sample size
         self.p = X.shape[1]  # covariate dimension
+        self.yname = None  # response name
+        self.xnames = None  # covariate names
 
     def getGroupedData(self, group):
         """
@@ -25,7 +27,7 @@ class Data(object):
 
         The purpose of index normalization is to make the grouped data set look as if
         it is a standalone data set for the subsequent operations. To implement the
-        normalization, the smallest covaraite index in the given group is forced to
+        normalization, the smallest covariate index in the given group is shifted to
         be 1 and all the other indices are adjusted accordingly, so that the relative
         differences are not changed. For example:
 
@@ -59,6 +61,81 @@ class Data(object):
         normalizedGroup = Group(*normalizedPartition)
         return subData, normalizedGroup
 
+    def setXNames(self, names):
+        """
+        Assign names for covariates in the data set. Each covariate must have one unique name.
+        The order of the names given is the same as the order of the columns in the data set.
+
+        :type names: list of strings
+        :param names:
+
+        :rtype: None
+        :return:
+        """
+        if len(names) != self.p:
+            raise ValueError("** The number of names (%d) is different from "
+                             "the number of covariates (%d). **" % (len(names), self.p))
+
+        if not isinstance(names, list):
+            try:
+                names = list(names)
+            except TypeError:
+                print "** Failed to convert \"names\" to a list. **"
+
+        self.xnames = names
+        return
+
+    def setYName(self, name):
+        self.yname = name
+        return
+
+    def __getitem__(self, variableName):
+        """
+        Given a variable name, return the corresponding data as a 1d array.
+
+        :type variableName: str
+        :param variableName: variable name
+
+        :rtype: 1d array
+        :return:
+        """
+        if self.yname == variableName:
+            return self.y
+        elif variableName in self.xnames:
+            return self.X[:, self.xnames.index(variableName)]
+        else:
+            raise ValueError("** Variable \"%s\" is not in the data set. **" % variableName)
+
+    def __str__(self):
+        # Summary string
+        ss1 = 'Sample size: %d' % self.n
+        ss2 = 'Number of covariates: %d' % self.p
+        summaryString = '\n'.join([ss1, ss2])
+
+        # Prepare print string for response
+        yString1 = ('\t' + self.yname + ': ') if self.yname is not None else '\tY: '
+        if self.n > 6:
+            yString2 = ', '.join(["%.02f" % val for val in self.y[:3]]) + \
+                       ' ... ' + ', '.join(["%.02f" % val for val in self.y[-3:]])
+        else:
+            yString2 = ', '.join(["%.02f" % x for x in self.y])
+        yString3 = str(self.y.dtype)
+        yString = '\t'.join([yString1, yString2, yString3])
+
+        # Prepare print string for covariates
+        xStringList = []
+        for i in xrange(self.p):
+            s1 = ('\t' + self.xnames[i] + ': ') if self.xnames is not None else ('\tX%d: ' % (i+1,))
+            if self.n > 6:
+                s2 = ', '.join(["%.02f" % val for val in self.X[:3, i]]) + \
+                          ' ... ' + ', '.join(["%.02f" % val for val in self.X[-3:, i]])
+            else:
+                s2 = ', '.join(["%.02f" % val for val in self.X[:, i]])
+            s3 = str(self.X[:, i].dtype)
+            xStringList.append('\t'.join([s1, s2, s3]))
+        xString = '\n'.join(xStringList)
+
+        return '\n'.join([summaryString, '\n[Response]', yString, '\n[Covariates]', xString])
 
 class ParameterizedData(object):
     def __init__(self, data, parameters):
