@@ -1,25 +1,29 @@
 """
-This simulation illustrate step-by-step the procedure of group structure determination
-proposed by Michael.
+The functions in this module implemented step-by-step split-and-merge procedure
+of group structure determination proposed by Michael. The idea is as follows.
 
 We start with a random partition of the predictor variables. The corresponding
 OKGT is fitted with R2 being recorded. Then we perform the following split and
 merge operators until there is no further improvement in R2:
 
-1. For each group of size > 1, split it into individual covariates and fit
+1. Split step:
+
+   For each group of size > 1, completely split it into univariate groups and fit
    the resulting OKGT and record its R2.
 
-   Compare R2 under each scenario in (2) with the R2 we started with. Pick the
-   the scenario with gives the largest improvement in R2 and randomly pick a
-   covariate from the group to form a uni-variate group.
+   Compare R2 of each complete split with the R2 we started with, and locate the
+   group whose split gives the largest improvement in R2. Then, from this particular
+   group, randomly pick a covariate to form a uni-variate group.
 
-2. For each univariate group in the current structure, try to merge its covariate
-   with one of the other groups, regardless of the other group being univariate or
-   multivariate.
+2. Merge step:
+
+   For each univariate group in the current structure, try to merge it with one of
+   the other groups, regardless of the other group being univariate or multivariate.
+   Then, make the merge permanent for those gives the largest improvement in R2.
 
 Then, step 1 and 2 are repeated iteratively until no further improvement in R2.
 
-Can be extended to include removing steps for variable selection.
+Can be extended to including removing steps for variable selection.
 
 Question:
 

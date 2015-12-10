@@ -1,3 +1,9 @@
+"""
+Test group structure detection on SkillCraft1 data set.
+
+In this experiment, we test three methods to detect the
+"""
+
 # ---
 # The following two lines added the root of the package into the system path
 # so that the module okgtreg can be imported properly when you run the script
@@ -13,9 +19,7 @@
 # Then, you can run the script from anywhere.
 # ---
 
-"""
-Test group structure detection on SkillCraft1 data set.
-"""
+
 import time
 
 from okgtreg.DataUtils import readSkillCraft1
