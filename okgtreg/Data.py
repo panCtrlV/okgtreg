@@ -1,5 +1,6 @@
-# from okgtreg.Group import *
-from .Group import *
+import numpy as np
+
+from okgtreg.Group import Group
 
 
 """
@@ -136,6 +137,9 @@ class Data(object):
         xString = '\n'.join(xStringList)
 
         return '\n'.join([summaryString, '\n[Response]', yString, '\n[Covariates]', xString])
+
+    def __str__(self):
+        pass
 
 class ParameterizedData(object):
     def __init__(self, data, parameters):

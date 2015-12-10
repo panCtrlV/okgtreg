@@ -1,8 +1,10 @@
 import numpy as np
+import copy
 
-from okgtreg.Group import *
-from okgtreg.OKGTReg import *
-from okgtreg.DataSimulator import *
+from okgtreg.Group import Group
+from okgtreg.OKGTReg import OKGTReg
+from okgtreg.DataSimulator import DataSimulator
+from okgtreg.Parameters import Parameters
 
 
 """
@@ -46,14 +48,11 @@ pool.
 # ------------------------
 # Start forward selection
 # ------------------------
-def backwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
-    # useLowRankApproximation = True
-    # rank = 10
-
-    ykernel = kernel
+def backwardSelection(data, kernel, useLowRankApproximation=True, rank=10, seed=None):
+    method = 'nystroem' if useLowRankApproximation else 'vanilla'
 
     covariatesPool = list(np.arange(data.p) + 1)
-    oldGroup = Group(covariatesPool)
+    oldGroup = Group(covariatesPool)  # start with a large single group
     p = oldGroup.p
     bestR2 = 0.
     bestCovariateIndex = None
@@ -69,18 +68,13 @@ def backwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
             print("\t Create a new group for covariate %d ..." % covariateInd)
             _currentGroup = oldGroup.removeOneCovariate(covariateInd)
             currentGroup = _currentGroup.addNewCovariateAsGroup(covariateInd)
-            print("\t\t current group structure: %s " % (currentGroup.partition,))
+            print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
             # Contrary to forward selection, the data matrix doesn't
             # change.
-            xkernels = [kernel] * currentGroup.size
-            parameters = Parameters(currentGroup, ykernel, xkernels)
+            parameters = Parameters(currentGroup, kernel, [kernel]*currentGroup.size)
             currentOKGT = OKGTReg(data, parameters)
             # Train OKGT
-            if useLowRankApproximation:
-                res = currentOKGT.train_Nystroem(rank)
-            else:
-                res = currentOKGT.train_Vanilla()
-
+            res = currentOKGT.train(method, rank, seed)
             currentR2 = res['r2']
             if currentR2 > bestR2:
                 print("\t\t current R2 =\t %.10f \t *" % currentR2)
@@ -117,16 +111,11 @@ def backwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
                     print("\t   in other group %d ..." % groupInd)
                     updatedOtherGroup = otherGroup.addNewCovariateToGroup(covariateInd, groupInd)
                     currentGroup = updatedOtherGroup + updatedCovariatesPool
-                    print("\t\t current group structure: %s " % (currentGroup.partition,))
-                    xkernels = [kernel] * currentGroup.size
-                    parameters = Parameters(currentGroup, ykernel, xkernels)
+                    print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
+                    parameters = Parameters(currentGroup, kernel, [kernel]*currentGroup.size)
                     currentOKGT = OKGTReg(data, parameters)
                     # Train OKGT
-                    if useLowRankApproximation:
-                        res = currentOKGT.train_Nystroem(rank)
-                    else:
-                        res = currentOKGT.train_Vanilla()
-
+                    res = currentOKGT.train(method, rank, seed)
                     currentR2 = res['r2']
                     # Check if there is improvement
                     if currentR2 > bestR2:
@@ -140,7 +129,7 @@ def backwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
         else:
             print("\t ** No other groups than the pool. Pass ... ** \n")
 
-        print("** Step %d updated group structure is: %s \n" % (counter, newGroup.partition))
+        print("** Step %d updated group structure is: %s \n" % (counter, newGroup.getPartitions()))
 
         # print "covariate pool: ", covariatesPool
         # print "best covariate index so far: ", bestCovariateIndex
@@ -154,11 +143,14 @@ def backwardSelection(data, kernel, useLowRankApproximation=True, rank=10):
             print("** Finish with early termination at step %d due to no further improvement of R2. ** \n" % counter)
             break
 
-    print ("** SELECTED GROUP STRUCTURE: %s with R2 = %f ** \n" % (oldGroup.partition, bestR2))
+    print ("** SELECTED GROUP STRUCTURE: %s with R2 = %f ** \n" % (oldGroup.getPartitions(), bestR2))
     return oldGroup
 
 
 if __name__ == "__main__":
+    from okgtreg.Kernel import Kernel
+    from okgtreg.Data import Data
+
     # Simulate data
     np.random.seed(25)
     # y, x = DataSimulator.SimData_Wang04(500)

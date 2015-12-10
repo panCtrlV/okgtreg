@@ -314,7 +314,8 @@ class Group(object):
 
     def _splitOneGroup(self, partitionNumber):
         """
-        Split a group in the current group structure into univariate groups.
+        Completely split a multivariate group in the current group structure
+        into univariate groups.
 
         :type partitionNumber: int
         :param partitionNumber: start from 1
@@ -336,6 +337,19 @@ class Group(object):
                 partitionList.pop(partitionNumber - 1)
                 partitionList.extend(selectedPartAfterSplit)
                 return Group(*tuple(partitionList))
+
+    def _splitOneCovariate(self, covariateIndex):
+        """
+        Split the given covariate into a new univariate group in
+        the current group structure.
+
+        :type covariateIndex: int
+        :param covariateIndex:
+
+        :rtype: Group
+        :return:
+        """
+        pass
 
     def _randomSplitOneGroup(self, partitionNumber, seed=None):
         if partitionNumber > self.size or partitionNumber < 1:
