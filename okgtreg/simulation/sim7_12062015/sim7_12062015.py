@@ -31,11 +31,12 @@ import os
 
 from okgtreg.DataSimulator import DataSimulator
 from okgtreg.Kernel import Kernel
-from okgtreg.groupStructureDetection.splitAndMergeWithRandomInitial import splitAndMergeWithRandomInitial
+from okgtreg.groupStructureDetection.splitAndMergeWithRandomInitial import splitAndMergeWithRandomInitial2
 
 
 nSim = 100
-seeds = range(nSim)
+# seeds = range(nSim)
+seed=25
 
 # Same data
 n = 500
@@ -51,7 +52,7 @@ for seed in seeds:
     np.random.seed(seed)
     data = DataSimulator.SimData_Wang04WithInteraction2(500)
 
-    optimalOkgt = splitAndMergeWithRandomInitial(25, data, kernel, True, 10)  # seed fixed for Nystroem
+    optimalOkgt = splitAndMergeWithRandomInitial2(25, data, kernel, True, 10)  # seed fixed for Nystroem
     optimalGroupStructure = optimalOkgt.getGroupStructure()
     optimalR2 = optimalOkgt.r2
     estimatedGroupStructures.append(optimalGroupStructure)

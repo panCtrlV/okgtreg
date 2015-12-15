@@ -233,7 +233,7 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
         except KeyError:
             print("** Method \"%s\" could not be found. **" % method)
 
-    def optimalSplit(self, kernel, method='vanilla', nComponents=None, seed=None):
+    def optimalSplit(self, kernel, method='vanilla', nComponents=None, seed=None, threshold=0.):
         """
         Given the current group structure, we attempt to completely split each multi-variate
         group one-by-one and the corresponding OKGT is fitted. If splitting a group improves
@@ -265,6 +265,10 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
         :type seed: int
         :param seed: seed used for the random number generator of Nystroem low-rank approximation.
 
+        :type threshold: float, >=0
+        :param threshold: if the improvement in R2 by splitting a group  exceeds this threshold,
+                          it is considered significant and the split is performed.
+
         :rtype: OKGTRegForDetermineGroupStructure
         :return: optimal group structure encapsulated in an OKGTRegForDetermineGroupStructure object
                  determined the optimal split procedure.
@@ -291,7 +295,8 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                     newOkgt.train(method=method, nComponents=nComponents, seed=seed)
                     print("** Tested group structure by complete split: "
                           "%s, R2 = %.04f. **" % (newGroup, newOkgt.r2))
-                    if newOkgt.r2 > bestR2:
+                    # if newOkgt.r2 > bestR2:
+                    if newOkgt.r2 - bestR2 > threshold:
                         bestR2 = newOkgt.r2
                         bestOkgt = newOkgt
                         print("** Improving -> Better group structure: "
@@ -306,9 +311,27 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                       "%s, R2 = %.04f. **\n" % (bestOkgt.getGroupStructure(), bestR2))
                 return bestOkgt
 
-    def optimalSplit2(self, kernel, method='vanilla', nComponents=None, seed=None):
+    def optimalSplit2(self, kernel, method='vanilla', nComponents=None, seed=None, threshold=0.):
         """
         A less aggressive split procedure. That is, random split instead of complete split.
+
+        :type kernel: Kernel
+        :param kernel: kernel function used to train OKGT during searching for optimal
+                       group structure after a less aggressive split procedure.
+
+        :type method: str
+        :param method: 'vanilla' or 'nystroem'
+
+        :type nComponents: int
+        :param nComponents: number of components for Nystroem low rank approximation.
+                            Details can be found at `Scikit-learn Nystroem <http://scikit-learn.org/stable/modules/generated/sklearn.kernel_approximation.Nystroem.html#sklearn.kernel_approximation.Nystroem>`_
+
+        :type seed: int
+        :param seed: seeding the random number generator for Nystroem low rank approximation
+
+        :type threshold: float, >=0
+        :param threshold: if the improvement in R2 by splitting a group exceeds this threshold,
+                          it is considered significant and the split is performed.
 
         :rtype: OKGTRegForDetermineGroupStructure
         :return:
@@ -334,7 +357,9 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                     testOkgt.train(method=method, nComponents=nComponents, seed=seed)
                     print("** Tested group structure by complete split: "
                           "%s, R2 = %.04f. **" % (testOkgt.getGroupStructure(), testOkgt.r2))
-                    if testOkgt.r2 > bestR2:
+                    # if testOkgt.r2 > bestR2:
+                    # Thresholding R2 improvement
+                    if testOkgt.r2 - bestR2 > threshold:
                         bestR2 = testOkgt.r2
                         # Randomly split one covariate from as the group structure (less aggressive)
                         newGroup = currentGroup.split(i, randomSplit=True)
@@ -359,7 +384,33 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                 return bestOkgt
                 # return newOkgt
 
-    def optimalMerge(self, kernel, method='vanilla', nComponents=None, seed=None):
+    def optimalMerge(self, kernel, method='vanilla', nComponents=None, seed=None, threshold=0.):
+        """
+        Determine the optimal group structure by merging groups in the current group structure.
+        The merging is performed for every pair of groups provided that at least one of the group
+        is univariate. The reason for not merging every pair of groups is to reduce the computational
+        burden of the procedure.
+
+        :param kernel:
+
+        :type method: str
+        :param method: `vanilla` or `nystroem`
+
+        :type nComponents: int
+        :param nComponents: number of components for Nystroem low rank approximation.
+                            Details can be found at `Scikit-learn Nystroem <http://scikit-learn.org/stable/modules/generated/sklearn.kernel_approximation.Nystroem.html#sklearn.kernel_approximation.Nystroem>`_
+
+        :type seed: int
+        :param seed: seeding the random number generator for Nystroem low rank approximation
+
+        :type threshold: float, >=0
+        :param threshold: if the improvement in R2 by merging two groups exceeds this threshold,
+                          it is considered significant and the merge is performed.
+
+        :rtype: OKGTRegForDetermineGroupStructure
+        :return:
+        """
+
         # Check if current OKGT is already trained
         if self.r2 is None:
             self.train(method=method, nComponents=nComponents, seed=seed)
@@ -387,7 +438,8 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                         newOkgt = OKGTRegForDetermineGroupStructure(self.data, newParameters)
                         newOkgt.train(method=method, nComponents=nComponents, seed=seed)
                         # print newOkgt.r2
-                        if newOkgt.r2 > bestR2:
+                        # if newOkgt.r2 > bestR2:
+                        if newOkgt.r2 - bestR2 > threshold:
                             bestR2 = newOkgt.r2
                             bestOkgt = newOkgt
                             print("** Better group structure: %s, R2 = %.04f. **" % (newGroup, bestR2))

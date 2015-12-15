@@ -7,6 +7,22 @@ import random
 
 class Group(object):
     def __init__(self, *args, **kwargs):
+        """
+
+        :type args: various number of lists of covariates
+        :param args: each list is a grouped collection of covariates,
+                     e.g. [1], [2,3], [4], [5,6,7], ...
+
+        :type [p]: int, optional
+        :param [p]: total number of covariates
+
+        :type [name]: str, optional
+        :param [name]: an identity for the current group structure
+
+        :rtype: Group
+        :return:
+        """
+
         # group with one covariate must input explicitly
 
         # Remove any empty groups
@@ -432,7 +448,6 @@ class Group(object):
         return Group(*tuple(remainingParts))
 
 
-
 class RandomGroup(Group):
     """
     Given a list of covariate indices or total number of covariates and
@@ -484,8 +499,10 @@ class RandomGroup(Group):
         Group.__init__(self, *tuple(partition))
 
 
-# randomGroup = RandomGroup(size=4, covariateIndices=[1,2,3,4,5,6,7,8,9,10])
-# randomGroup
+if __name__=='__main__':
+    randomGroup = RandomGroup(size=4, covariateIndices=[1,2,3,4,5,6,7,8,9,10])
+    randomGroup
 
-# randomGroup = RandomGroup(size=4, nCovariates=10)
-# randomGroup
+    randomGroup = RandomGroup(size=4, nCovariates=10)
+    randomGroup
+

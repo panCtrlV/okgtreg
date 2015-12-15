@@ -108,6 +108,8 @@ class Data(object):
             raise ValueError("** Variable \"%s\" is not in the data set. **" % variableName)
 
     def __str__(self):
+        # Used for `print Data`
+
         # Summary string
         ss1 = 'Sample size: %d' % self.n
         ss2 = 'Number of covariates: %d' % self.p
@@ -126,7 +128,9 @@ class Data(object):
         # Prepare print string for covariates
         xStringList = []
         for i in xrange(self.p):
-            s1 = ('\t' + self.xnames[i] + ': ') if self.xnames is not None else ('\tX%d: ' % (i+1,))
+            s1 = ('\t' + str(i+1) + '. ' + self.xnames[i] + ': ') if \
+                self.xnames is not None else ('\tX%d: ' % (i+1,))
+
             if self.n > 6:
                 s2 = ', '.join(["%.02f" % val for val in self.X[:3, i]]) + \
                           ' ... ' + ', '.join(["%.02f" % val for val in self.X[-3:, i]])
@@ -138,19 +142,41 @@ class Data(object):
 
         return '\n'.join([summaryString, '\n[Response]', yString, '\n[Covariates]', xString])
 
-    def __str__(self):
-        pass
+    def __repr__(self):
+        # Used for just calling `Data`
+        return self.__str__()
+
+
+    def getGroupedNames(self, group):
+        if self.xnames is not None:
+            return [[self.xnames[i-1] for i in part] for part in group.getPartitions()]
+        else:
+            raise ValueError("** Covariate names are not assigned to the data. **")
+
 
 class ParameterizedData(object):
     def __init__(self, data, parameters):
+        """
+
+        :type data: Data
+        :param data:
+
+        :type parameters: Parameters
+        :param parameters:
+
+        :return:
+        """
         if data.p != parameters.p:
-            raise ValueError("** Covariates dimensions for data and parameters are not conformable."
-                             "Data has %d covariates, while parameters have %d covariates." % (data.p, parameters.p))
+            raise ValueError("** Covariates dimensions for data and parameters "
+                             "are not conformable. Data has %d covariates, while "
+                             "parameters have %d covariates." % (data.p, parameters.p))
 
         self.p = data.p
         self.n = data.n
         self.y = data.y
         self.X = data.X
+        self.yname = data.yname
+        self.xnames = data.xnames
         self.partition = parameters.partition
         self.groupSize = parameters.groupSize
         self.ykernel = parameters.ykernel
@@ -215,3 +241,9 @@ class ParameterizedData(object):
         xStackedGrams = self._stackGramsForX()
         crossCov = yGram.dot(xStackedGrams.T) / self.n
         return crossCov
+
+    def getGroupedNames(self):
+        if self.xnames is not None:
+            return [[self.xnames[i-1] for i in part] for part in self.group.getPartitions()]
+        else:
+            raise ValueError("** Covariate names are not assigned to the data. **")

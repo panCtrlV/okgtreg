@@ -37,7 +37,7 @@ from okgtreg.OKGTReg import OKGTRegForDetermineGroupStructure
 from okgtreg.Parameters import Parameters
 
 
-def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, rank=10, seed=None):
+def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, rank=10, seed=None, threshold=0.):
     """
     with aggressive split.
 
@@ -49,6 +49,12 @@ def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, r
     :param kernel:
     :param useLowRankApproximation:
     :param rank:
+
+    :type threshold: float, >=0
+    :param threshold: if the improvement of merge or split in R2 exceeds this threshold,
+                      it is considered significant and the merge or split is performed.
+                      See "threshold" in OKGTRegForDetermineGroupStructure's methods:
+                      `optimalMerge`, `optimalSplit`, `optimalSplit2`.
 
     :rtype: OKGTRegForDetermineGroupStructure
     :return:
@@ -84,7 +90,7 @@ def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, r
     print(">>>> Best group structure: %s." % okgt.getGroupStructure())
     return okgt
 
-def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None):
+def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None, threshold=0.):
     """
     Less aggressive verison.
 
@@ -110,9 +116,9 @@ def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, 
         print("\n=== %d ===" % counter)
 
         print "[Split]"
-        okgtAfterSplit = okgt.optimalSplit2(kernel, method, rank, seed)  # less aggressive split
+        okgtAfterSplit = okgt.optimalSplit2(kernel, method, rank, seed, threshold)  # less aggressive split
         print "[Merge]"
-        okgtAfterMerge = okgt.optimalMerge(kernel, method, rank, seed)
+        okgtAfterMerge = okgt.optimalMerge(kernel, method, rank, seed, threshold)
 
         if okgtAfterSplit.r2 == okgtAfterMerge.r2:  # no split or merge can improve fitting
             proceed = False

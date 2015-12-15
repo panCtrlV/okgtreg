@@ -6,7 +6,8 @@
 # print os.path.dirname(os.path.realpath(__file__))
 
 # By adding the following two lines, the simulation script can be
-# called from anywhere.
+# called from project root as
+#   python /path/to/script.py
 # Details can be found at:
 #   http://stackoverflow.com/questions/26849832/python-imports-relative-path
 import sys
