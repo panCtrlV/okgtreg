@@ -2,7 +2,7 @@ import numpy as np
 from scipy.special import cbrt
 
 from .Data import Data
-
+from okgtreg.Group import Group
 
 """
 Create synthetic data
@@ -85,8 +85,11 @@ class DataSimulator(object):
         noise = np.random.standard_normal(n)
         y = np.log(4.0 + np.sin(4 * x[:, 0]) + np.abs(x[:, 1]) + x[:, 2]**2 +
                     x[:, 3]**3 + x[:, 4] + x[:, 5] * x[:, 6] + 0.1 * noise)
+
+        group = Group([1], [2], [3], [4], [5], [6,7])
+
         # return y, x
-        return Data(y, x)
+        return Data(y, x), group
 
     @staticmethod
     def SimData_Wang04WithInteraction2(n):
