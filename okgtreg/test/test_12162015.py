@@ -22,3 +22,6 @@ randomGroup4
 # Given size and named covariates (names are randomly ordered)
 randomGroup5 = RandomGroup(4, ['BA', 'd', 'afg', 'aam', 'zfd', 'ghs'])
 randomGroup5
+
+# Size > number of covariates
+randomGroup6 = RandomGroup(10, [1,2,3,4,5,6])

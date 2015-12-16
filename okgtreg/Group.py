@@ -475,6 +475,10 @@ class RandomGroup(Group):
         if covariates is None:
             covariates = list(np.arange(nCovariates) + 1)
 
+        if size > len(covariates):
+            raise ValueError("** Number of groups (%d) exceeds number of covariates (%d). **" %
+                             (size, len(covariates)))
+
         # Create a random number generator
         if seed is None:
             rg = random.Random()
