@@ -37,7 +37,8 @@ from okgtreg.OKGTReg import OKGTRegForDetermineGroupStructure
 from okgtreg.Parameters import Parameters
 
 
-def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, rank=10, seed=None, threshold=0.):
+def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, rank=10, seed=None,
+                                   threshold=0.):
     """
     with aggressive split.
 
@@ -90,7 +91,9 @@ def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, r
     print(">>>> Best group structure: %s." % okgt.getGroupStructure())
     return okgt
 
-def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None, threshold=0.):
+
+def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None,
+                                    threshold=0.):
     """
     Less aggressive verison.
 

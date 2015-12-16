@@ -25,22 +25,21 @@ class Group(object):
 
         # group with one covariate must input explicitly
 
-        # Remove any empty groups
+        # Remove any empty groups, e.g. []
         isEmpty = [len(x) != 0 for x in args]
         filteredArgs = tuple(itertools.compress(args, isEmpty))
-
         n = len(filteredArgs)  # number of non-empty input groups
 
-        # check duplicates
+        # check covariates duplicates
         inputs = [i for g in filteredArgs for i in g]  # flatten args
         uniqueInputs = set(inputs)
         if len(inputs) > len(uniqueInputs):
             raise ValueError("** Each index can only be in one group. "
                              "Please remove duplicates. **")
 
-        # Normalize group structure:
-        # check if within and between groups are ordered
-        leadingIndices = [np.array(g).min() for g in filteredArgs]  # list of smallest ind of each group
+        # Normalize group structure: check if within and between groups are ordered
+        # leadingIndices = [np.array(g).min() for g in filteredArgs]  # list of smallest ind of each group
+        leadingIndices = [min(g) for g in filteredArgs]  # this enables string comparison
         isOrdered = all(leadingIndices[i] <= leadingIndices[i+1] for i in xrange(n-1))
 
         if not isOrdered:
@@ -454,7 +453,7 @@ class RandomGroup(Group):
     the desired number of groups, randomly partition the covariates into
     groups.
     """
-    def __init__(self, size, covariateIndices=None, nCovariates=None, seed=None):
+    def __init__(self, size, covariates=None, nCovariates=None, seed=None):
         """
         Two constructors. Either `covariateIndices` or `nCovariates` is provided,
         not both.
@@ -462,8 +461,8 @@ class RandomGroup(Group):
         :type size: int
         :param size: desired number of groups in the random group structure
 
-        :type covariateIndices: list
-        :param covariateIndices: all covariate indices as a list
+        :type covariates: list
+        :param covariates: all covariate indices as a list
 
         :type nCovariates: int
         :param nCovariates: number of total covariates
@@ -471,32 +470,52 @@ class RandomGroup(Group):
         :rtype: Group
         :return: Group object with randomly partitioned structure
         """
-        # TODO: Check `covariateIndices` and `nCovariates` cannot be both given.
+        # TODO: Check `covariates` and `nCovariates` cannot be both given.
         # TODO: Partition in to n groups where each has at least one variable.
-        if covariateIndices is not None:
-            p = len(covariateIndices)  # total number of covariates
-        else:
-            p = nCovariates
-            covariateIndices = list(np.arange(p) + 1)
+        if covariates is None:
+            covariates = list(np.arange(nCovariates) + 1)
 
         # Create a random number generator
         if seed is None:
             rg = random.Random()
         else:
             rg = random.Random(seed)
+
         # Generate random memberships
         # groupIndices = np.random.randint(1, size+1, p)  # size + 1 <= p
                                                         # It is possible that some group number is not sampled
-        groupIndices = np.array([rg.choice(range(size)) for i in range(p)]) + 1
+        partition = self._nearEqualRandomPartition(covariates, size, rg)
+        Group.__init__(self, *tuple(partition))
 
-        indexedCovariates = zip(groupIndices, covariateIndices)
+    @staticmethod
+    def _randomPartition(covariates, n, rg):
+        p = len(covariates)
+        groupIndices = np.array([rg.choice(range(n)) for i in range(p)]) + 1
+        indexedCovariates = zip(groupIndices, covariates)
         indexedCovariates.sort(key=lambda x: x[0])
-
         partition = []
         for k, g in itertools.groupby(indexedCovariates, lambda x: x[0]):
             partition.append([pair[1] for pair in g])
+        return partition
 
-        Group.__init__(self, *tuple(partition))
+    @staticmethod
+    def _nearEqualRandomPartition(covariates, n, rg):
+        """
+        Randomly partition covariates into groups of nearly equal size.
+
+        :type n: int
+        :param n: number of groups
+
+        :type rg: random.Random
+        :param rg:
+
+        :rtype: list
+        :return:
+        """
+        covariateList = covariates
+        rg.shuffle(covariateList)
+        division = len(covariateList) / float(n)
+        return [ covariateList[int(round(division * i)): int(round(division * (i + 1)))] for i in xrange(n) ]
 
 
 if __name__=='__main__':

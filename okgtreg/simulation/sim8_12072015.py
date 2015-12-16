@@ -15,7 +15,7 @@ def simulateData(n):
     return Data(y, x)
 
 # Generate data
-np.random.seed(125)
+np.random.seed(25)
 data = simulateData(1000)
 
 # Same kernel
