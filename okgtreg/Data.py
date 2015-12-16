@@ -204,8 +204,18 @@ class ParameterizedData(object):
             cols = np.array(self.partition[groupNumber - 1])  # group number start from 1
             return self.X[:, cols - 1]
 
+    def _getGramsForX(self):
+        """
+        Contruct the gram matrix (centered) for each covariate group, the results are returned
+        as a list.
+
+        :rtype: list
+        :return: centered gram matrices, one for each group
+        """
+        return [kernel.gram(self.getXFromGroup(i+1)) for (i, kernel) in enumerate(self.xkernels)]
+
     def _stackGramsForX(self):
-        grams = [kernel.gram(self.getXFromGroup(i+1)) for (i, kernel) in enumerate(self.xkernels)]
+        grams = self._getGramsForX()
         return np.vstack(grams)
 
     def covarianceOperatorForX(self, returnAll=False):
