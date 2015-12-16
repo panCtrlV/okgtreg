@@ -38,7 +38,7 @@ from okgtreg.Parameters import Parameters
 
 
 def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, rank=10, seed=None,
-                                   threshold=0.):
+                                   threshold=0., nRandomPartition=2):
     """
     with aggressive split.
 
@@ -62,9 +62,8 @@ def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, r
     """
     method = 'nystroem' if useLowRankApproximation else 'vanilla'
 
-    # np.random.seed(seed)
     # group0 = RandomGroup(4, [i+1 for i in range(data.p)])
-    group0 = RandomGroup(4, nCovariates=data.p, seed=seed)
+    group0 = RandomGroup(nRandomPartition, nCovariates=data.p, seed=seed)
     parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
     okgt = OKGTRegForDetermineGroupStructure(data, parameters0)
 
@@ -93,21 +92,36 @@ def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, r
 
 
 def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None,
-                                    threshold=0.):
+                                    threshold=0., nRandomPartition=2):
     """
-    Less aggressive verison.
+    Less aggressive version.
 
-    :param seed:
     :param data:
     :param kernel:
     :param useLowRankApproximation:
     :param rank:
+
+    :type seed: int
+    :param seed: seeding both random group partition for the initial group structure and
+                 Nystroem method of low rank approximation for kernel matrices.
+
+    :type threshold: float, >=0
+    :param threshold: if the improvement of merge or split in R2 exceeds this threshold,
+                      it is considered significant and the merge or split is performed.
+                      See "threshold" in OKGTRegForDetermineGroupStructure's methods:
+                      `optimalMerge`, `optimalSplit`, `optimalSplit2`.
+
+    :type nRandomPartition: int
+    :param nRandomPartition: number of groups in the random partition as the initial group
+                             structure.
+
     :return:
     """
     method = 'nystroem' if useLowRankApproximation else 'vanilla'
 
     # Random group initialization
-    group0 = RandomGroup(4, nCovariates=data.p, seed=seed)
+    # group0 = RandomGroup(4, nCovariates=data.p, seed=seed)
+    group0 = RandomGroup(nRandomPartition, nCovariates=data.p, seed=seed)
     parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
     okgt = OKGTRegForDetermineGroupStructure(data, parameters0)
 
