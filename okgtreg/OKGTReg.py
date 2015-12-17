@@ -1,8 +1,9 @@
 import numpy as np
 import scipy as sp
 import scipy.linalg as slin
-import warnings
-import copy
+import sys, traceback
+# import warnings
+# import copy
 
 # from .Data import *
 # from .Kernel import *
@@ -20,20 +21,42 @@ groupStructure: partition of variables into groups
 
 
 class OKGTReg(object):
-    def __init__(self, data, parameters, eps=1e-6):
+    def __init__(self, data, parameters=None, eps=1e-6, kernel=None, group=None):
         """
+        Two constructors:
+            1) OKGTReg(data, parameters)
+            2) OKGTReg(data, kernel, group)
+
+        The second constructor assumes that all groups share the same kernel.
 
         :type data: Data
         :param data:
 
-        :type params: Parameters
-        :param params:
+        :type parameters: Parameters or None
+        :param paramseters:
+
+        :type eps: float
+        :param eps: regularization coefficient for regularizing kernel matrices
+
+        :type kernel: Kernel or None
+        :param kernel:
 
         :rtype: OKGTReg
         :return:
         """
-        # private field, not to accessed directly
-        self.parameterizedData = ParameterizedData(data, parameters)
+        # private field, not to access directly
+        if parameters is None:
+            try:
+                parameters = Parameters(group, kernel, [kernel]*group.size)
+                self.parameterizedData = ParameterizedData(data, parameters)
+            except AttributeError:
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                print("** The parameters \"kernel\" or \"group\" are not correctly specified. **")
+                traceback.print_exception(exc_type, exc_value, exc_traceback,
+                                          limit=2, file=sys.stdout)
+        else:
+            self.parameterizedData = ParameterizedData(data, parameters)
+
         self.eps = eps
         self.data = data
 

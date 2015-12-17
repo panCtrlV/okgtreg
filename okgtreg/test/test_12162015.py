@@ -1,7 +1,8 @@
+from okgtreg import *
+
 """
 Test the updated version of RandomGroup
 """
-from okgtreg.Group import RandomGroup
 
 # Given size and covariate indices
 randomGroup1 = RandomGroup(4, [1,2,3,4,5,6], seed=25)
@@ -29,8 +30,6 @@ randomGroup6 = RandomGroup(10, [1,2,3,4,5,6])
 """
 Modified the interface of Data.getGroupedData by allow the input to be a list
 """
-from okgtreg.DataSimulator import DataSimulator
-
 n = 500
 data, trueGroup = DataSimulator.SimData_Wang04WithInteraction(n)
 
@@ -45,8 +44,6 @@ data
 Modified the interface of Data.__getitem__ by allow different data types as key
 """
 import string
-
-from okgtreg.DataSimulator import DataSimulator
 
 n = 500
 data, trueGroup = DataSimulator.SimData_Wang04WithInteraction(n)
@@ -73,3 +70,24 @@ data[['a', 'pan']]
 # list of integers
 data[[1,2,3]]  # success
 data[[-1, 0, 2]]  # -1 out of bounds
+
+
+"""
+Modified OKGTReg constructor to enable object construction as
+
+    OKGTReg(data, kernel, group)
+"""
+data, group = DataSimulator.SimData_Wang04WithInteraction(500)
+kernel = Kernel('gaussian', sigma=0.5)
+
+# old constructor
+parameters = Parameters(group, kernel, [kernel]*group.size)
+okgt = OKGTReg(data, parameters)
+
+# new constructor
+okgt = OKGTReg(data, kernel=kernel, group=group)
+
+# Exceptions
+okgt = OKGTReg(data)
+okgt = OKGTReg(data, kernel=Kernel)
+okgt = OKGTReg(data, group=group)
