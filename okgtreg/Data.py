@@ -34,7 +34,7 @@ class Data(object):
 
             ([3, 5], [4], [7, 8])] -> ([1, 3], [2], [5, 6])
 
-        :type group: Group
+        :type group: Group or list
         :param group: a group structure, either a full partition or a structure consisting
                       of a subset of the available covariates.
 
@@ -46,7 +46,12 @@ class Data(object):
         def flattenPartition(partition):
             return [i for g in partition for i in g]
 
-        covariateInds = flattenPartition(group.partition)
+        # If the input group is a list, then construct a Group object
+        # from the list
+        if isinstance(group, list):
+            group = Group(*tuple(group))
+
+        covariateInds = flattenPartition(group.getPartitions())
         subX = self.X[:, np.array(covariateInds)-1]
         y = self.y
         subData = Data(y, subX)

@@ -25,3 +25,19 @@ randomGroup5
 
 # Size > number of covariates
 randomGroup6 = RandomGroup(10, [1,2,3,4,5,6])
+
+"""
+Modify the interface of Data.getGroupedData by allow the input to be a list
+"""
+from okgtreg.DataSimulator import DataSimulator
+from okgtreg.Data import Data
+
+n = 500
+data, trueGroup = DataSimulator.SimData_Wang04WithInteraction(n)
+
+# get a subset of the data corresponding to the group structure given as a list
+groupList = [[1], [6,7]]
+subData, subGroup = data.getGroupedData(groupList)
+subData
+data
+

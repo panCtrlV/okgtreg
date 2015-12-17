@@ -507,6 +507,9 @@ class RandomGroup(Group):
         """
         Randomly partition covariates into groups of nearly equal size.
 
+        Reference:
+            http://stackoverflow.com/questions/3352737/python-randomly-partition-a-list-into-n-nearly-equal-parts
+
         :type n: int
         :param n: number of groups
 
