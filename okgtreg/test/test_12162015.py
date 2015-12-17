@@ -27,10 +27,9 @@ randomGroup5
 randomGroup6 = RandomGroup(10, [1,2,3,4,5,6])
 
 """
-Modify the interface of Data.getGroupedData by allow the input to be a list
+Modified the interface of Data.getGroupedData by allow the input to be a list
 """
 from okgtreg.DataSimulator import DataSimulator
-from okgtreg.Data import Data
 
 n = 500
 data, trueGroup = DataSimulator.SimData_Wang04WithInteraction(n)
@@ -41,3 +40,36 @@ subData, subGroup = data.getGroupedData(groupList)
 subData
 data
 
+
+"""
+Modified the interface of Data.__getitem__ by allow different data types as key
+"""
+import string
+
+from okgtreg.DataSimulator import DataSimulator
+
+n = 500
+data, trueGroup = DataSimulator.SimData_Wang04WithInteraction(n)
+
+# string, when no names assigned in data
+data['x1']
+
+# string
+data.setXNames(list(string.ascii_lowercase)[:7])
+data.setYName('y')
+
+data['b']  # successful
+data['x1']  # no such name
+
+# integer
+data[1]  # covariate, success
+data[0]  # response, success
+data[100]  # index out of bound
+
+# list of strings
+data[['a', 'c']]  # success
+data[['a', 'pan']]
+
+# list of integers
+data[[1,2,3]]  # success
+data[[-1, 0, 2]]  # -1 out of bounds

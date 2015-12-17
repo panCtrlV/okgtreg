@@ -1,4 +1,5 @@
 import numpy as np
+import traceback, sys
 
 from okgtreg.Group import Group
 
@@ -13,6 +14,16 @@ class Data(object):
     covariate dimension. Also included is a method to create a grouped data.
     """
     def __init__(self, y, X):
+        """
+
+        :type y: 1d array
+        :param y:
+
+        :type X: 2d array
+        :param X:
+
+        :return:
+        """
         self.y = y
         self.X = X
         self.n = len(y)  # sample size
@@ -95,22 +106,63 @@ class Data(object):
         self.yname = name
         return
 
-    def __getitem__(self, variableName):
+    def __getitem__(self, key):
         """
         Given a variable name, return the corresponding data as a 1d array.
 
-        :type variableName: str
-        :param variableName: variable name
+        :type key: str or int or list of str or list of int
+        :param key: If key is given as a string, then it is considered as a variable name,
+                    either the response variable or one fo the covariates.
 
-        :rtype: 1d array
+                    If key is given as an integer, then it is considered as an index at which
+                    position a variable is retrieved. If key is 0, the response is returned. If
+                    key is a positive integer, the corresponding covariate is returned.
+
+                    If key is given as a list of strings, each string is considered as a variable name,
+                    then the observations for the corresponding variables are returned as a 2d array.
+
+                    If key is given as a list of integers, each integer is considered as the index
+                    for a variable, where 0 is corresponding to the response, and a positive integer
+                    is corresponding to a covariate.
+
+        :rtype: 1d array or 2d array
         :return:
         """
-        if self.yname == variableName:
-            return self.y
-        elif variableName in self.xnames:
-            return self.X[:, self.xnames.index(variableName)]
+        if isinstance(key, str):
+            try:
+                if key == self.yname:
+                    return self.y
+                elif key in self.xnames:
+                    return self.X[:, self.xnames.index(key)]
+                else:
+                    raise ValueError("** Variable \"%s\" is not in the data set. **" % key)
+            except TypeError:
+                # Details about "Print or retrieve a stack traceback" can be found at:
+                #   https://docs.python.org/2/library/traceback.html
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                print("** Variable names are not assigned. **")
+                traceback.print_exception(exc_type, exc_value, exc_traceback,
+                                          limit=2, file=sys.stdout)
+        elif isinstance(key, int):
+            if key == 0:
+                return self.y
+            elif key > 0:
+                try:
+                    return self.X[:, key-1]
+                except IndexError:
+                    exc_type, exc_value, exc_traceback = sys.exc_info()
+                    print("** Index %d is out of bounds for total number of covariates "
+                          "(%d). **" % (key, self.p))
+                    traceback.print_exception(exc_type, exc_value, exc_traceback,
+                                          limit=2, file=sys.stdout)
+            else:
+                raise IndexError("** Index %d is out of bounds. **" % key)
+        elif all(isinstance(k, str) for k in key):
+            return np.vstack([self.__getitem__(k) for k in key]).T  # recursion
+        elif all(isinstance(k, int) for k in key):
+            return np.vstack([self.__getitem__(k) for k in key]).T  # recursion
         else:
-            raise ValueError("** Variable \"%s\" is not in the data set. **" % variableName)
+            raise IndexError("** Index type %s is not recognized. **" % type(key))
 
     def __str__(self):
         # Used for `print Data`
