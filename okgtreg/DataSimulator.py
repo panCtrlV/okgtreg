@@ -74,7 +74,7 @@ class DataSimulator(object):
         """
         Model Name: Wang04 With Interaction
 
-            y=log(4 + sin(4 * X1) + |X2| + X3^2 + X4^3 + X5 + X6*X7 0.1*\epsilon)
+            y=log(4 + sin(4 * X1) + |X2| + X3^2 + X4^3 + X5 + X6*X7 + 0.1*\epsilon)
             Xi ~ Unif(-1, 1)
             \epsilon ~ N(0, 1)
 
@@ -88,7 +88,6 @@ class DataSimulator(object):
 
         group = Group([1], [2], [3], [4], [5], [6,7])
 
-        # return y, x
         return Data(y, x), group
 
     @staticmethod
@@ -114,6 +113,29 @@ class DataSimulator(object):
                    abs(x[:, 5] * x[:, 6] * x[:, 7]) +
                    0.1 * noise)
         return Data(y, x)
+
+    @staticmethod
+    def SimData_Wang04WithTwoBivariateGroups(n):
+        """
+        Model Name: Wang04 With Two Bivariate Groups
+
+            y = exp(1 + sin(2 * X1) + |X2| + X3^2 + X4^3 + X5 + X6*X7)
+
+        :type n: int
+        :param n: sample size
+
+        :rtype: tuple(Data, Group)
+        :return: data and the true group structure
+        """
+        p = 9
+        x = (np.random.random(n*p) * 2.0 - 1.0).reshape((n, p))
+        noise = np.random.standard_normal(n) * 0.1
+        y = np.exp( 1. + np.sin(2. * x[:, 0]) + np.abs(x[:, 1]) + x[:, 2]**2 + x[:, 3]**3 + x[:, 4] +
+                    x[:, 5] * x[:, 6] + np.cos(x[:, 7] + x[:, 8]) + noise)
+
+        group = Group([1], [2], [3], [4], [5], [6,7], [8,9])
+
+        return Data(y, x), group
 
     @staticmethod
     def SimData_Wang04WithInteraction2_100(n):
