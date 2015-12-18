@@ -448,8 +448,11 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
             self.train(method=method, nComponents=nComponents, seed=seed)
 
         if self.getGroupSize() == 1:  # only one group in the structure
-            print "** There is only one group. No need to merge. **"
+            print("** There is only one group. No need to merge. **")
             # warnings.warn("** There is only one group. No need to merge. **")
+            return self
+        elif not any(len(part)==1 for part in self.getPartition()):
+            print("** All groups are multi-variate. No merge. **")
             return self
         else:  # start merging attempts
             bestR2 = self.r2
