@@ -119,7 +119,9 @@ class DataSimulator(object):
         """
         Model Name: Wang04 With Two Bivariate Groups
 
-            y = exp(1 + sin(2 * X1) + |X2| + X3^2 + X4^3 + X5 + X6*X7)
+            y = (1 + sin(2 * X1) + |X2| + X3^2 + X4^3 + X5 + X6*X7 + 0.1 * \epsilon)^(1/3)
+            Xi ~ Unif(-1, 1) -> Xi ~ Unif(-pi, pi)
+            \epsilon ~ N(0, 1)
 
         :type n: int
         :param n: sample size
@@ -128,10 +130,18 @@ class DataSimulator(object):
         :return: data and the true group structure
         """
         p = 9
-        x = (np.random.random(n*p) * 2.0 - 1.0).reshape((n, p))
+        # x = (np.random.random(n*p) * 2.0 - 1.0).reshape((n, p))
+        x = np.random.uniform(-np.pi, np.pi, n*p).reshape((n, p))
         noise = np.random.standard_normal(n) * 0.1
-        y = np.exp( 1. + np.sin(2. * x[:, 0]) + np.abs(x[:, 1]) + x[:, 2]**2 + x[:, 3]**3 + x[:, 4] +
-                    x[:, 5] * x[:, 6] + np.cos(x[:, 7] + x[:, 8]) + noise)
+        gy = 1. + np.sin(2. * x[:, 0]) + \
+             np.abs(x[:, 1]) + \
+             x[:, 2]**2 + \
+             x[:, 3]**3 + \
+             x[:, 4] + \
+             x[:, 5] * x[:, 6] + \
+             np.cos(x[:, 7] + x[:, 8]) + \
+             noise
+        y = np.sign(gy) * np.power(np.abs(gy), 1./3)
 
         group = Group([1], [2], [3], [4], [5], [6,7], [8,9])
 
