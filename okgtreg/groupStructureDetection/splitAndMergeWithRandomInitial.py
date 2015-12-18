@@ -92,7 +92,7 @@ def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, r
 
 
 def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None,
-                                    threshold=0., nRandomPartition=2):
+                                    nRandomPartition=2, threshold=0., maxSplit=1):
     """
     Less aggressive version.
 
@@ -115,6 +115,9 @@ def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, 
     :param nRandomPartition: number of groups in the random partition as the initial group
                              structure.
 
+    :type maxSplit: int
+    :param maxSplit: see maxSplit in OKGTReg.optimalSplit2
+
     :return:
     """
     method = 'nystroem' if useLowRankApproximation else 'vanilla'
@@ -133,7 +136,7 @@ def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, 
         print("\n=== %d ===" % counter)
 
         print "[Split]"
-        okgtAfterSplit = okgt.optimalSplit2(kernel, method, rank, seed, threshold)  # less aggressive split
+        okgtAfterSplit = okgt.optimalSplit2(kernel, method, rank, seed, threshold, maxSplit)  # less aggressive split
         print "[Merge]"
         okgtAfterMerge = okgt.optimalMerge(kernel, method, rank, seed, threshold)
 

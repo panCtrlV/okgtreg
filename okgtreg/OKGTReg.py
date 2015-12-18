@@ -5,9 +5,6 @@ import sys, traceback
 # import warnings
 # import copy
 
-# from .Data import *
-# from .Kernel import *
-
 from .Data import Data, ParameterizedData
 from .Parameters import Parameters
 from .Group import Group
@@ -33,7 +30,7 @@ class OKGTReg(object):
         :param data:
 
         :type parameters: Parameters or None
-        :param paramseters:
+        :param parameters:
 
         :type eps: float
         :param eps: regularization coefficient for regularizing kernel matrices
@@ -311,7 +308,7 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
 
             currentGroup = self.getGroupStructure()
             for i in np.arange(currentGroup.size) + 1:
-                if len(currentGroup.getPartition(i)) > 1:
+                if len(currentGroup.getPartitions(i)[0]) > 1:
                     newGroup = currentGroup._splitOneGroup(i)
                     newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
                     newOkgt = OKGTRegForDetermineGroupStructure(self.data, newParameters)
@@ -334,7 +331,8 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                       "%s, R2 = %.04f. **\n" % (bestOkgt.getGroupStructure(), bestR2))
                 return bestOkgt
 
-    def optimalSplit2(self, kernel, method='vanilla', nComponents=None, seed=None, threshold=0.):
+    def optimalSplit2(self, kernel, method='vanilla', nComponents=None, seed=None,
+                      threshold=0., maxSplit=1):
         """
         A less aggressive split procedure. That is, random split instead of complete split.
 
@@ -356,6 +354,10 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
         :param threshold: if the improvement in R2 by splitting a group exceeds this threshold,
                           it is considered significant and the split is performed.
 
+        :type maxSplit: int
+        :param maxSplit: the maximum number of covariates to be split into univariate groups
+                         in a chosen group.
+
         :rtype: OKGTRegForDetermineGroupStructure
         :return:
         """
@@ -370,11 +372,13 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
             bestR2 = self.r2
             print("** Current group structure: %s, R2 = %.04f. **\n" % (bestOkgt.getGroupStructure(), bestR2))
 
+            improved = False
             # Update group structure
             currentGroup = self.getGroupStructure()
             for i in np.arange(currentGroup.size) + 1:
-                if len(currentGroup.getPartition(i)) > 1:
-                    testGroup = currentGroup._splitOneGroup(i)
+                parti = currentGroup.getPartitions(i)[0]
+                if len(parti) > 1:
+                    testGroup = currentGroup.split(i)  # completely split i-th group
                     testParameters = Parameters(testGroup, kernel, [kernel]*testGroup.size)
                     testOkgt = OKGTRegForDetermineGroupStructure(self.data, testParameters)
                     testOkgt.train(method=method, nComponents=nComponents, seed=seed)
@@ -383,9 +387,14 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                     # if testOkgt.r2 > bestR2:
                     # Thresholding R2 improvement
                     if testOkgt.r2 - bestR2 > threshold:
+                        improved = True
                         bestR2 = testOkgt.r2
-                        # Randomly split one covariate from as the group structure (less aggressive)
-                        newGroup = currentGroup.split(i, randomSplit=True)
+                        # Randomly split one or multiple covariate from the
+                        # current group structure (less aggressive)
+                        if maxSplit > len(parti):
+                            newGroup = testGroup
+                        else:
+                            newGroup = currentGroup.split(i, True, seed, maxSplit)
                         print("** Improving! -> Update by random split: %s. **" % newGroup)
                         # newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
                         # newOkgt = OKGTRegForDetermineGroupStructure(self.data, newParameters)
@@ -396,16 +405,16 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                         print("** No improving. **")
 
             # Return result
-            if self.r2 == bestR2:  # no improvement
-                print "\n** No split can improve R2. **\n"
-                return self
-            else:
+            if improved:
                 print("\n** New group structure after optimal random split: %s. **\n" % newGroup)
                 bestParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
                 bestOkgt = OKGTRegForDetermineGroupStructure(self.data, bestParameters)
                 bestOkgt.train(method=method, nComponents=nComponents, seed=seed)
                 return bestOkgt
                 # return newOkgt
+            else: # no improvement
+                print "\n** No split can improve R2. **\n"
+                return self
 
     def optimalMerge(self, kernel, method='vanilla', nComponents=None, seed=None, threshold=0.):
         """
@@ -452,7 +461,7 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
             for i in np.arange(1, self.getGroupSize()):  # excluding the last group
                 for j in np.arange(i+1, self.getGroupSize()+1):
                     # only attempt to merge a univariate group with another one
-                    if len(currentGroup.getPartition(i)) > 1 and len(currentGroup.getPartition(j)) > 1:
+                    if len(currentGroup.getPartitions(i)[0]) > 1 and len(currentGroup.getPartitions(j)[0]) > 1:
                         continue
                     else:
                         newGroup = currentGroup._mergeTwoGroups(i, j)
