@@ -7,7 +7,7 @@ from okgtreg.groupStructureDetection.splitAndMergeWithRandomInitial import split
 from okgtreg.OKGTReg import OKGTReg
 from okgtreg.Parameters import Parameters
 
-# Simpmle data generator
+# Simple data generator
 def simulateData(n):
     x = np.random.uniform(-1., 1., (n, 4))
     noise = np.random.normal(0., 1., n) * 0.1
