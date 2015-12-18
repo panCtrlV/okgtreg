@@ -92,7 +92,7 @@ def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, r
 
 
 def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None,
-                                    nRandomPartition=2, threshold=0., maxSplit=1):
+                                    nRandomPartition=2, sThreshold=0., mThreshold=0., maxSplit=1):
     """
     Less aggressive version.
 
@@ -105,11 +105,16 @@ def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, 
     :param seed: seeding both random group partition for the initial group structure and
                  Nystroem method of low rank approximation for kernel matrices.
 
-    :type threshold: float, >=0
-    :param threshold: if the improvement of merge or split in R2 exceeds this threshold,
-                      it is considered significant and the merge or split is performed.
-                      See "threshold" in OKGTRegForDetermineGroupStructure's methods:
-                      `optimalMerge`, `optimalSplit`, `optimalSplit2`.
+    :type sThreshold: float, >=0
+    :param sThreshold: threshold for optimal split.
+                       If the improvement of split in R2 exceeds this threshold, it is
+                       considered significant and the merge or split is performed.
+                       See "threshold" in `OKGTRegForDetermineGroupStructure.optimalSplit`
+                       and `OKGTRegForDetermineGroupStructure.optimalSplit2`.
+
+    :type mThreshold: float, >=0
+    :param mThreshold: threshold for optimal merge. Similar to sThreshold.
+                       See "threshold" in `OKGTRegForDetermineGroupStructure.optimalMerge`.
 
     :type nRandomPartition: int
     :param nRandomPartition: number of groups in the random partition as the initial group
@@ -136,9 +141,9 @@ def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, 
         print("\n=== %d ===" % counter)
 
         print "[Split]"
-        okgtAfterSplit = okgt.optimalSplit2(kernel, method, rank, seed, threshold, maxSplit)  # less aggressive split
+        okgtAfterSplit = okgt.optimalSplit2(kernel, method, rank, seed, sThreshold, maxSplit)  # less aggressive split
         print "[Merge]"
-        okgtAfterMerge = okgt.optimalMerge(kernel, method, rank, seed, threshold)
+        okgtAfterMerge = okgt.optimalMerge(kernel, method, rank, seed, mThreshold)
 
         if okgtAfterSplit.r2 == okgtAfterMerge.r2:  # no split or merge can improve fitting
             proceed = False
