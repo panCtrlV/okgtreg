@@ -129,8 +129,8 @@ def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, 
 
     # Random group initialization
     # group0 = RandomGroup(4, nCovariates=data.p, seed=seed)
-    # group0 = RandomGroup(nRandomPartition, nCovariates=data.p, seed=seed)
-    group0 = Group([1, 9], [2, 6, 8], [3], [4], [5], [7])
+    group0 = RandomGroup(nRandomPartition, nCovariates=data.p, seed=seed)
+    # group0 = Group([1, 9], [2, 6, 8], [3], [4], [5], [7])
     parameters0 = Parameters(group0, kernel, [kernel]*group0.size)
     okgt = OKGTRegForDetermineGroupStructure(data, parameters0)
 
@@ -146,9 +146,7 @@ def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, 
         print "[Merge]"
         okgtAfterMerge = okgt.optimalMerge(kernel, method, rank, seed, mThreshold)
 
-
-        print("[Debug] R2-split = %.04f, R2-merge = %.04f" % (okgtAfterSplit.bestR2, okgtAfterMerge.bestR2))
-
+        # Determine updated group structure
         if okgtAfterSplit.bestR2 == okgtAfterMerge.bestR2:  # no split or merge can improve fitting
             proceed = False
         elif okgtAfterSplit.bestR2 > okgtAfterMerge.bestR2:
