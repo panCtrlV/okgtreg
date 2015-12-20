@@ -357,7 +357,7 @@ class Group(object):
         if partitionNumber > self.size or partitionNumber < 1:
             raise ValueError("** \"partitionNumber\" %d is out of bound. **" % partitionNumber)
         else:
-            selectedPart = self.getPartition(partitionNumber)
+            selectedPart = self[partitionNumber]
             if len(selectedPart) == 1:
                 warnings.warn("** Group %d is univariate. No need to split. **" % partitionNumber)
                 # return None

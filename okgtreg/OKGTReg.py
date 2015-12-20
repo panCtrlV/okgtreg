@@ -234,6 +234,7 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
         self.f = None
         self.g = None
         self.r2 = None
+        self.bestR2 = None
 
     def train(self, method='vanilla', nComponents=None, seed=None):
         if method is 'nystroem' and nComponents is None:
@@ -334,7 +335,10 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
     def optimalSplit2(self, kernel, method='vanilla', nComponents=None, seed=None,
                       threshold=0., maxSplit=1):
         """
-        A less aggressive split procedure. That is, random split instead of complete split.
+        A less aggressive split procedure. That is, the returned group structure is
+        given by random split (one or multiple covariates in a group) instead of complete
+        split. However, during the intermediate steps, the improvement of R2 is based
+        on the complete split.
 
         :type kernel: Kernel
         :param kernel: kernel function used to train OKGT during searching for optimal
@@ -366,41 +370,36 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
 
         if self.getGroupSize() == self.parameterizedData.p:
             print "** All groups are univariate. No need to split. **"
+            self.bestR2 = self.r2
             return self
         else:  # start splitting attempts
             bestOkgt = self
-            bestR2 = self.r2
+            bestR2 = self.r2  # updated based on complete split
             print("** Current group structure: %s, R2 = %.04f. **\n" % (bestOkgt.getGroupStructure(), bestR2))
 
             improved = False
             # Update group structure
             currentGroup = self.getGroupStructure()
             for i in np.arange(currentGroup.size) + 1:
-                parti = currentGroup.getPartitions(i)[0]
-                if len(parti) > 1:
+                len_i = len(currentGroup[i])  # i-th part of the group structure
+                if len_i > 1:
                     testGroup = currentGroup.split(i)  # completely split i-th group
                     testParameters = Parameters(testGroup, kernel, [kernel]*testGroup.size)
                     testOkgt = OKGTRegForDetermineGroupStructure(self.data, testParameters)
                     testOkgt.train(method=method, nComponents=nComponents, seed=seed)
                     print("** Tested group structure by complete split: "
                           "%s, R2 = %.04f. **" % (testOkgt.getGroupStructure(), testOkgt.r2))
-                    # if testOkgt.r2 > bestR2:
                     # Thresholding R2 improvement
                     if testOkgt.r2 - bestR2 > threshold:
                         improved = True
                         bestR2 = testOkgt.r2
                         # Randomly split one or multiple covariate from the
                         # current group structure (less aggressive)
-                        if maxSplit > len(parti):
+                        if maxSplit > len_i:
                             newGroup = testGroup
                         else:
                             newGroup = currentGroup.split(i, True, seed, maxSplit)
                         print("** Improving! -> Update by random split: %s. **" % newGroup)
-                        # newParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
-                        # newOkgt = OKGTRegForDetermineGroupStructure(self.data, newParameters)
-                        # newOkgt.train(method=method, nComponents=nComponents, seed=seed)
-                        # print("** Updated group structure by random split: "
-                        #       "%s, R2 = %.04f. **" % (newOkgt.getGroupStructure(), newOkgt.r2))
                     else:
                         print("** No improving. **")
 
@@ -410,10 +409,12 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                 bestParameters = Parameters(newGroup, kernel, [kernel]*newGroup.size)
                 bestOkgt = OKGTRegForDetermineGroupStructure(self.data, bestParameters)
                 bestOkgt.train(method=method, nComponents=nComponents, seed=seed)
+                bestOkgt.bestR2 = bestR2
                 return bestOkgt
                 # return newOkgt
             else: # no improvement
                 print "\n** No split can improve R2. **\n"
+                self.bestR2 = self.r2
                 return self
 
     def optimalMerge(self, kernel, method='vanilla', nComponents=None, seed=None, threshold=0.):
@@ -450,15 +451,18 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
         if self.getGroupSize() == 1:  # only one group in the structure
             print("** There is only one group. No need to merge. **")
             # warnings.warn("** There is only one group. No need to merge. **")
+            self.bestR2 = self.r2
             return self
         elif not any(len(part)==1 for part in self.getPartition()):
             print("** All groups are multi-variate. No merge. **")
+            self.bestR2 = self.r2
             return self
         else:  # start merging attempts
             bestR2 = self.r2
             bestOkgt = self
             print("** Current group structure: %s, R2 = %.04f. **" % (bestOkgt.getGroupStructure(), bestR2))
 
+            improved = False
             # Try to merger two groups
             currentGroup = self.getGroupStructure()
             for i in np.arange(1, self.getGroupSize()):  # excluding the last group
@@ -475,15 +479,17 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
                         # print newOkgt.r2
                         # if newOkgt.r2 > bestR2:
                         if newOkgt.r2 - bestR2 > threshold:
+                            improved = True
                             bestR2 = newOkgt.r2
                             bestOkgt = newOkgt
                             print("** Better group structure: %s, R2 = %.04f. **" % (newGroup, bestR2))
 
-            if self.r2 == bestOkgt.r2:
-                print "\n** No merge can improve R2. **\n"
-                # warnings.warn("** No merge can improve R2. **")
-                return self
-            else:
+            if improved:
                 print("\n** New group structure after optimal merge: "
                       "%s, R2 = %.04f. **\n" % (bestOkgt.getGroupStructure(), bestR2))
+                bestOkgt.bestR2 = bestR2
                 return bestOkgt
+            else:
+                print "\n** No merge can improve R2. **\n"
+                self.bestR2 = self.r2
+                return self
