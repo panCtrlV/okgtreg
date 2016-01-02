@@ -48,7 +48,7 @@ while counter < nSim:
     res = splitAndMergeWithRandomInitial2(data, kernel, True, seed=counter)
 
     groups.append(res.getGroupStructure())
-    groups.append(res.r2)
+    r2s.append(res.r2)
 
 
 mydir = os.getcwd()
