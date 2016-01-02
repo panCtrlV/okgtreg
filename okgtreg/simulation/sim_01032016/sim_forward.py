@@ -3,8 +3,10 @@ __author__ = 'panc'
 """
 This simulation is intended to be used for IBM jab talk.
 
-The purpose of this simulation is to demonstrate the usefulness of group
-detection procedure to find an optimal group structure given a data set.
+The purpose of this simulation is to demonstrate the usefulness of the
+**forward selection** group detection procedure to find an optimal group
+structure given a data set.
+
 Ideally, the procedure should recover the true group structure in the
 simulation.
 
@@ -29,7 +31,8 @@ def positivePart(x):
 def simulateData(n):
     group = Group([1,2], [3,4], [5,6], [7,8], [9,10])
     x1 = np.random.uniform(0, 2, (n, 5))
-    x2 = x1 + np.random.normal(size=(n,5)) * 0.1
+    # x2 = x1 + np.random.normal(size=(n,5)) * 0.1
+    x2 = x1 * 2.
     x = np.vstack([np.vstack([x1[:,i], x2[:,i]]) for i in range(5)]).T
     e = np.random.normal(size=n) * 0.1
     y = ( 5. +
@@ -60,11 +63,12 @@ while counter < nSim:
     data, truegroup = simulateData(n)
 
     # Group structure detection
-    res = splitAndMergeWithRandomInitial2(data, kernel, True, seed=counter)
+    # res = splitAndMergeWithRandomInitial2(data, kernel, True, seed=counter)
+    res = forwardSelection(data, kernel, 'nystroem', seed=counter)
 
-    groups.append(res.getGroupStructure())
-    r2s.append(res.r2)
+    groups.append(res['group'])
+    r2s.append(res['r2'])
 
-
+# Pickle results
 mydir = os.getcwd()
-pickle.dump((groups, r2s), open(mydir+'/sim.pkl', 'wb'))
+pickle.dump((groups, r2s), open(mydir+'/'+__file__+'/'+'.pkl', 'wb'))
