@@ -26,8 +26,8 @@ def positivePart(x):
     return x
 
 # The first covariate in each group are independent Unif(0,2),
-# and the second covariate in a group is created by adding a
-# small noise to the first covariate.
+# and the second covariate in a group is created by multiplying a
+# constant to the first covariate.
 def simulateData(n):
     group = Group([1,2], [3,4], [5,6], [7,8], [9,10])
     x1 = np.random.uniform(0, 2, (n, 5))
