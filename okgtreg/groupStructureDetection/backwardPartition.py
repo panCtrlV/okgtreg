@@ -48,7 +48,7 @@ pool.
 # ------------------------
 # Start forward selection
 # ------------------------
-def backwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
+def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None):
     covariatesPool = list(np.arange(data.p) + 1)
     oldGroup = Group(covariatesPool)  # start with a large single group
     p = oldGroup.p
@@ -159,4 +159,4 @@ if __name__ == "__main__":
     kernel = Kernel('gaussian', sigma=0.5)
 
     # Call backward selection
-    selectedGroup = backwardSelection(data, kernel, True, 10)
+    selectedGroup = backwardPartition(data, kernel, 'nystroem', 10)
