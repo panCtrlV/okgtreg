@@ -11,7 +11,7 @@ Determining group structure by forward selection.
 # kernel = Kernel('gaussian', sigma=0.5)
 
 
-def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10, seed=None):
+def forwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
     """
     Forward selection procedure which detects group structure for OKGT.
     It is assumed that:
@@ -48,8 +48,6 @@ def forwardSelection(data, kernel, useLowRankApproximation=True, rank=10, seed=N
     :rtype: Group
     :return: selected group structure
     """
-    method = 'nystroem' if useLowRankApproximation else 'vanilla'
-
     covariatesPool = list(np.arange(data.p) + 1)
     oldGroup = Group()  # start with an empty group structure
     bestR2 = 0.
