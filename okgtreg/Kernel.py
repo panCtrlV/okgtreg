@@ -102,8 +102,8 @@ class Kernel(object):
 
     @staticmethod
     def laplaceKernel(x, y, sigma):
-        absSum = np.abs(x - y).sum()
-        return np.exp(-sigma * absSum)
+        norm = np.linalg.norm(x - y)
+        return np.exp(-sigma * norm)
 
     @staticmethod
     def exponentialKernel(x, y, sigma):
