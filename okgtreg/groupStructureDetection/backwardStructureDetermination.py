@@ -48,9 +48,7 @@ pool.
 # ------------------------
 # Start forward selection
 # ------------------------
-def backwardSelection(data, kernel, useLowRankApproximation=True, rank=10, seed=None):
-    method = 'nystroem' if useLowRankApproximation else 'vanilla'
-
+def backwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
     covariatesPool = list(np.arange(data.p) + 1)
     oldGroup = Group(covariatesPool)  # start with a large single group
     p = oldGroup.p
