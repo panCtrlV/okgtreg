@@ -41,8 +41,8 @@ while counter < nSim:
     # res = forwardSelection(data, kernel, 'nystroem', seed=counter)
     # res = backwardPartition(data, kernel, 'nystroem', seed=counter)
 
-    groups.append(res['group'])
-    r2s.append(res['r2'])
+    groups.append(res.getGroupStructure())
+    r2s.append(res.r2)
     print('\n')
 
 # Pickle results
