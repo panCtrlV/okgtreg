@@ -73,4 +73,4 @@ while counter < nSim:
 
 # Pickle results
 mydir = os.getcwd()
-pickle.dump((groups, r2s), open(mydir+'/'+__file__+'/'+'.pkl', 'wb'))
+pickle.dump((groups, r2s), open(mydir+'/'+__file__+'.pkl', 'wb'))
