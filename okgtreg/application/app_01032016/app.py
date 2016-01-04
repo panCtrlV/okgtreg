@@ -1,7 +1,7 @@
 __author__ = 'panc'
 
 """
-Application of forward procedure on SkillCraft1 data set.
+1. Application of forward procedure on SkillCraft1 data set.
 
 The data are normalized before applying forward procedure.
 """
@@ -22,4 +22,3 @@ SELECTED GROUP STRUCTURE:
 
     ([1], [2], [3, 8], [4, 18], [5], [6, 16], [7, 9], [10, 15], [11], [12], [13], [14], [17])
 """
-print data
