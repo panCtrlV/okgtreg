@@ -419,10 +419,11 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
 
     def optimalMerge(self, kernel, method='vanilla', nComponents=None, seed=None, threshold=0.):
         """
-        Determine the optimal group structure by merging groups in the current group structure.
-        The merging is performed for every pair of groups provided that at least one of the group
-        is univariate. The reason for not merging every pair of groups is to reduce the computational
-        burden of the procedure.
+        Determine the optimal group structure by merging groups in
+        the current group structure. The merging is performed for
+        every pair of groups provided that at least one of the group
+        is univariate. The reason for not merging every pair of the
+        groups is to reduce the computational burden of the procedure.
 
         :param kernel:
 
@@ -430,15 +431,19 @@ class OKGTRegForDetermineGroupStructure(OKGTReg):
         :param method: `vanilla` or `nystroem`
 
         :type nComponents: int
-        :param nComponents: number of components for Nystroem low rank approximation.
-                            Details can be found at `Scikit-learn Nystroem <http://scikit-learn.org/stable/modules/generated/sklearn.kernel_approximation.Nystroem.html#sklearn.kernel_approximation.Nystroem>`_
+        :param nComponents: number of components for Nystroem low rank
+                            approximation. Details of the Nystroem method
+                            can be found at
+                            `Scikit-learn Nystroem <http://scikit-learn.org/stable/modules/generated/sklearn.kernel_approximation.Nystroem.html#sklearn.kernel_approximation.Nystroem>`_
 
         :type seed: int
-        :param seed: seeding the random number generator for Nystroem low rank approximation
+        :param seed: seeding the random number generator for Nystroem
+                     low rank approximation
 
         :type threshold: float, >=0
-        :param threshold: if the improvement in R2 by merging two groups exceeds this threshold,
-                          it is considered significant and the merge is performed.
+        :param threshold: if the improvement in R2 by merging two groups
+                          exceeds this threshold, it is considered
+                          significant and the merge is performed.
 
         :rtype: OKGTRegForDetermineGroupStructure
         :return:
