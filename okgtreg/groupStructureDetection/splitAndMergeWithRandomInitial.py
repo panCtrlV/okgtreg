@@ -91,7 +91,7 @@ def splitAndMergeWithRandomInitial(data, kernel, useLowRankApproximation=True, r
     return okgt
 
 
-def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, rank=10, seed=None,
+def splitAndMergeWithRandomInitial2(data, kernel, method='nystroem', rank=10, seed=25,
                                     nRandomPartition=2, sThreshold=0., mThreshold=0., maxSplit=1):
     """
     Less aggressive version.
@@ -125,7 +125,6 @@ def splitAndMergeWithRandomInitial2(data, kernel, useLowRankApproximation=True, 
 
     :return:
     """
-    method = 'nystroem' if useLowRankApproximation else 'vanilla'
 
     # Random group initialization
     # group0 = RandomGroup(4, nCovariates=data.p, seed=seed)
