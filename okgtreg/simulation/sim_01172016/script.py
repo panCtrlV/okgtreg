@@ -8,6 +8,8 @@ group structures have any ordering.
 Note: 6 covariates have 203 different partitions. In general,
 the number of partitions for n variables is given by the Bell
 number.
+
+In this example, the training method is "vanilla".
 '''
 
 from okgtreg.simulation.sim_01172016.model import *
