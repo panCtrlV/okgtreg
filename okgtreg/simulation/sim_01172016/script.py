@@ -32,13 +32,11 @@ res = {}
 allpartitions = list(partitions(set(range(1, 7))))
 allpartitions = [tuple(list(item) for item in group) for group in allpartitions]
 
-# for i in range(len(allpartitions)):
-for i in range(10):
+for i in range(len(allpartitions)):
     group = Group(*allpartitions[i])
     okgt = OKGTReg(data, kernel=kernel, group=group)
     fit = okgt.train()  # vanilla train
     r2 = fit['r2']
-    # res.append((group, r2))
     res[group] = r2
     print("%d : %s : %.10f" % (i + 1, group, r2))
 
