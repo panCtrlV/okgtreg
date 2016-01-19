@@ -50,7 +50,7 @@ kernel = Kernel('gaussian', sigma=0.5)
 # Fit OKGT for all possible group structures
 bootstrapRes = {}
 
-allpartitions = list(partitions(set(range(1, 7))))
+allpartitions = list(partitions(set(range(1, truegroup.p + 1))))
 allpartitions = [tuple(list(item) for item in group) for group in allpartitions]
 
 for i in range(len(allpartitions)):
@@ -63,9 +63,10 @@ for i in range(len(allpartitions)):
 
 # Save results
 mydir = os.getcwd()
-filename = mydir + '/' + __file__ + '-' + bootstrapSeed + '.pkl'
-pickle.dump(bootstrapRes, open(filename, 'wb'))
+saveto = mydir + '/bootstrap/' + __file__ + '-' + str(bootstrapSeed) + '.pkl'
+# print saveto
+pickle.dump(bootstrapRes, open(saveto, 'wb'))
 
 # Generate bash script
 for i in range(100):
-    print("python -u bootstrap.py %d > bootstrap.py.out.%d" % (i + 1, i + 1))
+    print("python -u bootstrap.py %d > bootstrap/bootstrap.py.out.%d" % (i + 1, i + 1))
