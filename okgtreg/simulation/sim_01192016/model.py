@@ -12,7 +12,7 @@ from scipy.special import expit, cbrt
 from okgtreg import *
 
 
-def simpleData2(n):
+def simpleData_01192016(n):
     '''
     An simple model whose data is used in the current
     simulation. The model is:
@@ -37,7 +37,7 @@ def simpleData2(n):
 if __name__ == '__main__':
     np.random.seed(25)
     n = 500
-    data, group = simpleData2(n)
+    data, group = simpleData_01192016(n)
 
     import matplotlib.pyplot as plt
 
