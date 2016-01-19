@@ -16,7 +16,10 @@ import operator
 
 sorted(res_dict.items(), key=operator.itemgetter(1), reverse=True)
 
-# True group
+# First order difference of ordered R^2
+np.diff(sorted(res_dict.values(), reverse=True))
+
+# R^2 for the true group structure
 import numpy as np
 
 allgroups = res_dict.keys()
@@ -45,4 +48,20 @@ is:
 So there are only four inherited group structures which are
 listed above. In this example, they all perform better than
 the true group structure.
+
+The result of this simulation seems promising. The difference
+of R^2 between the top six group structures are:
+
+    -2.76481539e-03,  -5.05600392e-04,  -9.04432443e-04,
+    -3.21405809e-04,  -1.62512254e-02
+
+where the last value is the difference of R^2 between the true
+group structure and the top ranked incorrect group structure
+([1, 2, 3, 4, 5], [6]). The magnitude of the difference is one
+ order higher than the largest difference between the top four
+ group structures. It seems the different is significant.
+
+In order to test the significance of the differences, bootstrap
+is used.
+
 '''
