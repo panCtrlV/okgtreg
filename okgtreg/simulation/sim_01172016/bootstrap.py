@@ -67,6 +67,6 @@ saveto = mydir + '/bootstrap/' + __file__ + '-' + str(bootstrapSeed) + '.pkl'
 # print saveto
 pickle.dump(bootstrapRes, open(saveto, 'wb'))
 
-# Generate bash script
-for i in range(100):
-    print("python -u bootstrap.py %d > bootstrap/bootstrap.py.out.%d" % (i + 1, i + 1))
+# # Generate bash script
+# for i in range(100):
+#     print("python -u bootstrap.py %d > bootstrap/bootstrap.py.out.%d" % (i + 1, i + 1))
