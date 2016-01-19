@@ -31,6 +31,7 @@ kernel = Kernel('gaussian', sigma=0.5)
 # Fit OKGT for each possible group structure
 res = {}
 
+## all group structures
 allpartitions = list(partitions(set(range(1, 7))))
 allpartitions = [tuple(list(item) for item in group) for group in allpartitions]
 
