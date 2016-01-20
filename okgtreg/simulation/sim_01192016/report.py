@@ -21,7 +21,8 @@ for i in range(len(sortedRes)):
 
 # R^2 for the true group structure (#41)
 truegroup_str = '([1], [2, 3], [4, 5, 6])'
-print truegroup_str, ':', res_dict[truegroup_str]
+truerankid = int(np.where([k == truegroup_str for (k, v) in sortedRes])[0])
+print sortedRes[truerankid]
 
 '''
 Among the ranked group structures in terms of the estimated
@@ -57,14 +58,19 @@ def calculateComplexityFromKey(key):
 
 
 sortedComplexity = [calculateComplexityFromKey(k) for (k, v) in sortedRes]
+
+## plot the ranked complexities
 plt.title("Complexities of the ranked group structures")
 plt.plot(sortedComplexity)  # order of complexity in terms of fitting
 
+# Plot complexity vs R2
 sortedR2 = [v for (k, v) in sortedRes]
-# plt.plot(sortedComplexity, sortedR2)
-plt.title(r"Complexity of group structure against $R^2$")
-# plt.plot(sortedR2, sortedComplexity)
+
+plt.title(r"Complexity of group structure against $R^2$" + '\n' +
+          r"Red circle is the true group structure")
 plt.scatter(sortedR2, sortedComplexity)
+plt.scatter(sortedR2[truerankid], sortedComplexity[truerankid],
+            s=300, facecolors='none', edgecolors='r')
 plt.xlabel(r"$R^2$")
 plt.ylabel("Complexity")
 
