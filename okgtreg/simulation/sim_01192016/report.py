@@ -19,93 +19,61 @@ sortedRes = sorted(res_dict.items(), key=operator.itemgetter(1), reverse=True)
 for i in range(len(sortedRes)):
     print i + 1, ' : ', sortedRes[i][0], '\t: ', sortedRes[i][1]
 
-# R^2 for the true group structure (#28)
+# R^2 for the true group structure (#41)
 truegroup_str = '([1], [2, 3], [4, 5, 6])'
 print truegroup_str, ':', res_dict[truegroup_str]
 
 '''
-The top 28 group structures are listed below, where the
-last group structure is the true group structure:
+Among the ranked group structures in terms of the estimated
+$R^2$'s. The true group structure is the 41-st on the list.
 
-    1  :  ([1, 2, 3, 4, 5, 6],) 	:  0.998280984279
-    2  :  ([1, 2, 3, 4, 5], [6]) 	:  0.993104524481
-    3  :  ([1, 2, 3, 4, 6], [5]) 	:  0.992118473923
-    4  :  ([1, 2, 3, 5, 6], [4]) 	:  0.992067571377
-    5  :  ([1, 2, 3, 4], [5, 6]) 	:  0.983859855577
-    6  :  ([1, 2, 3, 5], [4, 6]) 	:  0.982406579335
-    7  :  ([1], [2, 3, 4, 5, 6]) 	:  0.982220382286
-    8  :  ([1, 2, 3, 4], [5], [6]) 	:  0.98106128715
-    9  :  ([1, 2, 3, 6], [4, 5]) 	:  0.980593601684
-    10  :  ([1, 2, 3, 5], [4], [6]) 	:  0.978969940125
-    11  :  ([1, 2, 3, 6], [4], [5]) 	:  0.97881449268
-    12  :  ([1, 2, 3], [4, 5, 6]) 	:  0.978150484547
-    13  :  ([1, 4, 5, 6], [2, 3]) 	:  0.971187526931
-    14  :  ([1, 2, 3], [4, 6], [5]) 	:  0.967803824902
-    15  :  ([1, 2, 3], [4], [5, 6]) 	:  0.967591407205
-    16  :  ([1, 2, 3], [4, 5], [6]) 	:  0.966989376778
-    17  :  ([1, 5], [2, 3, 4, 6]) 	:  0.965147585939
-    18  :  ([1, 6], [2, 3, 4, 5]) 	:  0.96514654272
-    19  :  ([1, 4], [2, 3, 5, 6]) 	:  0.964404716768
-    20  :  ([1, 2, 3], [4], [5], [6]) 	:  0.963341433094
-    21  :  ([1], [2, 3, 4, 6], [5]) 	:  0.962476638295
-    22  :  ([1, 5, 6], [2, 3, 4]) 	:  0.96094095558
-    23  :  ([1], [2, 3, 4, 5], [6]) 	:  0.960569735301
-    24  :  ([1], [2, 3, 5, 6], [4]) 	:  0.959266766802
-    25  :  ([1, 4, 6], [2, 3, 5]) 	:  0.957999996255
-    26  :  ([1, 4, 5], [2, 3, 6]) 	:  0.955490081705
-    27  :  ([1, 5, 6], [2, 3], [4]) 	:  0.951755741871
-    28  :  ([1], [2, 3], [4, 5, 6]) 	:  0.951470439652
+Overall, OKGT with gaussian kernel does not provides a good
+fitting. The largest $R^2$ is 0.8.
+
+By inspecting the top 40 group structures, the grouping of
+covariates 4, 5, 6 plays an active role in forming different
+group structures. In the top 15 group structures, the covriates
+1-3 are always grouped together, while the partitions of 4-6
+causes different group structures.
+
+Another observation is that the binding of the covariates 2
+and 3 is strong. They are grouped together in the top 40 group
+structures. Actually, they are together until the 52-nd group
+structure.
+'''
+
+# Calculate the proposed complexity
+import re
+import numpy as np
+import matplotlib.pyplot as plt
 
 
-# Large Function Space Results in Better Fitting
-# ----------------------------------------------
+def calculateComplexityFromKey(key):
+    groupstrlist = re.findall('\[[^\]]*\]', key)
+    grouptuple = tuple([[int(d) for d in re.findall('\d', s)] for s in groupstrlist])
+    group = Group(*grouptuple)
+    groupcomplexity = np.sum([2 ** len(g) for g in group.partition])
+    return groupcomplexity
 
-Splitting the last group, i.e. sigmoid(x_4 + x_5 + x_6), does
-not seem to damage the goodness of fitting. In the top 11 group
-structures, group structures with various ways to split the
-last grouping are presented. In particular, the following ways
-of splitting (x_4, x_5, x_6) gives good fitting performance (
-in decreasing order):
 
-    1. Split one variable as a univariate group, then the other
-       two join the remaining variables as a single group (see
-       group structure 2, 3, 4).
+sortedComplexity = [calculateComplexityFromKey(k) for (k, v) in sortedRes]
+plt.title("Complexities of the ranked group structures")
+plt.plot(sortedComplexity)  # order of complexity in terms of fitting
 
-    2. Split two variables as a bivariate group, then the other
-       one joins the remaining variables as a single group (see
-       group structure 5, 6, 9).
+sortedR2 = [v for (k, v) in sortedRes]
+# plt.plot(sortedComplexity, sortedR2)
+plt.title(r"Complexity of group structure against $R^2$")
+# plt.plot(sortedR2, sortedComplexity)
+plt.scatter(sortedR2, sortedComplexity)
+plt.xlabel(r"$R^2$")
+plt.ylabel("Complexity")
 
-    3. Split two variables as two univariate groups, then the
-       other one joins the remaining variables as a single group
-       (see group structure 8, 10, 11).
-
-The two group structures ranked in the top 11 are group structure
-1 and 7. The group structure 1 is the most flexible structure. In
-the simulation study "sim_01172016", it also gave the best fitting
-performance. Group structure 7 is an inherited group structure, the
-good fitting performance is due to the large function space we are
-using.
-
-** Since larger function spaces usually give better performance, at
-least in these two simulation studies, some penalty should be imposed
-on OKGT fitting regarding the size of the function space. This is
-similar to penalizing for the number of the variables in linear
-regression.**
-
-# Mis-specification Damages Fitting Performance
-# ---------------------------------------------
-
-The following two group structures correspond to the same
-function spaces. However, the estimation of R^2 are drastically
-different.
-
- ([1, 3], [2, 4], [5], [6]) : 0.6677935518
- ([1, 4], [2, 3], [5], [6]) : 0.9348431480
-
-The group 195 is more severely mis-specified than group 197.
-While group 197 has [2,3] being a correct grouping, all of the
-groupings in group 195 are incorrect.
-
-**This shows that with the same function space, the specification
-of the variable partition has great impact on OKGT fitting.**
+'''
+We plot the complexities for different group structure against
+the estimated $R^2$. It can be seen that this is an upward
+trend relationship between the complexities and the estimated
+$R^2$. However, the relationship is not monotone. The estimated
+$R^2$'s for the group structures with the same complexity cover
+multiple ranges from low to high. In the figure, a group structure
+with complexity around 12 can beat that with complexity around 35.
 '''
