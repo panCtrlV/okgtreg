@@ -1,0 +1,304 @@
+=== Bootstrap seed: 10 ===
+1 : ([1, 2, 3, 4, 5, 6],) : 0.9652352152
+2 : ([1], [2, 3, 4, 5, 6]) : 0.9614004459
+3 : ([1, 3, 4, 5, 6], [2]) : 0.9390783143
+4 : ([1, 2], [3, 4, 5, 6]) : 0.9359011328
+5 : ([1], [2], [3, 4, 5, 6]) : 0.9351478769
+6 : ([1, 2, 4, 5, 6], [3]) : 0.9378675468
+7 : ([1, 3], [2, 4, 5, 6]) : 0.9345288639
+8 : ([1], [2, 4, 5, 6], [3]) : 0.9338376454
+9 : ([1, 4, 5, 6], [2, 3]) : 0.9577098649
+10 : ([1, 4, 5, 6], [2], [3]) : 0.9336531332
+11 : ([1, 2, 3], [4, 5, 6]) : 0.9598132689
+12 : ([1], [2, 3], [4, 5, 6]) : 0.9573091663
+13 : ([1, 3], [2], [4, 5, 6]) : 0.9317978154
+14 : ([1, 2], [3], [4, 5, 6]) : 0.9319469684
+15 : ([1], [2], [3], [4, 5, 6]) : 0.9311131556
+16 : ([1, 2, 3, 5, 6], [4]) : 0.9423958200
+17 : ([1, 4], [2, 3, 5, 6]) : 0.9361367289
+18 : ([1], [2, 3, 5, 6], [4]) : 0.9360788886
+19 : ([1, 3, 5, 6], [2, 4]) : 0.9105566190
+20 : ([1, 3, 5, 6], [2], [4]) : 0.9094456105
+21 : ([1, 2, 4], [3, 5, 6]) : 0.9093008839
+22 : ([1], [2, 4], [3, 5, 6]) : 0.9065297395
+23 : ([1, 4], [2], [3, 5, 6]) : 0.9058207763
+24 : ([1, 2], [3, 5, 6], [4]) : 0.9062508215
+25 : ([1], [2], [3, 5, 6], [4]) : 0.9045811102
+26 : ([1, 2, 5, 6], [3, 4]) : 0.9093835620
+27 : ([1, 2, 5, 6], [3], [4]) : 0.9082989033
+28 : ([1, 3, 4], [2, 5, 6]) : 0.9087861316
+29 : ([1], [2, 5, 6], [3, 4]) : 0.9057432426
+30 : ([1, 4], [2, 5, 6], [3]) : 0.9056322904
+31 : ([1, 3], [2, 5, 6], [4]) : 0.9063339778
+32 : ([1], [2, 5, 6], [3], [4]) : 0.9048180586
+33 : ([1, 5, 6], [2, 3, 4]) : 0.9353442335
+34 : ([1, 5, 6], [2], [3, 4]) : 0.9046750134
+35 : ([1, 5, 6], [2, 4], [3]) : 0.9050667562
+36 : ([1, 5, 6], [2, 3], [4]) : 0.9320986608
+37 : ([1, 5, 6], [2], [3], [4]) : 0.9032611361
+38 : ([1, 2, 3, 4], [5, 6]) : 0.9384696676
+39 : ([1], [2, 3, 4], [5, 6]) : 0.9349966174
+40 : ([1, 3, 4], [2], [5, 6]) : 0.9061278637
+41 : ([1, 2], [3, 4], [5, 6]) : 0.9042339188
+42 : ([1], [2], [3, 4], [5, 6]) : 0.9030438673
+43 : ([1, 2, 4], [3], [5, 6]) : 0.9065194393
+44 : ([1, 3], [2, 4], [5, 6]) : 0.9053467527
+45 : ([1], [2, 4], [3], [5, 6]) : 0.9039439697
+46 : ([1, 4], [2, 3], [5, 6]) : 0.9320269381
+47 : ([1, 4], [2], [3], [5, 6]) : 0.9030149039
+48 : ([1, 2, 3], [4], [5, 6]) : 0.9356611754
+49 : ([1], [2, 3], [4], [5, 6]) : 0.9320217647
+50 : ([1, 3], [2], [4], [5, 6]) : 0.9036769516
+51 : ([1, 2], [3], [4], [5, 6]) : 0.9032462096
+52 : ([1], [2], [3], [4], [5, 6]) : 0.9018831371
+53 : ([1, 2, 3, 4, 6], [5]) : 0.9409616841
+54 : ([1, 5], [2, 3, 4, 6]) : 0.9382812365
+55 : ([1], [2, 3, 4, 6], [5]) : 0.9375050605
+56 : ([1, 3, 4, 6], [2, 5]) : 0.9133964015
+57 : ([1, 3, 4, 6], [2], [5]) : 0.9123822138
+58 : ([1, 2, 5], [3, 4, 6]) : 0.9126842652
+59 : ([1], [2, 5], [3, 4, 6]) : 0.9099051264
+60 : ([1, 5], [2], [3, 4, 6]) : 0.9106109256
+61 : ([1, 2], [3, 4, 6], [5]) : 0.9102814776
+62 : ([1], [2], [3, 4, 6], [5]) : 0.9090489755
+63 : ([1, 2, 4, 6], [3, 5]) : 0.9160003496
+64 : ([1, 2, 4, 6], [3], [5]) : 0.9149274561
+65 : ([1, 3, 5], [2, 4, 6]) : 0.9163152878
+66 : ([1], [2, 4, 6], [3, 5]) : 0.9138195260
+67 : ([1, 5], [2, 4, 6], [3]) : 0.9137723119
+68 : ([1, 3], [2, 4, 6], [5]) : 0.9137294300
+69 : ([1], [2, 4, 6], [3], [5]) : 0.9127009947
+70 : ([1, 4, 6], [2, 3, 5]) : 0.9325301415
+71 : ([1, 4, 6], [2], [3, 5]) : 0.9068374090
+72 : ([1, 4, 6], [2, 5], [3]) : 0.9068822182
+73 : ([1, 4, 6], [2, 3], [5]) : 0.9299436286
+74 : ([1, 4, 6], [2], [3], [5]) : 0.9059224364
+75 : ([1, 2, 3, 5], [4, 6]) : 0.9368336092
+76 : ([1], [2, 3, 5], [4, 6]) : 0.9322172553
+77 : ([1, 3, 5], [2], [4, 6]) : 0.9086311508
+78 : ([1, 2], [3, 5], [4, 6]) : 0.9072032157
+79 : ([1], [2], [3, 5], [4, 6]) : 0.9057406378
+80 : ([1, 2, 5], [3], [4, 6]) : 0.9080845184
+81 : ([1, 3], [2, 5], [4, 6]) : 0.9069426828
+82 : ([1], [2, 5], [3], [4, 6]) : 0.9058072734
+83 : ([1, 5], [2, 3], [4, 6]) : 0.9297251839
+84 : ([1, 5], [2], [3], [4, 6]) : 0.9057838411
+85 : ([1, 2, 3], [4, 6], [5]) : 0.9329141462
+86 : ([1], [2, 3], [4, 6], [5]) : 0.9295776798
+87 : ([1, 3], [2], [4, 6], [5]) : 0.9059744339
+88 : ([1, 2], [3], [4, 6], [5]) : 0.9061085075
+89 : ([1], [2], [3], [4, 6], [5]) : 0.9048415331
+90 : ([1, 2, 3, 6], [4, 5]) : 0.9438168913
+91 : ([1, 2, 3, 6], [4], [5]) : 0.9294343527
+92 : ([1, 4, 5], [2, 3, 6]) : 0.9407246513
+93 : ([1], [2, 3, 6], [4, 5]) : 0.9398831061
+94 : ([1, 5], [2, 3, 6], [4]) : 0.9256862973
+95 : ([1, 4], [2, 3, 6], [5]) : 0.9257546768
+96 : ([1], [2, 3, 6], [4], [5]) : 0.9253150028
+97 : ([1, 3, 6], [2, 4, 5]) : 0.9154066702
+98 : ([1, 3, 6], [2], [4, 5]) : 0.9133457653
+99 : ([1, 3, 6], [2, 5], [4]) : 0.9007524880
+100 : ([1, 3, 6], [2, 4], [5]) : 0.9019890435
+101 : ([1, 3, 6], [2], [4], [5]) : 0.9000811198
+102 : ([1, 2, 4, 5], [3, 6]) : 0.9165542805
+103 : ([1], [2, 4, 5], [3, 6]) : 0.9131341376
+104 : ([1, 4, 5], [2], [3, 6]) : 0.9129685312
+105 : ([1, 2], [3, 6], [4, 5]) : 0.9119035729
+106 : ([1], [2], [3, 6], [4, 5]) : 0.9104966570
+107 : ([1, 2, 5], [3, 6], [4]) : 0.9013661160
+108 : ([1, 4], [2, 5], [3, 6]) : 0.8993756753
+109 : ([1], [2, 5], [3, 6], [4]) : 0.8983123916
+110 : ([1, 5], [2, 4], [3, 6]) : 0.9009677271
+111 : ([1, 5], [2], [3, 6], [4]) : 0.8988848443
+112 : ([1, 2, 4], [3, 6], [5]) : 0.9027543485
+113 : ([1], [2, 4], [3, 6], [5]) : 0.9000174789
+114 : ([1, 4], [2], [3, 6], [5]) : 0.8987326829
+115 : ([1, 2], [3, 6], [4], [5]) : 0.8993013973
+116 : ([1], [2], [3, 6], [4], [5]) : 0.8976324564
+117 : ([1, 2, 6], [3, 4, 5]) : 0.9157805811
+118 : ([1, 2, 6], [3], [4, 5]) : 0.9121361050
+119 : ([1, 2, 6], [3, 5], [4]) : 0.9007767549
+120 : ([1, 2, 6], [3, 4], [5]) : 0.9000607584
+121 : ([1, 2, 6], [3], [4], [5]) : 0.8992195351
+122 : ([1, 3, 4, 5], [2, 6]) : 0.9197146741
+123 : ([1], [2, 6], [3, 4, 5]) : 0.9142356696
+124 : ([1, 4, 5], [2, 6], [3]) : 0.9122496611
+125 : ([1, 3], [2, 6], [4, 5]) : 0.9114776651
+126 : ([1], [2, 6], [3], [4, 5]) : 0.9100638997
+127 : ([1, 3, 5], [2, 6], [4]) : 0.9021680927
+128 : ([1, 4], [2, 6], [3, 5]) : 0.8991608092
+129 : ([1], [2, 6], [3, 5], [4]) : 0.8987002901
+130 : ([1, 5], [2, 6], [3, 4]) : 0.9001710606
+131 : ([1, 5], [2, 6], [3], [4]) : 0.8986181434
+132 : ([1, 3, 4], [2, 6], [5]) : 0.9008168917
+133 : ([1], [2, 6], [3, 4], [5]) : 0.8985334798
+134 : ([1, 4], [2, 6], [3], [5]) : 0.8980279293
+135 : ([1, 3], [2, 6], [4], [5]) : 0.8986904650
+136 : ([1], [2, 6], [3], [4], [5]) : 0.8974571931
+137 : ([1, 6], [2, 3, 4, 5]) : 0.9429499391
+138 : ([1, 6], [2], [3, 4, 5]) : 0.9134460843
+139 : ([1, 6], [2, 4, 5], [3]) : 0.9117795942
+140 : ([1, 6], [2, 3], [4, 5]) : 0.9380169058
+141 : ([1, 6], [2], [3], [4, 5]) : 0.9091809181
+142 : ([1, 6], [2, 3, 5], [4]) : 0.9259135109
+143 : ([1, 6], [2, 4], [3, 5]) : 0.8992298904
+144 : ([1, 6], [2], [3, 5], [4]) : 0.8967551666
+145 : ([1, 6], [2, 5], [3, 4]) : 0.8975110969
+146 : ([1, 6], [2, 5], [3], [4]) : 0.8965453962
+147 : ([1, 6], [2, 3, 4], [5]) : 0.9268366721
+148 : ([1, 6], [2], [3, 4], [5]) : 0.8965870839
+149 : ([1, 6], [2, 4], [3], [5]) : 0.8983129683
+150 : ([1, 6], [2, 3], [4], [5]) : 0.9230500924
+151 : ([1, 6], [2], [3], [4], [5]) : 0.8956932173
+152 : ([1, 2, 3, 4, 5], [6]) : 0.9477311531
+153 : ([1], [2, 3, 4, 5], [6]) : 0.9430606017
+154 : ([1, 3, 4, 5], [2], [6]) : 0.9184007738
+155 : ([1, 2], [3, 4, 5], [6]) : 0.9138525846
+156 : ([1], [2], [3, 4, 5], [6]) : 0.9132693412
+157 : ([1, 2, 4, 5], [3], [6]) : 0.9144767252
+158 : ([1, 3], [2, 4, 5], [6]) : 0.9128119176
+159 : ([1], [2, 4, 5], [3], [6]) : 0.9114418351
+160 : ([1, 4, 5], [2, 3], [6]) : 0.9386328247
+161 : ([1, 4, 5], [2], [3], [6]) : 0.9106554189
+162 : ([1, 2, 3], [4, 5], [6]) : 0.9416135061
+163 : ([1], [2, 3], [4, 5], [6]) : 0.9381706261
+164 : ([1, 3], [2], [4, 5], [6]) : 0.9103375681
+165 : ([1, 2], [3], [4, 5], [6]) : 0.9097743707
+166 : ([1], [2], [3], [4, 5], [6]) : 0.9087369367
+167 : ([1, 2, 3, 5], [4], [6]) : 0.9313524003
+168 : ([1, 4], [2, 3, 5], [6]) : 0.9262526223
+169 : ([1], [2, 3, 5], [4], [6]) : 0.9259098550
+170 : ([1, 3, 5], [2, 4], [6]) : 0.9017750913
+171 : ([1, 3, 5], [2], [4], [6]) : 0.9000412269
+172 : ([1, 2, 4], [3, 5], [6]) : 0.9014237773
+173 : ([1], [2, 4], [3, 5], [6]) : 0.8989949359
+174 : ([1, 4], [2], [3, 5], [6]) : 0.8972005608
+175 : ([1, 2], [3, 5], [4], [6]) : 0.8980779815
+176 : ([1], [2], [3, 5], [4], [6]) : 0.8964774624
+177 : ([1, 2, 5], [3, 4], [6]) : 0.9000435891
+178 : ([1, 2, 5], [3], [4], [6]) : 0.8987281206
+179 : ([1, 3, 4], [2, 5], [6]) : 0.9002335998
+180 : ([1], [2, 5], [3, 4], [6]) : 0.8973533203
+181 : ([1, 4], [2, 5], [3], [6]) : 0.8970213040
+182 : ([1, 3], [2, 5], [4], [6]) : 0.8977510567
+183 : ([1], [2, 5], [3], [4], [6]) : 0.8962166640
+184 : ([1, 5], [2, 3, 4], [6]) : 0.9270923767
+185 : ([1, 5], [2], [3, 4], [6]) : 0.8978436867
+186 : ([1, 5], [2, 4], [3], [6]) : 0.8987771693
+187 : ([1, 5], [2, 3], [4], [6]) : 0.9232233723
+188 : ([1, 5], [2], [3], [4], [6]) : 0.8963907476
+189 : ([1, 2, 3, 4], [5], [6]) : 0.9308566258
+190 : ([1], [2, 3, 4], [5], [6]) : 0.9268655907
+191 : ([1, 3, 4], [2], [5], [6]) : 0.8992287159
+192 : ([1, 2], [3, 4], [5], [6]) : 0.8977086751
+193 : ([1], [2], [3, 4], [5], [6]) : 0.8964926393
+194 : ([1, 2, 4], [3], [5], [6]) : 0.9004918472
+195 : ([1, 3], [2, 4], [5], [6]) : 0.8992979424
+196 : ([1], [2, 4], [3], [5], [6]) : 0.8981190929
+197 : ([1, 4], [2, 3], [5], [6]) : 0.9234602742
+198 : ([1, 4], [2], [3], [5], [6]) : 0.8962956913
+199 : ([1, 2, 3], [4], [5], [6]) : 0.9268931393
+200 : ([1], [2, 3], [4], [5], [6]) : 0.9231212587
+201 : ([1, 3], [2], [4], [5], [6]) : 0.8969947025
+202 : ([1, 2], [3], [4], [5], [6]) : 0.8968323761
+203 : ([1], [2], [3], [4], [5], [6]) : 0.8954540396
+python -u bootstrap.py 1 > bootstrap/bootstrap.py.out.1
+python -u bootstrap.py 2 > bootstrap/bootstrap.py.out.2
+python -u bootstrap.py 3 > bootstrap/bootstrap.py.out.3
+python -u bootstrap.py 4 > bootstrap/bootstrap.py.out.4
+python -u bootstrap.py 5 > bootstrap/bootstrap.py.out.5
+python -u bootstrap.py 6 > bootstrap/bootstrap.py.out.6
+python -u bootstrap.py 7 > bootstrap/bootstrap.py.out.7
+python -u bootstrap.py 8 > bootstrap/bootstrap.py.out.8
+python -u bootstrap.py 9 > bootstrap/bootstrap.py.out.9
+python -u bootstrap.py 10 > bootstrap/bootstrap.py.out.10
+python -u bootstrap.py 11 > bootstrap/bootstrap.py.out.11
+python -u bootstrap.py 12 > bootstrap/bootstrap.py.out.12
+python -u bootstrap.py 13 > bootstrap/bootstrap.py.out.13
+python -u bootstrap.py 14 > bootstrap/bootstrap.py.out.14
+python -u bootstrap.py 15 > bootstrap/bootstrap.py.out.15
+python -u bootstrap.py 16 > bootstrap/bootstrap.py.out.16
+python -u bootstrap.py 17 > bootstrap/bootstrap.py.out.17
+python -u bootstrap.py 18 > bootstrap/bootstrap.py.out.18
+python -u bootstrap.py 19 > bootstrap/bootstrap.py.out.19
+python -u bootstrap.py 20 > bootstrap/bootstrap.py.out.20
+python -u bootstrap.py 21 > bootstrap/bootstrap.py.out.21
+python -u bootstrap.py 22 > bootstrap/bootstrap.py.out.22
+python -u bootstrap.py 23 > bootstrap/bootstrap.py.out.23
+python -u bootstrap.py 24 > bootstrap/bootstrap.py.out.24
+python -u bootstrap.py 25 > bootstrap/bootstrap.py.out.25
+python -u bootstrap.py 26 > bootstrap/bootstrap.py.out.26
+python -u bootstrap.py 27 > bootstrap/bootstrap.py.out.27
+python -u bootstrap.py 28 > bootstrap/bootstrap.py.out.28
+python -u bootstrap.py 29 > bootstrap/bootstrap.py.out.29
+python -u bootstrap.py 30 > bootstrap/bootstrap.py.out.30
+python -u bootstrap.py 31 > bootstrap/bootstrap.py.out.31
+python -u bootstrap.py 32 > bootstrap/bootstrap.py.out.32
+python -u bootstrap.py 33 > bootstrap/bootstrap.py.out.33
+python -u bootstrap.py 34 > bootstrap/bootstrap.py.out.34
+python -u bootstrap.py 35 > bootstrap/bootstrap.py.out.35
+python -u bootstrap.py 36 > bootstrap/bootstrap.py.out.36
+python -u bootstrap.py 37 > bootstrap/bootstrap.py.out.37
+python -u bootstrap.py 38 > bootstrap/bootstrap.py.out.38
+python -u bootstrap.py 39 > bootstrap/bootstrap.py.out.39
+python -u bootstrap.py 40 > bootstrap/bootstrap.py.out.40
+python -u bootstrap.py 41 > bootstrap/bootstrap.py.out.41
+python -u bootstrap.py 42 > bootstrap/bootstrap.py.out.42
+python -u bootstrap.py 43 > bootstrap/bootstrap.py.out.43
+python -u bootstrap.py 44 > bootstrap/bootstrap.py.out.44
+python -u bootstrap.py 45 > bootstrap/bootstrap.py.out.45
+python -u bootstrap.py 46 > bootstrap/bootstrap.py.out.46
+python -u bootstrap.py 47 > bootstrap/bootstrap.py.out.47
+python -u bootstrap.py 48 > bootstrap/bootstrap.py.out.48
+python -u bootstrap.py 49 > bootstrap/bootstrap.py.out.49
+python -u bootstrap.py 50 > bootstrap/bootstrap.py.out.50
+python -u bootstrap.py 51 > bootstrap/bootstrap.py.out.51
+python -u bootstrap.py 52 > bootstrap/bootstrap.py.out.52
+python -u bootstrap.py 53 > bootstrap/bootstrap.py.out.53
+python -u bootstrap.py 54 > bootstrap/bootstrap.py.out.54
+python -u bootstrap.py 55 > bootstrap/bootstrap.py.out.55
+python -u bootstrap.py 56 > bootstrap/bootstrap.py.out.56
+python -u bootstrap.py 57 > bootstrap/bootstrap.py.out.57
+python -u bootstrap.py 58 > bootstrap/bootstrap.py.out.58
+python -u bootstrap.py 59 > bootstrap/bootstrap.py.out.59
+python -u bootstrap.py 60 > bootstrap/bootstrap.py.out.60
+python -u bootstrap.py 61 > bootstrap/bootstrap.py.out.61
+python -u bootstrap.py 62 > bootstrap/bootstrap.py.out.62
+python -u bootstrap.py 63 > bootstrap/bootstrap.py.out.63
+python -u bootstrap.py 64 > bootstrap/bootstrap.py.out.64
+python -u bootstrap.py 65 > bootstrap/bootstrap.py.out.65
+python -u bootstrap.py 66 > bootstrap/bootstrap.py.out.66
+python -u bootstrap.py 67 > bootstrap/bootstrap.py.out.67
+python -u bootstrap.py 68 > bootstrap/bootstrap.py.out.68
+python -u bootstrap.py 69 > bootstrap/bootstrap.py.out.69
+python -u bootstrap.py 70 > bootstrap/bootstrap.py.out.70
+python -u bootstrap.py 71 > bootstrap/bootstrap.py.out.71
+python -u bootstrap.py 72 > bootstrap/bootstrap.py.out.72
+python -u bootstrap.py 73 > bootstrap/bootstrap.py.out.73
+python -u bootstrap.py 74 > bootstrap/bootstrap.py.out.74
+python -u bootstrap.py 75 > bootstrap/bootstrap.py.out.75
+python -u bootstrap.py 76 > bootstrap/bootstrap.py.out.76
+python -u bootstrap.py 77 > bootstrap/bootstrap.py.out.77
+python -u bootstrap.py 78 > bootstrap/bootstrap.py.out.78
+python -u bootstrap.py 79 > bootstrap/bootstrap.py.out.79
+python -u bootstrap.py 80 > bootstrap/bootstrap.py.out.80
+python -u bootstrap.py 81 > bootstrap/bootstrap.py.out.81
+python -u bootstrap.py 82 > bootstrap/bootstrap.py.out.82
+python -u bootstrap.py 83 > bootstrap/bootstrap.py.out.83
+python -u bootstrap.py 84 > bootstrap/bootstrap.py.out.84
+python -u bootstrap.py 85 > bootstrap/bootstrap.py.out.85
+python -u bootstrap.py 86 > bootstrap/bootstrap.py.out.86
+python -u bootstrap.py 87 > bootstrap/bootstrap.py.out.87
+python -u bootstrap.py 88 > bootstrap/bootstrap.py.out.88
+python -u bootstrap.py 89 > bootstrap/bootstrap.py.out.89
+python -u bootstrap.py 90 > bootstrap/bootstrap.py.out.90
+python -u bootstrap.py 91 > bootstrap/bootstrap.py.out.91
+python -u bootstrap.py 92 > bootstrap/bootstrap.py.out.92
+python -u bootstrap.py 93 > bootstrap/bootstrap.py.out.93
+python -u bootstrap.py 94 > bootstrap/bootstrap.py.out.94
+python -u bootstrap.py 95 > bootstrap/bootstrap.py.out.95
+python -u bootstrap.py 96 > bootstrap/bootstrap.py.out.96
+python -u bootstrap.py 97 > bootstrap/bootstrap.py.out.97
+python -u bootstrap.py 98 > bootstrap/bootstrap.py.out.98
+python -u bootstrap.py 99 > bootstrap/bootstrap.py.out.99
+python -u bootstrap.py 100 > bootstrap/bootstrap.py.out.100
