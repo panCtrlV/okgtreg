@@ -25,12 +25,13 @@ def simpleData_01192016(n):
     :param n:
     :return:
     '''
-    x = np.random.normal(0., 1., (n, 6))
+    x = np.random.uniform(-1., 1., (n, 6))
+    # x = np.random.normal(0., 1., (n, 6))
     e = np.random.normal(0., 0.1, n)
-    y = cbrt(np.sin(x[:, 0]) +
-             np.log(np.abs(x[:, 1] + x[:, 2])) +
-             expit(x[:, 3] + x[:, 4] + x[:, 5]) +
-             e)
+    y = cbrt(np.sin(2 * x[:, 0]) +
+             np.log((x[:, 1] + x[:, 2]) ** 2) +
+             expit(3. + x[:, 3] * x[:, 4] * x[:, 5]) +
+             e) ** 2
     return Data(y, x), Group([1], [2, 3], [4, 5, 6])
 
 
@@ -42,4 +43,4 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     plt.scatter(np.arange(n), data.y)  # scatter plot
-    plt.hist(data.y, 50)  # histogram shows bi-modal
+    plt.hist(data.y, 30)  # histogram

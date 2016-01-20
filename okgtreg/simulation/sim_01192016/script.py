@@ -49,3 +49,9 @@ for i in range(len(allpartitions)):
 mydir = os.getcwd()
 saveto = mydir + '/' + __file__ + '.pkl'
 pickle.dump(res, open(saveto, 'wb'))
+
+
+# group = Group([1], [2,3], [4,5,6])
+# okgt = OKGTReg(data, kernel=kernel, group=group)
+# fit = okgt.train()
+# fit['r2']
