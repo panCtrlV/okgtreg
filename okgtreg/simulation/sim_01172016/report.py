@@ -14,7 +14,11 @@ resfile.close()
 # Sort group structures by R^2's in decreasing order
 import operator
 
-sorted(res_dict.items(), key=operator.itemgetter(1), reverse=True)
+sortedRes = sorted(res_dict.items(), key=operator.itemgetter(1), reverse=True)
+counter = 0
+for (k, v) in sortedRes:
+    counter += 1
+    print counter, ' : ', k.__str__(), ' : ', v
 
 # First order difference of ordered R^2
 np.diff(sorted(res_dict.values(), reverse=True))
@@ -24,6 +28,7 @@ import numpy as np
 
 allgroups = res_dict.keys()
 true_id = np.argmax([group.__str__() == Group([1], [2, 3], [4, 5, 6]).__str__() for group in allgroups])  # 95
+print true_id
 truegroup = allgroups[true_id]
 
 print truegroup, ' : ', res_dict[truegroup]
@@ -65,3 +70,16 @@ In order to test the significance of the differences, bootstrap
 is used.
 
 '''
+
+# Complexity vs R2
+import matplotlib.pyplot as plt
+
+sortedR2 = [v for (k, v) in sortedRes]
+sortedComplexity = [np.sum([2 ** len(g) for g in k.partition]) for (k, v) in sortedRes]
+
+plt.title(r"Complexity of group structure against $R^2$" + '\n' +
+          r"Red circle is the true group structure")
+plt.scatter(sortedR2, sortedComplexity)
+plt.scatter(sortedR2[4], sortedComplexity[4], s=300, facecolors='none', edgecolors='r')
+plt.xlabel(r"$R^2$")
+plt.ylabel("Complexity")
