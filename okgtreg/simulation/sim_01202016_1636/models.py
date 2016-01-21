@@ -67,23 +67,34 @@ def model8(n):
     b = np.random.normal(0., 1., 6)
     x = np.random.normal(1., 2., (n, 6))
     e = np.random.normal(0., 0.1, n)
-    y = cbrt(1. + b[0] * x[:, 0] + b[1] * x[:, 1] ** 2 + b[2] * x[:, 2] ** 3 + \
-             b[3] * np.abs(x[:, 3]) + b[4] * np.sin(x[:, 4]) + b[5] * np.exp(x[:, 5]) + e)
-    return Data(y, x), Group([1], [2], [3], [4, 5, 6])
+    y = cbrt(1. + \
+             b[0] * x[:, 0] + \
+             b[1] * x[:, 1] ** 2 + \
+             b[2] * x[:, 2] ** 3 + \
+             b[3] * np.abs(x[:, 3]) + \
+             b[4] * np.sin(x[:, 4]) + \
+             b[5] * np.exp(x[:, 5]) + e)
+    return Data(y, x), Group([1], [2], [3], [4], [5], [6])
 
 
 def model9(n):
     # x = np.random.normal(0., 2., (n, 6))
     x = np.random.uniform(1, 2, (n, 6))
     e = np.random.normal(0., 0.1, n)
-    y = np.log(np.abs(1. + np.sin(x[:, 0]) + x[:, 1] * x[:, 2] + expit(x[:, 3] * x[:, 4] * x[:, 5]) + e))
+    y = np.log(np.abs(1. +
+                      np.sin(x[:, 0]) +
+                      x[:, 1] * x[:, 2] +
+                      expit(x[:, 3] * x[:, 4] * x[:, 5]) + e))
     return Data(y, x), Group([1], [2, 3], [4, 5, 6])
 
 
 def model10(n):
     x = np.random.uniform(1, 2, (n, 6))
     e = np.random.normal(0., 0.1, n)
-    y = np.log(1. + np.log(x[:, 0]) + x[:, 1] / np.exp(x[:, 2]) + np.power(x[:, 3] + x[:, 4], x[:, 5]) + e)
+    y = np.log(1. +
+               np.log(x[:, 0]) +
+               x[:, 1] / np.exp(x[:, 2]) +
+               np.power(x[:, 3] + x[:, 4], x[:, 5]) + e)
     return Data(y, x), Group([1], [2, 3], [4, 5, 6])
 
 
