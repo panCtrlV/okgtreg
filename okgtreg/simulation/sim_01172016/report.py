@@ -1,8 +1,11 @@
 __author__ = 'panc'
 
+import pickle
+import operator
+import numpy as np
+
 from okgtreg import *
 
-import pickle
 
 # The results contains all group structures and
 # the corresponding R^2's. They are saved in a
@@ -12,20 +15,13 @@ res_dict = pickle.load(resfile)
 resfile.close()
 
 # Sort group structures by R^2's in decreasing order
-import operator
-
 sortedRes = sorted(res_dict.items(), key=operator.itemgetter(1), reverse=True)
 counter = 0
 for (k, v) in sortedRes:
     counter += 1
     print counter, ' : ', k.__str__(), ' : ', v
 
-# First order difference of ordered R^2
-np.diff(sorted(res_dict.values(), reverse=True))
-
 # R^2 for the true group structure
-import numpy as np
-
 allgroups = res_dict.keys()
 true_id = np.argmax([group.__str__() == Group([1], [2, 3], [4, 5, 6]).__str__() for group in allgroups])  # 95
 print true_id
@@ -83,3 +79,18 @@ plt.scatter(sortedR2, sortedComplexity)
 plt.scatter(sortedR2[4], sortedComplexity[4], s=300, facecolors='none', edgecolors='r')
 plt.xlabel(r"$R^2$")
 plt.ylabel("Complexity")
+
+'''
+Bootstrap gives the estimates of standard deviation of the
+difference between the estimated $R^2$'s.
+'''
+# First order difference of ordered R^2
+np.diff(sorted(res_dict.values(), reverse=True))
+
+for i in range(100):
+    filename = 'bootstrap.py-' + str(i + 1) + '.pkl'
+    file = open('okgtreg/simulation/sim_01172016/bootstrap/' + filename, 'rb')
+    bootstrap_res = pickle.load(file)
+    file.close()
+
+    pass
