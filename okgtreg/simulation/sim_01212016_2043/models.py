@@ -28,7 +28,7 @@ def model5(n):
 
 def model6(n):
     b = np.random.normal(0., 1., 6)
-    x = np.random.normal(0., 1., (n, 6))
+    x = np.random.normal(0., 1., (n, 6))  # changed from t to normal
     e = np.random.normal(0., 0.1, n)
     y = np.log(np.abs(1. +
                       x[:, :3].dot(b[:3]) +
