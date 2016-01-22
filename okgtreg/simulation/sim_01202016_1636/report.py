@@ -4,7 +4,7 @@ import pickle
 import operator
 import numpy as np
 
-lmbda = np.exp(np.linspace(np.log(1e-10), np.log(1 / 64.), 10))  # evenly spaced on log-scale
+lmbda = np.exp(np.linspace(np.log(1e-10), np.log(1. / 64), 10))  # evenly spaced on log-scale
 
 '''
 # Model 1
@@ -28,13 +28,23 @@ print sortedRes[truerankid]
 '''
 202  :  ([1], [2], [3], [4], [5], [6])  :  0.991569738028
 '''
-
+# Ranking after adding penalty
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
+
+## 2-based penalty
 # complexityList = [ np.sum([2 ** len(g) for g in gstruct.partition])
 #                    for gstruct in groupsList ]
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+
+## e-based penalty
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
                   for gstruct in groupsList]
+
 r2List = [v for (k, v) in res_list]
 
 # Print the tabulation of different lambda and
@@ -57,6 +67,8 @@ for i in range(len(lmbda)):
 # for item in sorted(zip(groupsList, r2List, complexityList, r2adjList), key=operator.itemgetter(3), reverse=True):
 #     print item
 '''
+# 2-based penalty
+# ---------------
 lambda	:	true_group_rank
 1e-10 	:	202
 8.13625304968e-10 	:	202
@@ -68,6 +80,33 @@ lambda	:	true_group_rank
 0.000236032133143 	:	125
 0.00192041716311 	:	75
 0.015625 	:	75
+
+# e-based penalty
+# ---------------
+lambda	:	true_group_rank
+1e-10 	:	202
+8.13625304968e-10 	:	202
+6.61986136885e-09 	:	202
+5.38608672508e-08 	:	202
+4.38225645428e-07 	:	202
+3.56551474406e-06 	:	201
+2.90099302101e-05 	:	148
+0.000236032133143 	:	1
+0.00192041716311 	:	1
+0.015625 	:	1
+
+=== 2-power penalty ===
+lambda	:	true_group_rank
+1e-10 	:	202
+8.13625304968e-10 	:	202
+6.61986136885e-09 	:	202
+5.38608672508e-08 	:	202
+4.38225645428e-07 	:	202
+3.56551474406e-06 	:	200
+2.90099302101e-05 	:	193
+0.000236032133143 	:	1
+0.00192041716311 	:	1
+0.015625 	:	1
 '''
 
 
@@ -96,9 +135,18 @@ print sortedRes[truerankid]
 
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
-# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition]) for gstruct in groupsList]
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+
+# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
                   for gstruct in groupsList]
+
 r2List = [v for (k, v) in res_list]
 
 # Print the tabulation of different lambda and
@@ -139,6 +187,19 @@ lambda	:	true_group_rank
 0.000236032133143 	:	203
 0.00192041716311 	:	201
 0.015625 	:	82
+
+=== 2-power penalty ===
+lambda	:	true_group_rank
+1e-10 	:	203
+8.13625304968e-10 	:	203
+6.61986136885e-09 	:	203
+5.38608672508e-08 	:	203
+4.38225645428e-07 	:	203
+3.56551474406e-06 	:	203
+2.90099302101e-05 	:	203
+0.000236032133143 	:	203
+0.00192041716311 	:	202
+0.015625 	:	163
 '''
 
 '''
@@ -166,10 +227,18 @@ print sortedRes[truerankid]
 
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
-# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition]) for gstruct in groupsList]
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
-                  for gstruct in groupsList]
 r2List = [v for (k, v) in res_list]
+
+# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+                  for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -209,6 +278,19 @@ lambda	:	true_group_rank
 0.000236032133143 	:	1
 0.00192041716311 	:	1
 0.015625 	:	11
+
+=== 2-power penalty ===
+lambda	:	true_group_rank
+1e-10 	:	15
+8.13625304968e-10 	:	15
+6.61986136885e-09 	:	15
+5.38608672508e-08 	:	15
+4.38225645428e-07 	:	15
+3.56551474406e-06 	:	15
+2.90099302101e-05 	:	14
+0.000236032133143 	:	10
+0.00192041716311 	:	1
+0.015625 	:	2
 '''
 
 
@@ -234,13 +316,21 @@ print sortedRes[truerankid]
 '''
 15  :  ([1], [2], [3], [4, 5, 6])  :  0.993972146566
 '''
-
+# Ranking after adding penalty
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
-# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition]) for gstruct in groupsList]
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
-                  for gstruct in groupsList]
 r2List = [v for (k, v) in res_list]
+
+# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+                  for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -280,6 +370,19 @@ lambda	:	true_group_rank
 0.000236032133143 	:	1
 0.00192041716311 	:	59
 0.015625 	:	77
+
+=== 2-power penalty ===
+lambda	:	true_group_rank
+1e-10 	:	15
+8.13625304968e-10 	:	15
+6.61986136885e-09 	:	15
+5.38608672508e-08 	:	15
+4.38225645428e-07 	:	15
+3.56551474406e-06 	:	15
+2.90099302101e-05 	:	15
+0.000236032133143 	:	1
+0.00192041716311 	:	8
+0.015625 	:	62
 '''
 
 
@@ -305,13 +408,23 @@ print sortedRes[truerankid]
 '''
 45  :  ([1], [2], [3], [4, 5, 6])  :  0.986146245772
 '''
-
+# Ranking after adding penalty
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
-# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition]) for gstruct in groupsList]
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
-                  for gstruct in groupsList]
 r2List = [v for (k, v) in res_list]
+
+## 2-based penalty
+# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## e-based penalty
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+                  for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -351,6 +464,19 @@ lambda	:	true_group_rank
 0.000236032133143 	:	16
 0.00192041716311 	:	77
 0.015625 	:	77
+
+=== 2-power penalty ===
+lambda	:	true_group_rank
+1e-10 	:	45
+8.13625304968e-10 	:	45
+6.61986136885e-09 	:	45
+5.38608672508e-08 	:	45
+4.38225645428e-07 	:	45
+3.56551474406e-06 	:	44
+2.90099302101e-05 	:	41
+0.000236032133143 	:	17
+0.00192041716311 	:	63
+0.015625 	:	63
 '''
 
 
@@ -376,13 +502,21 @@ print sortedRes[truerankid]
 '''
 15  :  ([1], [2], [3], [4, 5, 6])  :  0.999733564469
 '''
-
+# Ranking after adding penalty
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
-# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition]) for gstruct in groupsList]
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
-                  for gstruct in groupsList]
 r2List = [v for (k, v) in res_list]
+
+# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+                  for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -397,6 +531,7 @@ for i in range(len(lmbda)):
                             for item in sorted_gstructWithR2adj])[0])
     print lmbda[i], '\t:\t', true_id + 1
 '''
+=== 2-based penalty ===
 lambda	:	true_group_rank
 1e-10 	:	15
 8.13625304968e-10 	:	15
@@ -409,8 +544,7 @@ lambda	:	true_group_rank
 0.00192041716311 	:	82
 0.015625 	:	82
 
-# e-based penalty
-# ---------------
+=== e-based penalty ===
 lambda	:	true_group_rank
 1e-10 	:	15
 8.13625304968e-10 	:	15
@@ -422,6 +556,22 @@ lambda	:	true_group_rank
 0.000236032133143 	:	79
 0.00192041716311 	:	79
 0.015625 	:	79
+
+=== 2-power penalty ===
+lambda	:	true_group_rank
+1e-10 	:	15
+8.13625304968e-10 	:	15
+6.61986136885e-09 	:	15
+5.38608672508e-08 	:	15
+4.38225645428e-07 	:	14
+3.56551474406e-06 	:	9
+2.90099302101e-05 	:	28
+0.000236032133143 	:	64
+0.00192041716311 	:	64
+0.015625 	:	64
+
+In this example, the improvement as a result of the 2-power penalty
+is better than that of the e-based penalty.
 '''
 
 
@@ -451,11 +601,18 @@ print sortedRes[truerankid]
 
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
+r2List = [v for (k, v) in res_list]
+
 # complexityList = [ np.sum([2 ** len(g) for g in gstruct.partition])
 #                    for gstruct in groupsList ]
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
                   for gstruct in groupsList]
-r2List = [v for (k, v) in res_list]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -497,6 +654,22 @@ lambda	:	true_group_rank
 0.000236032133143 	:	145
 0.00192041716311 	:	128
 0.015625 	:	100
+
+=== 2-power penalty ===
+lambda	:	true_group_rank
+1e-10 	:	142
+8.13625304968e-10 	:	142
+6.61986136885e-09 	:	142
+5.38608672508e-08 	:	142
+4.38225645428e-07 	:	142
+3.56551474406e-06 	:	142
+2.90099302101e-05 	:	142
+0.000236032133143 	:	141
+0.00192041716311 	:	140
+0.015625 	:	96
+
+The 2-power penalty also performs a little better than
+the e-based penalty.
 '''
 
 
@@ -522,14 +695,21 @@ print sortedRes[truerankid]
 '''
 156  :  ([1], [2], [3], [4], [5], [6])  :  0.999733626801
 '''
-
+# Ranking after adding penalty
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
+r2List = [v for (k, v) in res_list]
+
 # complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
 #                   for gstruct in groupsList]
+
 complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
                   for gstruct in groupsList]
-r2List = [v for (k, v) in res_list]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+                  for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -544,8 +724,9 @@ for i in range(len(lmbda)):
                             for item in sorted_gstructWithR2adj])[0])
     print lmbda[i], '\t:\t', true_id + 1
 '''
-lambda	:	true_group_rank
-1e-10 	:	156
+=== 2-based penalty ===
+lambda	            :	true_group_rank
+1e-10 	            :	156
 8.13625304968e-10 	:	156
 6.61986136885e-09 	:	156
 5.38608672508e-08 	:	156
@@ -554,12 +735,11 @@ lambda	:	true_group_rank
 2.90099302101e-05 	:	99
 0.000236032133143 	:	38
 0.00192041716311 	:	38
-0.015625 	:	38
+0.015625 	        :	38
 
-# e-based penalty
-# ---------------
-lambda	:	true_group_rank
-1e-10 	:	156
+=== e-based penalty ===
+lambda	            :	true_group_rank
+1e-10 	            :	156
 8.13625304968e-10 	:	156
 6.61986136885e-09 	:	156
 5.38608672508e-08 	:	156
@@ -568,7 +748,20 @@ lambda	:	true_group_rank
 2.90099302101e-05 	:	1
 0.000236032133143 	:	1
 0.00192041716311 	:	1
-0.015625 	:	1
+0.015625 	        :	1
+
+=== 2-power penalty ===
+lambda	            :	true_group_rank
+1e-10 	            :	156
+8.13625304968e-10 	:	156
+6.61986136885e-09 	:	156
+5.38608672508e-08 	:	156
+4.38225645428e-07 	:	156
+3.56551474406e-06 	:	135
+2.90099302101e-05 	:	1
+0.000236032133143 	:	1
+0.00192041716311 	:	1
+0.015625 	        :	1
 '''
 
 
@@ -594,13 +787,21 @@ print sortedRes[truerankid]
 '''
 14  :  ([1], [2, 3], [4, 5, 6])  :  0.978444736553
 '''
-
+# Ranking after adding penalty
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
-# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition]) for gstruct in groupsList]
+r2List = [v for (k, v) in res_list]
+
+# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
 complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
                   for gstruct in groupsList]
-r2List = [v for (k, v) in res_list]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+                  for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -629,8 +830,8 @@ lambda	:	true_group_rank
 
 # e-based penalty
 # ---------------
-lambda	:	true_group_rank
-1e-10 	:	14
+lambda	            :	true_group_rank
+1e-10 	            :	14
 8.13625304968e-10 	:	14
 6.61986136885e-09 	:	14
 5.38608672508e-08 	:	14
@@ -639,7 +840,20 @@ lambda	:	true_group_rank
 2.90099302101e-05 	:	4
 0.000236032133143 	:	14
 0.00192041716311 	:	82
-0.015625 	:	98
+0.015625 	        :	98
+
+=== 2-power penalty ===
+lambda	            :	true_group_rank
+1e-10 	            :	14
+8.13625304968e-10 	:	14
+6.61986136885e-09 	:	14
+5.38608672508e-08 	:	14
+4.38225645428e-07 	:	14
+3.56551474406e-06 	:	14
+2.90099302101e-05 	:	8
+0.000236032133143 	:	14
+0.00192041716311 	:	70
+0.015625 	        :	98
 '''
 
 
@@ -668,9 +882,18 @@ print sortedRes[truerankid]
 
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
-# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition]) for gstruct in groupsList]
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+
+# complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## 2-power penalty
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
                   for gstruct in groupsList]
+
 r2List = [v for (k, v) in res_list]
 
 # Print the tabulation of different lambda and
@@ -711,4 +934,17 @@ lambda	:	true_group_rank
 0.000236032133143 	:	2
 0.00192041716311 	:	78
 0.015625 	:	97
+
+=== 2-power penalty ===
+lambda	            :	true_group_rank
+1e-10 	            :	2
+8.13625304968e-10 	:	2
+6.61986136885e-09 	:	2
+5.38608672508e-08 	:	2
+4.38225645428e-07 	:	2
+3.56551474406e-06 	:	2
+2.90099302101e-05 	:	1
+0.000236032133143 	:	2
+0.00192041716311 	:	20
+0.015625 	        :	97
 '''
