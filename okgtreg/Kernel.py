@@ -11,6 +11,7 @@ It also contains some useful methods such as evaluating a gram matrix given data
 class Kernel(object):
     def __init__(self, name, sigma=None, intercept=None, slope=None, degree=None):
         self.name = name
+        # TODO: replace the following if...else... with a dictionary
         if name in ('gaussian', 'laplace', 'exponential'):
             if sigma is None:
                 raise ValueError("** Parameter 'sigma' is not provided for %s kernel. **" % name)
