@@ -34,14 +34,14 @@ groupsList = [k for (k, v) in res_list]
 r2List = [v for (k, v) in res_list]
 
 ## e-based penalty
-print("=== e-based penalty ===")
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
-                  for gstruct in groupsList]
+# print("=== e-based penalty ===")
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
 
 ## 2-power penalty
-# print("=== 2-power penalty ===")
-# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
-#                   for gstruct in groupsList]
+print("=== 2-power penalty ===")
+complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+                  for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
