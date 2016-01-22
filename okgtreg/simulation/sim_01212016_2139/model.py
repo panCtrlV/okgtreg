@@ -9,5 +9,10 @@ from okgtreg.Group import Group
 def simplePolyModel(n):
     x = np.random.normal(0., 1., (n, 6))
     e = np.random.normal(0., 0.1, n)
-    y = np.log((x[:, :3].sum(1)) ** 2 + (x[:, 3:].sum(1)) ** 2 + e)
+    y = np.log((x[:, :3].sum(1)) ** 2 + (x[:, 3:].sum(1)) ** 2) + e
     return Data(y, x), Group([1, 2, 3], [4, 5, 6])
+
+
+if __name__ == '__main__':
+    data, group = simplePolyModel(500)
+    # np.where(np.isnan(data.y))
