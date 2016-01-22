@@ -5,8 +5,8 @@ import random
 import numpy as np
 import pickle
 
-from okgtreg.simulation.sim_01202016_1636.models import *
-from okgtreg.simulation.sim_01202016_1636.helper import *
+from okgtreg.simulation.sim_01212016_2043.models import *
+from okgtreg.simulation.sim_01212016_2043.helper import *
 from okgtreg import *
 
 # Parse command line arguments
