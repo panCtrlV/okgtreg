@@ -9,26 +9,34 @@ It also contains some useful methods such as evaluating a gram matrix given data
 """
 
 class Kernel(object):
-    def __init__(self, name, sigma=None, intercept=None, slope=None, degree=None):
+    def __init__(self, name, sigma=None, intercept=0., slope=1., degree=None):
         self.name = name
         # TODO: replace the following if...else... with a dictionary
+
+        kernels = {'gaussian': lambda x, y: self.gaussianKernel(x, y, sigma),
+                   'laplace': lambda x, y: self.laplaceKernel(x, y, sigma),
+                   'exponential': lambda x, y: self.exponentialKernel(x, y, sigma),
+                   'polynomial': lambda x, y: self.polynomialKernel(x, y, intercept, slope, degree),
+                   'sigmoid': lambda x, y: self.sigmoidKernel(x, y, intercept, slope)}
+
         if name in ('gaussian', 'laplace', 'exponential'):
             if sigma is None:
                 raise ValueError("** Parameter 'sigma' is not provided for %s kernel. **" % name)
             else:
                 self.sigma = sigma
-                if name == 'gaussian':
-                    def gaussianKernelFn(x, y):
-                        return self.gaussianKernel(x, y, sigma)
-                    self.fn = gaussianKernelFn
-                elif name == 'laplace':
-                    def laplaceKernelFn(x, y):
-                        return self.laplaceKernel(x, y, sigma)
-                    self.fn = laplaceKernelFn
-                elif name == 'exponential':
-                    def exponentialKernelFn(x, y):
-                        return self.exponentialKernel(x, y, sigma)
-                    self.fn = exponentialKernelFn
+                # if name == 'gaussian':
+                #     def gaussianKernelFn(x, y):
+                #         return self.gaussianKernel(x, y, sigma)
+                #     self.fn = gaussianKernelFn
+                # elif name == 'laplace':
+                #     def laplaceKernelFn(x, y):
+                #         return self.laplaceKernel(x, y, sigma)
+                #     self.fn = laplaceKernelFn
+                # elif name == 'exponential':
+                #     def exponentialKernelFn(x, y):
+                #         return self.exponentialKernel(x, y, sigma)
+                #     self.fn = exponentialKernelFn
+                self.fn = kernels[name]
         elif name == 'polynomial':
             if any(val is None for val in [intercept, slope, degree]):
                 raise ValueError("** Parameters 'intercept', 'slope', and 'degree' are not all provided"
@@ -37,9 +45,10 @@ class Kernel(object):
                 self.intercept = intercept
                 self.slope = slope
                 self.degree = degree
-                def polynomialKernelFn(x, y):
-                    return self.polynomialKernel(x, y, intercept, slope, degree)
-                self.fn = polynomialKernelFn
+                # def polynomialKernelFn(x, y):
+                #     return self.polynomialKernel(x, y, intercept, slope, degree)
+                # self.fn = polynomialKernelFn
+                self.fn = kernels[name]
         elif name == 'sigmoid':
             if any(val is None for val in [intercept, slope]):
                 raise ValueError("** Parameters 'intercept' and 'slope' are not both provided"
@@ -47,9 +56,10 @@ class Kernel(object):
             else:
                 self.intercept = intercept
                 self.slope = slope
-                def sigmoidKernelFn(x, y):
-                    return self.sigmoidKernel(x, y, intercept, slope)
-                self.fn = sigmoidKernelFn
+                # def sigmoidKernelFn(x, y):
+                #     return self.sigmoidKernel(x, y, intercept, slope)
+                # self.fn = sigmoidKernelFn
+                self.fn = kernels[name]
         else:
             raise NotImplementedError("** %s kernel is not yet implemented. **" % name)
 
@@ -140,3 +150,9 @@ class Kernel(object):
         else:
             innerprod = x * y
         return np.tanh(slope * innerprod + intercept)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        pass
