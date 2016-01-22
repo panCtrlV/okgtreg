@@ -150,9 +150,3 @@ class Kernel(object):
         else:
             innerprod = x * y
         return np.tanh(slope * innerprod + intercept)
-
-    def __str__(self):
-        return self.name
-
-    def __repr__(self):
-        pass
