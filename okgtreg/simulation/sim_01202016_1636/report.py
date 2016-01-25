@@ -31,6 +31,7 @@ print sortedRes[truerankid]
 # Ranking after adding penalty
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
+r2List = [v for (k, v) in res_list]
 
 ## 2-based penalty
 # complexityList = [ np.sum([2 ** len(g) for g in gstruct.partition])
@@ -41,11 +42,15 @@ groupsList = [k for (k, v) in res_list]
 #                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## n^{n+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
-r2List = [v for (k, v) in res_list]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -107,6 +112,21 @@ lambda	:	true_group_rank
 0.000236032133143 	:	1
 0.00192041716311 	:	1
 0.015625 	:	1
+
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	202
+8.13625304968e-10 	:	202
+6.61986136885e-09 	:	202
+5.38608672508e-08 	:	202
+4.38225645428e-07 	:	201
+3.56551474406e-06 	:	190
+2.90099302101e-05 	:	73
+0.000236032133143 	:	1
+0.00192041716311 	:	1
+0.015625 	:	1
+
 '''
 
 
@@ -132,9 +152,10 @@ print sortedRes[truerankid]
 '''
 203  :  ([1], [2], [3], [4], [5], [6])  :  0.347687527214
 '''
-
+# Ranking after adding penalty
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
+r2List = [v for (k, v) in res_list]
 
 # complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
 #                   for gstruct in groupsList]
@@ -143,11 +164,14 @@ groupsList = [k for (k, v) in res_list]
 #                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
-                  for gstruct in groupsList]
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
 
-r2List = [v for (k, v) in res_list]
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
+                  for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -162,6 +186,7 @@ for i in range(len(lmbda)):
                             for item in sorted_gstructWithR2adj])[0])
     print lmbda[i], '\t:\t', true_id + 1
 '''
+=== 2-based penalty ===
 lambda	:	true_group_rank
 1e-10 	:	203
 8.13625304968e-10 	:	203
@@ -174,8 +199,7 @@ lambda	:	true_group_rank
 0.00192041716311 	:	203
 0.015625 	:	202
 
-# e-based penalty
-# ---------------
+=== e-based penalty ===
 lambda	:	true_group_rank
 1e-10 	:	203
 8.13625304968e-10 	:	203
@@ -200,7 +224,21 @@ lambda	:	true_group_rank
 0.000236032133143 	:	203
 0.00192041716311 	:	202
 0.015625 	:	163
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	203
+8.13625304968e-10 	:	203
+6.61986136885e-09 	:	203
+5.38608672508e-08 	:	203
+4.38225645428e-07 	:	203
+3.56551474406e-06 	:	203
+2.90099302101e-05 	:	202
+0.000236032133143 	:	196
+0.00192041716311 	:	168
+0.015625 	:	58
 '''
+
 
 '''
 # Model 3
@@ -236,8 +274,13 @@ r2List = [v for (k, v) in res_list]
 #                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
@@ -291,6 +334,19 @@ lambda	:	true_group_rank
 0.000236032133143 	:	10
 0.00192041716311 	:	1
 0.015625 	:	2
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	15
+8.13625304968e-10 	:	15
+6.61986136885e-09 	:	15
+5.38608672508e-08 	:	15
+4.38225645428e-07 	:	14
+3.56551474406e-06 	:	11
+2.90099302101e-05 	:	3
+0.000236032133143 	:	1
+0.00192041716311 	:	1
+0.015625 	:	30
 '''
 
 
@@ -328,8 +384,13 @@ r2List = [v for (k, v) in res_list]
 #                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
@@ -383,6 +444,19 @@ lambda	:	true_group_rank
 0.000236032133143 	:	1
 0.00192041716311 	:	8
 0.015625 	:	62
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	15
+8.13625304968e-10 	:	15
+6.61986136885e-09 	:	15
+5.38608672508e-08 	:	15
+4.38225645428e-07 	:	12
+3.56551474406e-06 	:	5
+2.90099302101e-05 	:	4
+0.000236032133143 	:	11
+0.00192041716311 	:	77
+0.015625 	:	77
 '''
 
 
@@ -422,8 +496,13 @@ r2List = [v for (k, v) in res_list]
 #                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
@@ -477,6 +556,19 @@ lambda	:	true_group_rank
 0.000236032133143 	:	17
 0.00192041716311 	:	63
 0.015625 	:	63
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	45
+8.13625304968e-10 	:	45
+6.61986136885e-09 	:	45
+5.38608672508e-08 	:	44
+4.38225645428e-07 	:	43
+3.56551474406e-06 	:	28
+2.90099302101e-05 	:	15
+0.000236032133143 	:	80
+0.00192041716311 	:	77
+0.015625 	:	77
 '''
 
 
@@ -514,8 +606,13 @@ r2List = [v for (k, v) in res_list]
 #                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
@@ -572,6 +669,19 @@ lambda	:	true_group_rank
 
 In this example, the improvement as a result of the 2-power penalty
 is better than that of the e-based penalty.
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	15
+8.13625304968e-10 	:	15
+6.61986136885e-09 	:	14
+5.38608672508e-08 	:	10
+4.38225645428e-07 	:	7
+3.56551474406e-06 	:	37
+2.90099302101e-05 	:	79
+0.000236032133143 	:	79
+0.00192041716311 	:	79
+0.015625 	:	79
 '''
 
 
@@ -610,8 +720,13 @@ r2List = [v for (k, v) in res_list]
 #                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
@@ -670,6 +785,19 @@ lambda	:	true_group_rank
 
 The 2-power penalty also performs a little better than
 the e-based penalty.
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	142
+8.13625304968e-10 	:	142
+6.61986136885e-09 	:	142
+5.38608672508e-08 	:	142
+4.38225645428e-07 	:	142
+3.56551474406e-06 	:	141
+2.90099302101e-05 	:	138
+0.000236032133143 	:	128
+0.00192041716311 	:	137
+0.015625 	:	100
 '''
 
 
@@ -703,12 +831,17 @@ r2List = [v for (k, v) in res_list]
 # complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
 #                   for gstruct in groupsList]
 
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
-                  for gstruct in groupsList]
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
@@ -762,6 +895,19 @@ lambda	            :	true_group_rank
 0.000236032133143 	:	1
 0.00192041716311 	:	1
 0.015625 	        :	1
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	156
+8.13625304968e-10 	:	156
+6.61986136885e-09 	:	153
+5.38608672508e-08 	:	151
+4.38225645428e-07 	:	129
+3.56551474406e-06 	:	63
+2.90099302101e-05 	:	1
+0.000236032133143 	:	1
+0.00192041716311 	:	1
+0.015625 	:	1
 '''
 
 
@@ -795,12 +941,17 @@ r2List = [v for (k, v) in res_list]
 # complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
 #                   for gstruct in groupsList]
 
-complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
-                  for gstruct in groupsList]
+# complexityList = [np.sum([np.exp(len(g)) for g in gstruct.partition])
+#                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
 # Print the tabulation of different lambda and
@@ -854,6 +1005,19 @@ lambda	            :	true_group_rank
 0.000236032133143 	:	14
 0.00192041716311 	:	70
 0.015625 	        :	98
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	14
+8.13625304968e-10 	:	14
+6.61986136885e-09 	:	14
+5.38608672508e-08 	:	13
+4.38225645428e-07 	:	8
+3.56551474406e-06 	:	3
+2.90099302101e-05 	:	12
+0.000236032133143 	:	14
+0.00192041716311 	:	82
+0.015625 	:	98
 '''
 
 
@@ -882,6 +1046,7 @@ print sortedRes[truerankid]
 
 res_list = res_dict.items()
 groupsList = [k for (k, v) in res_list]
+r2List = [v for (k, v) in res_list]
 
 # complexityList = [np.sum([2 ** len(g) for g in gstruct.partition])
 #                   for gstruct in groupsList]
@@ -890,11 +1055,15 @@ groupsList = [k for (k, v) in res_list]
 #                   for gstruct in groupsList]
 
 ## 2-power penalty
-print("=== 2-power penalty ===")
-complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+# print("=== 2-power penalty ===")
+# complexityList = [np.sum([len(g) ** 2 for g in gstruct.partition])
+#                   for gstruct in groupsList]
+
+## d^{d+2} penalty
+print("=== d^{d+2} penalty ===")
+complexityList = [np.sum([len(g) ** len(g) for g in gstruct.partition])
                   for gstruct in groupsList]
 
-r2List = [v for (k, v) in res_list]
 
 # Print the tabulation of different lambda and
 # the resulting rank of the true group structure
@@ -947,4 +1116,17 @@ lambda	            :	true_group_rank
 0.000236032133143 	:	2
 0.00192041716311 	:	20
 0.015625 	        :	97
+
+=== d^{d+2} penalty ===
+lambda	:	true_group_rank
+1e-10 	:	2
+8.13625304968e-10 	:	2
+6.61986136885e-09 	:	2
+5.38608672508e-08 	:	2
+4.38225645428e-07 	:	2
+3.56551474406e-06 	:	1
+2.90099302101e-05 	:	1
+0.000236032133143 	:	2
+0.00192041716311 	:	78
+0.015625 	:	97
 '''
