@@ -162,7 +162,7 @@ if __name__ == '__main__':
 
     # Simulate data
     n = 500
-    np.random.seed(25)
+    np.random.seed(0)
     data, tgroup = model10(500)
 
     print tgroup

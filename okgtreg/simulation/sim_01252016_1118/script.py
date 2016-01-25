@@ -18,12 +18,12 @@ model_id = int(args[1])
 model = selectModel(model_id)
 
 # Kernel
-kernel = Kernel('laplace', sigma=0.5)
+kernel = Kernel('gaussian', sigma=0.5)
 
 # Print simulation information
 s1 = "# Simulation time: %s" % currentTimeStr
 s2 = "# Selected Model: %d" % model_id
-s3 = "# Kernel: Laplace (0.5)"
+s3 = "# Kernel: Gaussian (0.5)"
 s4 = "# Training method: vanilla"
 swidth = max(len(s1), len(s2), len(s3), len(s4)) + 2
 s0 = ''.join(np.repeat("#", swidth))
