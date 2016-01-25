@@ -1,5 +1,3 @@
-# import numpy as np
-
 from okgtreg.OKGTReg import *
 from okgtreg.Parameters import *
 
@@ -9,9 +7,10 @@ Determining group structure by forward selection.
 """
 
 # kernel = Kernel('gaussian', sigma=0.5)
+lmbda = 1e-5
 
 
-def forwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
+def forwardInclusion(data, kernel, method='vanilla', rank=10, seed=None):
     """
     Forward selection procedure which detects group structure for OKGT.
     It is assumed that:
@@ -50,7 +49,8 @@ def forwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
     """
     covariatesPool = list(np.arange(data.p) + 1)
     oldGroup = Group()  # start with an empty group structure
-    bestR2 = 0.
+    # bestR2 = 0.
+    bestR2 = -np.inf
     bestCovariateIndex = None
 
     while len(covariatesPool):
@@ -60,7 +60,7 @@ def forwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
         for covariateInd in covariatesPool:
             print("\t try covariate %d ..." % covariateInd)
             currentGroup = oldGroup.addNewCovariateAsGroup(covariateInd)
-            print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
+            # print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
             # The following OKGT needs a subset of data and the grouped covariate
             # indices being **normalized**, so that the training is done as if we are
             # using a complete data.
@@ -72,16 +72,25 @@ def forwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
             currentOKGT = OKGTReg(dataForOKGT, parametersForOKGT)
             # Train OKGT
             res = currentOKGT.train(method=method, nComponents=rank, seed=seed)
-            currentR2 = res['r2']
+            # currentR2 = res['r2']
+            capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
+            print("\t\t current group structure: %s with capacity: %d" %
+                  (currentGroup.getPartitions(), capacity))
+            currentR2 = res['r2'] - lmbda * capacity
             # Check if there is improvement
             if currentR2 > bestR2:
-                print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                # print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                print("\t\t current R2 (penalized) =\t %.10f \t *" % currentR2)
                 bestR2 = currentR2
                 bestCovariateIndex = covariateInd
                 newGroup = currentGroup
             else:
-                print("\t\t current R2 =\t %.10f" % currentR2)
-            print("\t\t best R2 =\t\t %.10f" % bestR2)
+                # print("\t\t current R2 =\t %.10f" % currentR2)
+                print("\t\t current R2 (penalized) =\t %.10f" % currentR2)
+
+            # print("\t\t best R2 =\t\t %.10f" % bestR2)
+            print("\t\t best R2 (penalized) =\t\t %.10f" % bestR2)
+
         print("** updated group structure is: %s \n" % (newGroup.getPartitions(), ))
         # If group structure is not empty, a new covariate can be added to an existing group
         if oldGroup.size > 0:
@@ -93,7 +102,7 @@ def forwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
                     # print oldGroup.partition
                     print("\t in group %d ..." % groupInd)
                     currentGroup = oldGroup.addNewCovariateToGroup(covariateInd, groupInd)
-                    print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
+                    # print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
                     # print currentGroup.partition
                     dataForOKGT, groupForOKGT = data.getGroupedData(currentGroup)
                     # print groupForOKGT.partition
@@ -102,17 +111,25 @@ def forwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
                     currentOKGT = OKGTReg(dataForOKGT, parametersForOKGT)
                     # Train OKGT
                     res = currentOKGT.train(method=method, nComponents=rank, seed=seed)
-                    currentR2 = res['r2']
+                    # currentR2 = res['r2']
+                    capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
+                    print("\t\t current group structure: %s with capacity: %d" %
+                          (currentGroup.getPartitions(), capacity))
+                    currentR2 = res['r2'] - lmbda * capacity
                     # Check if there is improvement
                     if currentR2 > bestR2:
-                        print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                        # print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                        print("\t\t current R2 (penalized) =\t %.10f \t *" % currentR2)
                         bestR2 = currentR2
                         bestCovariateIndex = covariateInd
                         # bestGroupIndex = groupInd
                         newGroup = currentGroup
                     else:
-                        print("\t\t current R2 =\t %.10f" % currentR2)
-                    print("\t\t best R2 =\t\t %.10f" % bestR2)
+                        # print("\t\t current R2 =\t %.10f" % currentR2)
+                        print("\t\t current R2 (penalized) =\t %.10f" % currentR2)
+
+                    # print("\t\t best R2 =\t\t %.10f" % bestR2)
+                    print("\t\t best R2 (penalized) =\t\t %.10f" % bestR2)
         # Add early termination if no further improvement
         # TODO: It is possible that there is no further improvement by adding new
         # todo: covariates, but there are still covariates in the pool. Currently,
@@ -129,6 +146,29 @@ def forwardSelection(data, kernel, method='vanilla', rank=10, seed=None):
 
     print ("** SELECTED GROUP STRUCTURE: %s ** \n" % (oldGroup.partition, ))
     # return oldGroup
-    return dict(group=oldGroup, r2=bestR2)
+    # return dict(group=oldGroup, r2=bestR2)
+    return dict(group=oldGroup, r2p=bestR2)
 
 
+if __name__ == '__main__':
+    # Model
+    def model10(n):
+        x = np.random.uniform(1, 2, (n, 6))
+        e = np.random.normal(0., 0.1, n)
+        y = np.log(1. +
+                   np.log(x[:, 0]) +
+                   x[:, 1] / np.exp(x[:, 2]) +
+                   np.power(x[:, 3] + x[:, 4], x[:, 5]) + e)
+        return Data(y, x), Group([1], [2, 3], [4, 5, 6])
+
+
+    # Simulate data
+    n = 500
+    np.random.seed(25)
+    data, tgroup = model10(500)
+
+    print tgroup
+
+    # Run forward inclusion method for group structure detection
+    kernel = Kernel('gaussian', sigma=0.5)
+    res = forwardInclusion(data, kernel)
