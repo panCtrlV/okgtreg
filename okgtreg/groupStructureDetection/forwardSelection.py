@@ -69,7 +69,7 @@ def forwardInclusion(data, kernel, method='vanilla', rank=10, seed=None, lmbda=1
             parametersForOKGT = Parameters(groupForOKGT, kernel, [kernel]*groupForOKGT.size)
             currentOKGT = OKGTReg(dataForOKGT, parametersForOKGT)
             # Train OKGT
-            res = currentOKGT.train(method=method, nComponents=rank, seed=seed)
+            res = currentOKGT.train(method, rank, seed)
             # currentR2 = res['r2']
             capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
             print("\t\t current group structure: %s with capacity: %d" %
