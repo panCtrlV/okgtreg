@@ -50,6 +50,6 @@ filename = 'script-model-' + str(model_id) + '.pkl'
 saveto = mydir + '/' + filename
 pickle.dump(res, open(saveto, 'wb'))
 
-# Create bash script
-for i in range(10):
-    print("python -u script.py %d > script-model-%d.out" % (i + 1, i + 1))
+# # Create bash script
+# for i in range(10):
+#     print("python -u script.py %d > script-model-%d.out" % (i + 1, i + 1))
