@@ -3,7 +3,6 @@ import copy
 
 from okgtreg.Group import Group
 from okgtreg.OKGTReg import OKGTReg
-from okgtreg.DataSimulator import DataSimulator
 from okgtreg.Parameters import Parameters
 
 
@@ -48,11 +47,12 @@ pool.
 # ------------------------
 # Start forward selection
 # ------------------------
-def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None):
+def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None, lmbda=1e-5):
     covariatesPool = list(np.arange(data.p) + 1)
     oldGroup = Group(covariatesPool)  # start with a large single group
     p = oldGroup.p
-    bestR2 = 0.
+    # bestR2 = 0.
+    bestR2 = -np.inf
     bestCovariateIndex = None
 
     counter = 0
@@ -66,22 +66,30 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None):
             print("\t Create a new group for covariate %d ..." % covariateInd)
             _currentGroup = oldGroup.removeOneCovariate(covariateInd)
             currentGroup = _currentGroup.addNewCovariateAsGroup(covariateInd)
-            print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
+            # print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
             # Contrary to forward selection, the data matrix doesn't
             # change.
             parameters = Parameters(currentGroup, kernel, [kernel]*currentGroup.size)
             currentOKGT = OKGTReg(data, parameters)
             # Train OKGT
             res = currentOKGT.train(method, rank, seed)
-            currentR2 = res['r2']
+            # currentR2 = res['r2']
+            capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
+            print("\t\t current group structure: %s with capacity: %d" %
+                  (currentGroup.getPartitions(), capacity))
+            currentR2 = res['r2'] - lmbda * capacity
             if currentR2 > bestR2:
-                print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                # print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                print("\t\t current R2 (penalized) =\t %.10f \t *" % currentR2)
                 bestR2 = currentR2
                 newGroup = currentGroup
                 bestCovariateIndex = covariateInd
             else:
-                print("\t\t current R2 =\t %.10f" % currentR2)
-            print("\t\t best R2 =\t\t %.10f \n" % bestR2)
+                # print("\t\t current R2 =\t %.10f" % currentR2)
+                print("\t\t current R2 (penalized) =\t %.10f" % currentR2)
+
+            # print("\t\t best R2 =\t\t %.10f \n" % bestR2)
+            print("\t\t best R2 (penalized) =\t\t %.10f \n" % bestR2)
 
         # print("** Updated group structure is: %s \n" % (newGroup.partition, ))
         # print '\n'
@@ -114,20 +122,29 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None):
                     currentOKGT = OKGTReg(data, parameters)
                     # Train OKGT
                     res = currentOKGT.train(method, rank, seed)
-                    currentR2 = res['r2']
+                    # currentR2 = res['r2']
+                    capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
+                    print("\t\t current group structure: %s with capacity: %d" %
+                          (currentGroup.getPartitions(), capacity))
+                    currentR2 = res['r2'] - lmbda * capacity
                     # Check if there is improvement
                     if currentR2 > bestR2:
-                        print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                        # print("\t\t current R2 =\t %.10f \t *" % currentR2)
+                        print("\t\t current R2 (penalized) =\t %.10f \t *" % currentR2)
                         bestR2 = currentR2
                         newGroup = currentGroup
                         bestCovariateIndex = covariateInd
                     else:
-                        print("\t\t current R2 =\t %.10f" % currentR2)
-                    print("\t\t best R2 =\t\t %.10f \n" % bestR2)
+                        # print("\t\t current R2 =\t %.10f" % currentR2)
+                        print("\t\t current R2 (penalized) =\t %.10f" % currentR2)
+
+                    # print("\t\t best R2 =\t\t %.10f \n" % bestR2)
+                    print("\t\t best R2 (penalized) =\t\t %.10f \n" % bestR2)
         else:
             print("\t ** No other groups than the pool. Pass ... ** \n")
 
-        print("** Step %d updated group structure is: %s \n" % (counter, newGroup.getPartitions()))
+        print("** Step %d updated group structure is: %s \n" %
+              (counter, newGroup.getPartitions()))
 
         # print "covariate pool: ", covariatesPool
         # print "best covariate index so far: ", bestCovariateIndex
@@ -138,25 +155,54 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None):
             if counter == p-1:
                 print("** Finish with complete iterations. ** \n")
         else:
-            print("** Finish with early termination at step %d due to no further improvement of R2. ** \n" % counter)
+            print("** Finish with early termination at step %d "
+                  "due to no further improvement of R2. ** \n" % counter)
             break
 
-    print ("** SELECTED GROUP STRUCTURE: %s with R2 = %f ** \n" % (oldGroup.getPartitions(), bestR2))
-    return dict(group=oldGroup, r2=bestR2)
+    # print ( "** SELECTED GROUP STRUCTURE: %s with R2 = %f ** \n" %
+    #         (oldGroup.getPartitions(), bestR2) )
+    print ("** SELECTED GROUP STRUCTURE: %s with R2 (penalized) = %f ** \n" %
+           (oldGroup.getPartitions(), bestR2))
+    # return dict(group=oldGroup, r2=bestR2)
+    return dict(group=oldGroup, r2p=bestR2)
 
 
 if __name__ == "__main__":
+    # from okgtreg.DataSimulator import DataSimulator
     from okgtreg.Kernel import Kernel
     from okgtreg.Data import Data
 
+
+    # # Simulate data
+    # np.random.seed(25)
+    # # y, x = DataSimulator.SimData_Wang04(500)
+    # y, x = DataSimulator.SimData_Wang04WithInteraction(500)
+    # data = Data(y, x)
+    #
+    # # Same kernel for all groups
+    # kernel = Kernel('gaussian', sigma=0.5)
+    #
+    # # Call backward selection
+    # selectedGroup = backwardPartition(data, kernel, 'nystroem', 10)
+
+    # Model
+    def model10(n):
+        x = np.random.uniform(1, 2, (n, 6))
+        e = np.random.normal(0., 0.1, n)
+        y = np.log(1. +
+                   np.log(x[:, 0]) +
+                   x[:, 1] / np.exp(x[:, 2]) +
+                   np.power(x[:, 3] + x[:, 4], x[:, 5]) + e)
+        return Data(y, x), Group([1], [2, 3], [4, 5, 6])
+
+
     # Simulate data
+    n = 500
     np.random.seed(25)
-    # y, x = DataSimulator.SimData_Wang04(500)
-    y, x = DataSimulator.SimData_Wang04WithInteraction(500)
-    data = Data(y, x)
+    data, tgroup = model10(500)
 
-    # Same kernel for all groups
+    print tgroup
+
+    # Run forward inclusion method for group structure detection
     kernel = Kernel('gaussian', sigma=0.5)
-
-    # Call backward selection
-    selectedGroup = backwardPartition(data, kernel, 'nystroem', 10)
+    res = backwardPartition(data, kernel)
