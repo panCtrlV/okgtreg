@@ -7,10 +7,8 @@ Determining group structure by forward selection.
 """
 
 # kernel = Kernel('gaussian', sigma=0.5)
-lmbda = 1e-5
 
-
-def forwardInclusion(data, kernel, method='vanilla', rank=10, seed=None):
+def forwardInclusion(data, kernel, method='vanilla', rank=10, seed=None, lmbda=1e-5):
     """
     Forward selection procedure which detects group structure for OKGT.
     It is assumed that:
