@@ -6,7 +6,7 @@ from okgtreg.groupStructureDetection.forwardSelection import forwardInclusion
 import sys, os
 import datetime
 import pickle
-import pandas as pd
+from sklearn import preprocessing
 
 # Current time
 currentTimeStr = datetime.datetime.strftime(datetime.datetime.now(), '%Y-%m-%d %H:%M:%S')
@@ -44,7 +44,10 @@ for i in range(nSim):
     print("=== seed: %d ===" % seeds[i])
     np.random.seed(seeds[i])
     data, tgroup = model(nSample)
-    # pd.DataFrame(data.X).
+    # normalize data
+    data.y = preprocessing.scale(data.y)
+    data.X = preprocessing.scale(data.X)
+    # forward inclusion/selection
     optimalRes = (forwardInclusion(data, kernel))
     res[optimalRes['group']] = optimalRes['r2p']
 
