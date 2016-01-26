@@ -30,6 +30,7 @@ def printGroupingFrequency(groupList, sort=True):
     else:
         for item in counter.items():
             print item[0], ':', item[1]
+    return counter
 
 
 def printGroupFrequency(groupList, sort=True):
@@ -42,3 +43,4 @@ def printGroupFrequency(groupList, sort=True):
     else:
         for item in counter.items():
             print Group(*tuple(list(i) for i in item[0])), ':', item[1]
+    return counter
