@@ -23,7 +23,7 @@ with open(dirname + filename, 'rb') as f:
     res = pickle.load(f)
 
 groupList = res.keys()
-groupingCounter = printGroupingFrequency(groupList)
+groupingCounter = groupingFrequency(groupList)
 print("=== Top 10 most frequent groupings ===")
 for i in range(10):
     item = groupingCounter[i]
@@ -41,7 +41,7 @@ for i in range(10):
 9 : (3, 4, 5, 6) : 9
 10 : (1, 4, 5, 6) : 9
 '''
-groupCounter = printGroupFrequency(groupList)
+groupCounter = groupFrequency(groupList)
 print("=== Top 10 most frequent group structures ===")
 for i in range(10):
     item = groupCounter[i]
@@ -87,7 +87,7 @@ with open(dirname + filename, 'rb') as f:
     res = pickle.load(f)
 
 groupList = res.keys()
-groupingCounter = printGroupingFrequency(groupList)
+groupingCounter = groupingFrequency(groupList)
 print("=== Top 10 most frequent groupings ===")
 for i in range(10):
     item = groupingCounter[i]
@@ -105,7 +105,7 @@ for i in range(10):
 9 : (2, 3) : 7
 10 : (1, 2, 3, 4) : 7
 '''
-groupCounter = printGroupFrequency(groupList)
+groupCounter = groupFrequency(groupList)
 print("=== Top 10 most frequent group structures ===")
 for i in range(10):
     item = groupCounter[i]
@@ -135,7 +135,7 @@ with open(dirname + filename, 'rb') as f:
     res = pickle.load(f)
 
 groupList = res.keys()
-groupingCounter = printGroupingFrequency(groupList)
+groupingCounter = groupingFrequency(groupList)
 print("=== Top 10 most frequent groupings ===")
 for i in range(10):
     item = groupingCounter[i]
@@ -153,7 +153,7 @@ for i in range(10):
 9 : (2, 3, 5, 6) : 4
 10 : (3, 5) : 4
 '''
-groupCounter = printGroupFrequency(groupList)
+groupCounter = groupFrequency(groupList)
 print("=== Top 10 most frequent group structures ===")
 for i in range(10):
     item = groupCounter[i]
@@ -183,7 +183,7 @@ with open(dirname + filename, 'rb') as f:
     res = pickle.load(f)
 
 groupList = res.keys()
-groupingCounter = printGroupingFrequency(groupList)
+groupingCounter = groupingFrequency(groupList)
 print("=== Top 10 most frequent groupings ===")
 for i in range(10):
     item = groupingCounter[i]
@@ -201,7 +201,7 @@ for i in range(10):
 9 : (2, 3, 5, 6) : 7
 10 : (3, 5) : 7
 '''
-groupCounter = printGroupFrequency(groupList)
+groupCounter = groupFrequency(groupList)
 print("=== Top 10 most frequent group structures ===")
 for i in range(10):
     item = groupCounter[i]
@@ -220,6 +220,7 @@ for i in range(10):
 10 : ([1, 2, 5, 6], [3, 4]) : 4
 '''
 
+
 '''
 # Model 5 results
 # ===============
@@ -231,7 +232,7 @@ with open(dirname + filename, 'rb') as f:
     res = pickle.load(f)
 
 groupList = res.keys()
-groupingCounter = printGroupingFrequency(groupList)
+groupingCounter = groupingFrequency(groupList)
 print("=== Top 10 most frequent groupings ===")
 for i in range(10):
     item = groupingCounter[i]
@@ -249,7 +250,7 @@ for i in range(10):
 9 : (1, 2, 3, 5) : 8
 10 : (2, 3) : 8
 '''
-groupCounter = printGroupFrequency(groupList)
+groupCounter = groupFrequency(groupList)
 print("=== Top 10 most frequent group structures ===")
 for i in range(10):
     item = groupCounter[i]
@@ -282,7 +283,7 @@ with open(dirname + filename, 'rb') as f:
     res = pickle.load(f)
 
 groupList = res.keys()
-groupingCounter = printGroupingFrequency(groupList)
+groupingCounter = groupingFrequency(groupList)
 print("=== Top 10 most frequent groupings ===")
 for i in range(10):
     item = groupingCounter[i]
@@ -300,7 +301,7 @@ for i in range(10):
 9 : (2,) : 10
 10 : (4,) : 10
 '''
-groupCounter = printGroupFrequency(groupList)
+groupCounter = groupFrequency(groupList)
 print("=== Top 10 most frequent group structures ===")
 for i in range(10):
     item = groupCounter[i]
@@ -330,7 +331,7 @@ with open(dirname + filename, 'rb') as f:
     res = pickle.load(f)
 
 groupList = res.keys()
-groupingCounter = printGroupingFrequency(groupList)
+groupingCounter = groupingFrequency(groupList)
 print("=== Top 10 most frequent groupings ===")
 for i in range(10):
     item = groupingCounter[i]
