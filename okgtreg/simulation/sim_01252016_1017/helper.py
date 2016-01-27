@@ -9,6 +9,7 @@ from okgtreg.Group import Group
 def mapGroupToDictionary(g):
     """
     Map a Group object to a dictionary.
+    e.g. ([1,2,3], [4,5,6]) => {(1,2,3):1, (4,5,6):1}
 
     :type g: Group
     :param g:
@@ -34,13 +35,14 @@ def printGroupingFrequency(groupList, sort=True):
 
 
 def printGroupFrequency(groupList, sort=True):
-    groupDictList = [mapGroupToDictionary(group) for group in groupList]
-    counter = collections.Counter(tuple(g.keys()) for g in groupDictList)
+    # groupDictList = [mapGroupToDictionary(group) for group in groupList]
+    groupStrList = [group.__str__() for group in groupList]
+    counter = collections.Counter(groupStrList)
     if sort:
         counter = counter.most_common()
         for item in counter:
-            print Group(*tuple(list(i) for i in item[0])), ':', item[1]
+            print item[0], ':', item[1]
     else:
         for item in counter.items():
-            print Group(*tuple(list(i) for i in item[0])), ':', item[1]
+            print item[0], ':', item[1]
     return counter

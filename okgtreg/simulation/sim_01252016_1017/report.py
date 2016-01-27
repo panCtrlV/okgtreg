@@ -151,6 +151,7 @@ one is picked as a univariate group, the other two are
 coffined with [4,5,6] as a single group.
 '''
 
+
 '''
 # Model 4 results
 # ===============
@@ -230,7 +231,7 @@ groupCounter = printGroupFrequency(groupList)
 ([1, 2], [3], [4, 5, 6]) : 4
 ([1, 4, 5, 6], [2, 3]) : 3
 
-The true group structure is correctly 4/100 times,
+The true group structure is correctly identified 4/100 times,
 though most of time two-group structures are determined
 to be optimal.
 '''
