@@ -270,7 +270,36 @@ reportResults(dirname, filename)
 filename = 'script-model-8.pkl'
 reportResults(dirname, filename)
 '''
-Still running ...
+=== Top 10 out of 22 most frequent groupings ===
+1 : (6,) : 65
+2 : (1,) : 58
+3 : (5,) : 56
+4 : (4,) : 54
+5 : (2,) : 52
+6 : (3,) : 50
+7 : (3, 6) : 17
+8 : (2, 4) : 17
+9 : (1, 4) : 12
+10 : (3, 5) : 12
+
+=== Top 10 out of 41 most frequent group structures ===
+1 : ([1], [2], [3], [4], [5], [6]) : 18
+2 : ([1], [2], [3, 5], [4], [6]) : 5
+3 : ([1], [2, 4], [3], [5], [6]) : 5
+4 : ([1], [2, 3], [4], [5], [6]) : 5
+5 : ([1], [2], [3], [4], [5, 6]) : 5
+6 : ([1, 3], [2], [4], [5], [6]) : 4
+7 : ([1], [2], [3, 6], [4], [5]) : 4
+8 : ([1], [2, 4], [3, 5], [6]) : 3
+9 : ([1, 5], [2, 4], [3, 6]) : 3
+10 : ([1, 2], [3, 6], [4, 5]) : 3
+
+In this example, univariate groupings are correctly identified
+as most of time. The true group structure is identified most
+often as the optimal group structure.
+
+But the variability of the estimates is large. There are 41
+different group structures in the 100 simulations.
 '''
 
 '''
