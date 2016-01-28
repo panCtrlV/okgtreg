@@ -27826,3 +27826,2952 @@
 
 	   in other group 2 ...
 		 current group structure: ([1, 2, 5], [3], [4, 6]) 
+		 current group structure: ([1, 2, 5], [3], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995221993
+		 best R2 (penalized) =		 0.9996427078 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3, 5], [6]) 
+		 current group structure: ([1, 2, 4], [3, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996237958
+		 best R2 (penalized) =		 0.9996427078 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 4], [3], [5, 6]) 
+		 current group structure: ([1, 2, 4], [3], [5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995456018
+		 best R2 (penalized) =		 0.9996427078 
+
+** Step 3 updated group structure is: ([1, 2, 5], [3], [4], [6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 5], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998328622 	 *
+		 best R2 (penalized) =		 0.9998328622 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998398583 	 *
+		 best R2 (penalized) =		 0.9998398583 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2], [3], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998378780
+		 best R2 (penalized) =		 0.9998398583 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 5], [4], [6]) 
+		 current group structure: ([1, 3], [2, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997941409
+		 best R2 (penalized) =		 0.9998398583 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2, 5], [3], [6]) 
+		 current group structure: ([1, 4], [2, 5], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998173446
+		 best R2 (penalized) =		 0.9998398583 
+
+	   in other group 3 ...
+		 current group structure: ([1, 6], [2, 5], [3], [4]) 
+		 current group structure: ([1, 6], [2, 5], [3], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9996774207
+		 best R2 (penalized) =		 0.9998398583 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 3], [4], [6]) 
+		 current group structure: ([1, 5], [2, 3], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998001548
+		 best R2 (penalized) =		 0.9998398583 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5], [2, 4], [3], [6]) 
+		 current group structure: ([1, 5], [2, 4], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998270713
+		 best R2 (penalized) =		 0.9998398583 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2, 6], [3], [4]) 
+		 current group structure: ([1, 5], [2, 6], [3], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9996627368
+		 best R2 (penalized) =		 0.9998398583 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3, 5], [4], [6]) 
+		 current group structure: ([1, 2], [3, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998070433
+		 best R2 (penalized) =		 0.9998398583 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2], [3], [4, 5], [6]) 
+		 current group structure: ([1, 2], [3], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998219708
+		 best R2 (penalized) =		 0.9998398583 
+
+	   in other group 3 ...
+		 current group structure: ([1, 2], [3], [4], [5, 6]) 
+		 current group structure: ([1, 2], [3], [4], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996803229
+		 best R2 (penalized) =		 0.9998398583 
+
+** Step 4 updated group structure is: ([1, 5], [2], [3], [4], [6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9998490331 	 *
+		 best R2 (penalized) =		 0.9998490331 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9998490331
+		 best R2 (penalized) =		 0.9998490331 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3], [4], [5], [6]) 
+		 current group structure: ([1, 2], [3], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998378780
+		 best R2 (penalized) =		 0.9998490331 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2], [4], [5], [6]) 
+		 current group structure: ([1, 3], [2], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998083323
+		 best R2 (penalized) =		 0.9998490331 
+
+	   in other group 3 ...
+		 current group structure: ([1, 4], [2], [3], [5], [6]) 
+		 current group structure: ([1, 4], [2], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998326267
+		 best R2 (penalized) =		 0.9998490331 
+
+	   in other group 4 ...
+		 current group structure: ([1, 6], [2], [3], [4], [5]) 
+		 current group structure: ([1, 6], [2], [3], [4], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9996841777
+		 best R2 (penalized) =		 0.9998490331 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1], [2, 5], [3], [4], [6]) 
+		 current group structure: ([1], [2, 5], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998328622
+		 best R2 (penalized) =		 0.9998490331 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2], [3, 5], [4], [6]) 
+		 current group structure: ([1], [2], [3, 5], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998099164
+		 best R2 (penalized) =		 0.9998490331 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2], [3], [4, 5], [6]) 
+		 current group structure: ([1], [2], [3], [4, 5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998335118
+		 best R2 (penalized) =		 0.9998490331 
+
+	   in other group 4 ...
+		 current group structure: ([1], [2], [3], [4], [5, 6]) 
+		 current group structure: ([1], [2], [3], [4], [5, 6]) with capacity: 8
+		 current R2 (penalized) =	 0.9996729418
+		 best R2 (penalized) =		 0.9998490331 
+
+** Step 5 updated group structure is: ([1], [2], [3], [4], [5], [6]) 
+
+** Finish with complete iterations. ** 
+
+** SELECTED GROUP STRUCTURE: ([1], [2], [3], [4], [5], [6]) with R2 (penalized) = 0.999849 ** 
+
+=== seed: 91 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685145647 	 *
+		 best R2 (penalized) =		 0.9685145647 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685195495 	 *
+		 best R2 (penalized) =		 0.9685195495 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9686210991 	 *
+		 best R2 (penalized) =		 0.9686210991 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685377279
+		 best R2 (penalized) =		 0.9686210991 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685321402
+		 best R2 (penalized) =		 0.9686210991 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9686806865 	 *
+		 best R2 (penalized) =		 0.9686806865 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 2, 3, 4, 5], [6]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973506315 	 *
+		 best R2 (penalized) =		 0.9973506315 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5], [2], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973465672
+		 best R2 (penalized) =		 0.9973506315 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5], [3], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973789206 	 *
+		 best R2 (penalized) =		 0.9973789206 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5], [4], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973513643
+		 best R2 (penalized) =		 0.9973789206 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4], [5], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973422509
+		 best R2 (penalized) =		 0.9973789206 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 6], [2, 3, 4, 5]) 
+		 current group structure: ([1, 6], [2, 3, 4, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9972778000
+		 best R2 (penalized) =		 0.9973789206 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4, 5], [2, 6]) 
+		 current group structure: ([1, 3, 4, 5], [2, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972935495
+		 best R2 (penalized) =		 0.9973789206 
+
+	 try adding covariate 3 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 5], [3, 6]) 
+		 current group structure: ([1, 2, 4, 5], [3, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973525351
+		 best R2 (penalized) =		 0.9973789206 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3, 5], [4, 6]) 
+		 current group structure: ([1, 2, 3, 5], [4, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973014121
+		 best R2 (penalized) =		 0.9973789206 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3, 4], [5, 6]) 
+		 current group structure: ([1, 2, 3, 4], [5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972872328
+		 best R2 (penalized) =		 0.9973789206 
+
+** Step 2 updated group structure is: ([1, 2, 4, 5], [3], [6]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9994596450 	 *
+		 best R2 (penalized) =		 0.9994596450 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5], [2], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9994105280
+		 best R2 (penalized) =		 0.9994596450 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5], [3], [4], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9994598068 	 *
+		 best R2 (penalized) =		 0.9994598068 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4], [3], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9994024736
+		 best R2 (penalized) =		 0.9994598068 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5], [6]) 
+		 current group structure: ([1, 3], [2, 4, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9994706863 	 *
+		 best R2 (penalized) =		 0.9994706863 
+
+	   in other group 2 ...
+		 current group structure: ([1, 6], [2, 4, 5], [3]) 
+		 current group structure: ([1, 6], [2, 4, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9994527565
+		 best R2 (penalized) =		 0.9994706863 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 3], [6]) 
+		 current group structure: ([1, 4, 5], [2, 3], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9994705275
+		 best R2 (penalized) =		 0.9994706863 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 5], [2, 6], [3]) 
+		 current group structure: ([1, 4, 5], [2, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9994982793 	 *
+		 best R2 (penalized) =		 0.9994982793 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5], [3, 4], [6]) 
+		 current group structure: ([1, 2, 5], [3, 4], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995006440 	 *
+		 best R2 (penalized) =		 0.9995006440 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 5], [3], [4, 6]) 
+		 current group structure: ([1, 2, 5], [3], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995389917 	 *
+		 best R2 (penalized) =		 0.9995389917 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3, 5], [6]) 
+		 current group structure: ([1, 2, 4], [3, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9994920148
+		 best R2 (penalized) =		 0.9995389917 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 4], [3], [5, 6]) 
+		 current group structure: ([1, 2, 4], [3], [5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995015059
+		 best R2 (penalized) =		 0.9995389917 
+
+** Step 3 updated group structure is: ([1, 2, 5], [3], [4, 6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 5], [3], [4, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9993977943
+		 best R2 (penalized) =		 0.9995389917 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 5], [2], [3], [4, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9992526290
+		 best R2 (penalized) =		 0.9995389917 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2], [3], [4, 6], [5]) with capacity: 10
+		 current R2 (penalized) =	 0.9990816379
+		 best R2 (penalized) =		 0.9995389917 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 5], [4, 6]) 
+		 current group structure: ([1, 3], [2, 5], [4, 6]) with capacity: 12
+		 current R2 (penalized) =	 0.9994899427
+		 best R2 (penalized) =		 0.9995389917 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 6], [2, 5], [3]) 
+		 current group structure: ([1, 4, 6], [2, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9994896831
+		 best R2 (penalized) =		 0.9995389917 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 3], [4, 6]) 
+		 current group structure: ([1, 5], [2, 3], [4, 6]) with capacity: 12
+		 current R2 (penalized) =	 0.9993449561
+		 best R2 (penalized) =		 0.9995389917 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5], [2, 4, 6], [3]) 
+		 current group structure: ([1, 5], [2, 4, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995206718
+		 best R2 (penalized) =		 0.9995389917 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3, 5], [4, 6]) 
+		 current group structure: ([1, 2], [3, 5], [4, 6]) with capacity: 12
+		 current R2 (penalized) =	 0.9996044677 	 *
+		 best R2 (penalized) =		 0.9996044677 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2], [3], [4, 5, 6]) 
+		 current group structure: ([1, 2], [3], [4, 5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9994870405
+		 best R2 (penalized) =		 0.9996044677 
+
+** Step 4 updated group structure is: ([1, 2], [3, 5], [4, 6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3, 5], [4, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9995947759
+		 best R2 (penalized) =		 0.9996044677 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1], [2], [3, 5], [4, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9995947759
+		 best R2 (penalized) =		 0.9996044677 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 5], [2], [4, 6]) 
+		 current group structure: ([1, 3, 5], [2], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995250700
+		 best R2 (penalized) =		 0.9996044677 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 6], [2], [3, 5]) 
+		 current group structure: ([1, 4, 6], [2], [3, 5]) with capacity: 32
+		 current R2 (penalized) =	 0.9994827740
+		 best R2 (penalized) =		 0.9996044677 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1], [2, 3, 5], [4, 6]) 
+		 current group structure: ([1], [2, 3, 5], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995339652
+		 best R2 (penalized) =		 0.9996044677 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 4, 6], [3, 5]) 
+		 current group structure: ([1], [2, 4, 6], [3, 5]) with capacity: 32
+		 current R2 (penalized) =	 0.9994895952
+		 best R2 (penalized) =		 0.9996044677 
+
+** Step 5 updated group structure is: ([1, 2], [3, 5], [4, 6]) 
+
+** Finish with early termination at step 5 due to no further improvement of R2. ** 
+
+** SELECTED GROUP STRUCTURE: ([1, 2], [3, 5], [4, 6]) with R2 (penalized) = 0.999604 ** 
+
+=== seed: 92 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685265533 	 *
+		 best R2 (penalized) =		 0.9685265533 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685284287 	 *
+		 best R2 (penalized) =		 0.9685284287 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685394585 	 *
+		 best R2 (penalized) =		 0.9685394585 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9684979061
+		 best R2 (penalized) =		 0.9685394585 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685418029 	 *
+		 best R2 (penalized) =		 0.9685418029 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9687031317 	 *
+		 best R2 (penalized) =		 0.9687031317 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 2, 3, 4, 5], [6]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973764159 	 *
+		 best R2 (penalized) =		 0.9973764159 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5], [2], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973747902
+		 best R2 (penalized) =		 0.9973764159 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5], [3], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973934053 	 *
+		 best R2 (penalized) =		 0.9973934053 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5], [4], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973764934
+		 best R2 (penalized) =		 0.9973934053 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4], [5], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973756809
+		 best R2 (penalized) =		 0.9973934053 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 6], [2, 3, 4, 5]) 
+		 current group structure: ([1, 6], [2, 3, 4, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9973153313
+		 best R2 (penalized) =		 0.9973934053 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4, 5], [2, 6]) 
+		 current group structure: ([1, 3, 4, 5], [2, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973233539
+		 best R2 (penalized) =		 0.9973934053 
+
+	 try adding covariate 3 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 5], [3, 6]) 
+		 current group structure: ([1, 2, 4, 5], [3, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973740815
+		 best R2 (penalized) =		 0.9973934053 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3, 5], [4, 6]) 
+		 current group structure: ([1, 2, 3, 5], [4, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973029719
+		 best R2 (penalized) =		 0.9973934053 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3, 4], [5, 6]) 
+		 current group structure: ([1, 2, 3, 4], [5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973150471
+		 best R2 (penalized) =		 0.9973934053 
+
+** Step 2 updated group structure is: ([1, 2, 4, 5], [3], [6]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996304548 	 *
+		 best R2 (penalized) =		 0.9996304548 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5], [2], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996235838
+		 best R2 (penalized) =		 0.9996304548 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5], [3], [4], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996042665
+		 best R2 (penalized) =		 0.9996304548 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4], [3], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996238591
+		 best R2 (penalized) =		 0.9996304548 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5], [6]) 
+		 current group structure: ([1, 3], [2, 4, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996352326 	 *
+		 best R2 (penalized) =		 0.9996352326 
+
+	   in other group 2 ...
+		 current group structure: ([1, 6], [2, 4, 5], [3]) 
+		 current group structure: ([1, 6], [2, 4, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995444049
+		 best R2 (penalized) =		 0.9996352326 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 3], [6]) 
+		 current group structure: ([1, 4, 5], [2, 3], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996218648
+		 best R2 (penalized) =		 0.9996352326 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 5], [2, 6], [3]) 
+		 current group structure: ([1, 4, 5], [2, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995390573
+		 best R2 (penalized) =		 0.9996352326 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5], [3, 4], [6]) 
+		 current group structure: ([1, 2, 5], [3, 4], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996144782
+		 best R2 (penalized) =		 0.9996352326 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 5], [3], [4, 6]) 
+		 current group structure: ([1, 2, 5], [3], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995427361
+		 best R2 (penalized) =		 0.9996352326 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3, 5], [6]) 
+		 current group structure: ([1, 2, 4], [3, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996208364
+		 best R2 (penalized) =		 0.9996352326 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 4], [3], [5, 6]) 
+		 current group structure: ([1, 2, 4], [3], [5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995550945
+		 best R2 (penalized) =		 0.9996352326 
+
+** Step 3 updated group structure is: ([1, 3], [2, 4, 5], [6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3], [2], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997933421 	 *
+		 best R2 (penalized) =		 0.9997933421 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 3], [2, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997827655
+		 best R2 (penalized) =		 0.9997933421 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 3], [2, 4], [5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998099057 	 *
+		 best R2 (penalized) =		 0.9998099057 
+
+** Add to an existing group: **
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3], [4, 5], [6]) 
+		 current group structure: ([1, 2, 3], [4, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996231962
+		 best R2 (penalized) =		 0.9998099057 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2, 6], [4, 5]) 
+		 current group structure: ([1, 3], [2, 6], [4, 5]) with capacity: 12
+		 current R2 (penalized) =	 0.9996829626
+		 best R2 (penalized) =		 0.9998099057 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4], [2, 5], [6]) 
+		 current group structure: ([1, 3, 4], [2, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996322931
+		 best R2 (penalized) =		 0.9998099057 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2, 5], [4, 6]) 
+		 current group structure: ([1, 3], [2, 5], [4, 6]) with capacity: 12
+		 current R2 (penalized) =	 0.9997397520
+		 best R2 (penalized) =		 0.9998099057 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 5], [2, 4], [6]) 
+		 current group structure: ([1, 3, 5], [2, 4], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996182440
+		 best R2 (penalized) =		 0.9998099057 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2, 4], [5, 6]) 
+		 current group structure: ([1, 3], [2, 4], [5, 6]) with capacity: 12
+		 current R2 (penalized) =	 0.9997020324
+		 best R2 (penalized) =		 0.9998099057 
+
+** Step 4 updated group structure is: ([1, 3], [2, 4], [5], [6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3], [2], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997887042
+		 best R2 (penalized) =		 0.9998099057 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 3], [2], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997887042
+		 best R2 (penalized) =		 0.9998099057 
+
+** Add to an existing group: **
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3], [4], [5], [6]) 
+		 current group structure: ([1, 2, 3], [4], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996321919
+		 best R2 (penalized) =		 0.9998099057 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2, 5], [4], [6]) 
+		 current group structure: ([1, 3], [2, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997827655
+		 best R2 (penalized) =		 0.9998099057 
+
+	   in other group 3 ...
+		 current group structure: ([1, 3], [2, 6], [4], [5]) 
+		 current group structure: ([1, 3], [2, 6], [4], [5]) with capacity: 10
+		 current R2 (penalized) =	 0.9996611106
+		 best R2 (penalized) =		 0.9998099057 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4], [2], [5], [6]) 
+		 current group structure: ([1, 3, 4], [2], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996475698
+		 best R2 (penalized) =		 0.9998099057 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2], [4, 5], [6]) 
+		 current group structure: ([1, 3], [2], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997933421
+		 best R2 (penalized) =		 0.9998099057 
+
+	   in other group 3 ...
+		 current group structure: ([1, 3], [2], [4, 6], [5]) 
+		 current group structure: ([1, 3], [2], [4, 6], [5]) with capacity: 10
+		 current R2 (penalized) =	 0.9997498254
+		 best R2 (penalized) =		 0.9998099057 
+
+** Step 5 updated group structure is: ([1, 3], [2, 4], [5], [6]) 
+
+** Finish with early termination at step 5 due to no further improvement of R2. ** 
+
+** SELECTED GROUP STRUCTURE: ([1, 3], [2, 4], [5], [6]) with R2 (penalized) = 0.999810 ** 
+
+=== seed: 93 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685297148 	 *
+		 best R2 (penalized) =		 0.9685297148 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9684941151
+		 best R2 (penalized) =		 0.9685297148 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9686927560 	 *
+		 best R2 (penalized) =		 0.9686927560 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685474375
+		 best R2 (penalized) =		 0.9686927560 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685417441
+		 best R2 (penalized) =		 0.9686927560 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685147093
+		 best R2 (penalized) =		 0.9686927560 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 2, 4, 5, 6], [3]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5, 6], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9973473204 	 *
+		 best R2 (penalized) =		 0.9973473204 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5, 6], [2], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9973494548 	 *
+		 best R2 (penalized) =		 0.9973494548 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5, 6], [3], [4]) with capacity: 258
+		 current R2 (penalized) =	 0.9973489622
+		 best R2 (penalized) =		 0.9973494548 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4, 6], [3], [5]) with capacity: 258
+		 current R2 (penalized) =	 0.9973361686
+		 best R2 (penalized) =		 0.9973494548 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 4, 5], [3], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973962255 	 *
+		 best R2 (penalized) =		 0.9973962255 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5, 6]) 
+		 current group structure: ([1, 3], [2, 4, 5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973299830
+		 best R2 (penalized) =		 0.9973962255 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5, 6], [2, 3]) 
+		 current group structure: ([1, 4, 5, 6], [2, 3]) with capacity: 260
+		 current R2 (penalized) =	 0.9973431327
+		 best R2 (penalized) =		 0.9973962255 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5, 6], [3, 4]) 
+		 current group structure: ([1, 2, 5, 6], [3, 4]) with capacity: 260
+		 current R2 (penalized) =	 0.9973253839
+		 best R2 (penalized) =		 0.9973962255 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 6], [3, 5]) 
+		 current group structure: ([1, 2, 4, 6], [3, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9973202828
+		 best R2 (penalized) =		 0.9973962255 
+
+	 try adding covariate 6 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 5], [3, 6]) 
+		 current group structure: ([1, 2, 4, 5], [3, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973580835
+		 best R2 (penalized) =		 0.9973962255 
+
+** Step 2 updated group structure is: ([1, 2, 4, 5], [3], [6]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996313766 	 *
+		 best R2 (penalized) =		 0.9996313766 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5], [2], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996354684 	 *
+		 best R2 (penalized) =		 0.9996354684 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5], [3], [4], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996416239 	 *
+		 best R2 (penalized) =		 0.9996416239 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4], [3], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996374774
+		 best R2 (penalized) =		 0.9996416239 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5], [6]) 
+		 current group structure: ([1, 3], [2, 4, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995910976
+		 best R2 (penalized) =		 0.9996416239 
+
+	   in other group 2 ...
+		 current group structure: ([1, 6], [2, 4, 5], [3]) 
+		 current group structure: ([1, 6], [2, 4, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9996047657
+		 best R2 (penalized) =		 0.9996416239 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 3], [6]) 
+		 current group structure: ([1, 4, 5], [2, 3], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996173865
+		 best R2 (penalized) =		 0.9996416239 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 5], [2, 6], [3]) 
+		 current group structure: ([1, 4, 5], [2, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9996047366
+		 best R2 (penalized) =		 0.9996416239 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5], [3, 4], [6]) 
+		 current group structure: ([1, 2, 5], [3, 4], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995755530
+		 best R2 (penalized) =		 0.9996416239 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 5], [3], [4, 6]) 
+		 current group structure: ([1, 2, 5], [3], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995993039
+		 best R2 (penalized) =		 0.9996416239 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3, 5], [6]) 
+		 current group structure: ([1, 2, 4], [3, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995885584
+		 best R2 (penalized) =		 0.9996416239 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 4], [3], [5, 6]) 
+		 current group structure: ([1, 2, 4], [3], [5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996065843
+		 best R2 (penalized) =		 0.9996416239 
+
+** Step 3 updated group structure is: ([1, 2, 5], [3], [4], [6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 5], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998154093 	 *
+		 best R2 (penalized) =		 0.9998154093 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998166248 	 *
+		 best R2 (penalized) =		 0.9998166248 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2], [3], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998169217 	 *
+		 best R2 (penalized) =		 0.9998169217 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 5], [4], [6]) 
+		 current group structure: ([1, 3], [2, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997438690
+		 best R2 (penalized) =		 0.9998169217 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2, 5], [3], [6]) 
+		 current group structure: ([1, 4], [2, 5], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998101992
+		 best R2 (penalized) =		 0.9998169217 
+
+	   in other group 3 ...
+		 current group structure: ([1, 6], [2, 5], [3], [4]) 
+		 current group structure: ([1, 6], [2, 5], [3], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9997760212
+		 best R2 (penalized) =		 0.9998169217 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 3], [4], [6]) 
+		 current group structure: ([1, 5], [2, 3], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997654119
+		 best R2 (penalized) =		 0.9998169217 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5], [2, 4], [3], [6]) 
+		 current group structure: ([1, 5], [2, 4], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998074087
+		 best R2 (penalized) =		 0.9998169217 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2, 6], [3], [4]) 
+		 current group structure: ([1, 5], [2, 6], [3], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9997866971
+		 best R2 (penalized) =		 0.9998169217 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3, 5], [4], [6]) 
+		 current group structure: ([1, 2], [3, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997387140
+		 best R2 (penalized) =		 0.9998169217 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2], [3], [4, 5], [6]) 
+		 current group structure: ([1, 2], [3], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9998056122
+		 best R2 (penalized) =		 0.9998169217 
+
+	   in other group 3 ...
+		 current group structure: ([1, 2], [3], [4], [5, 6]) 
+		 current group structure: ([1, 2], [3], [4], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997909116
+		 best R2 (penalized) =		 0.9998169217 
+
+** Step 4 updated group structure is: ([1, 2], [3], [4], [5], [6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9998258126 	 *
+		 best R2 (penalized) =		 0.9998258126 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9998258126
+		 best R2 (penalized) =		 0.9998258126 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2], [4], [5], [6]) 
+		 current group structure: ([1, 3], [2], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997397651
+		 best R2 (penalized) =		 0.9998258126 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2], [3], [5], [6]) 
+		 current group structure: ([1, 4], [2], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998172703
+		 best R2 (penalized) =		 0.9998258126 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) 
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998166248
+		 best R2 (penalized) =		 0.9998258126 
+
+	   in other group 4 ...
+		 current group structure: ([1, 6], [2], [3], [4], [5]) 
+		 current group structure: ([1, 6], [2], [3], [4], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9997799405
+		 best R2 (penalized) =		 0.9998258126 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1], [2, 3], [4], [5], [6]) 
+		 current group structure: ([1], [2, 3], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997720335
+		 best R2 (penalized) =		 0.9998258126 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 4], [3], [5], [6]) 
+		 current group structure: ([1], [2, 4], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998162450
+		 best R2 (penalized) =		 0.9998258126 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2, 5], [3], [4], [6]) 
+		 current group structure: ([1], [2, 5], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9998154093
+		 best R2 (penalized) =		 0.9998258126 
+
+	   in other group 4 ...
+		 current group structure: ([1], [2, 6], [3], [4], [5]) 
+		 current group structure: ([1], [2, 6], [3], [4], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9997989821
+		 best R2 (penalized) =		 0.9998258126 
+
+** Step 5 updated group structure is: ([1], [2], [3], [4], [5], [6]) 
+
+** Finish with complete iterations. ** 
+
+** SELECTED GROUP STRUCTURE: ([1], [2], [3], [4], [5], [6]) with R2 (penalized) = 0.999826 ** 
+
+=== seed: 94 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685023819 	 *
+		 best R2 (penalized) =		 0.9685023819 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9684884920
+		 best R2 (penalized) =		 0.9685023819 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685584213 	 *
+		 best R2 (penalized) =		 0.9685584213 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685102961
+		 best R2 (penalized) =		 0.9685584213 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685031028
+		 best R2 (penalized) =		 0.9685584213 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9686334881 	 *
+		 best R2 (penalized) =		 0.9686334881 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 2, 3, 4, 5], [6]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973162861 	 *
+		 best R2 (penalized) =		 0.9973162861 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5], [2], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973236123 	 *
+		 best R2 (penalized) =		 0.9973236123 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5], [3], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973869819 	 *
+		 best R2 (penalized) =		 0.9973869819 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5], [4], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973226949
+		 best R2 (penalized) =		 0.9973869819 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4], [5], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973160465
+		 best R2 (penalized) =		 0.9973869819 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 6], [2, 3, 4, 5]) 
+		 current group structure: ([1, 6], [2, 3, 4, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9972750496
+		 best R2 (penalized) =		 0.9973869819 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4, 5], [2, 6]) 
+		 current group structure: ([1, 3, 4, 5], [2, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972822025
+		 best R2 (penalized) =		 0.9973869819 
+
+	 try adding covariate 3 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 5], [3, 6]) 
+		 current group structure: ([1, 2, 4, 5], [3, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973623194
+		 best R2 (penalized) =		 0.9973869819 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3, 5], [4, 6]) 
+		 current group structure: ([1, 2, 3, 5], [4, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972662314
+		 best R2 (penalized) =		 0.9973869819 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3, 4], [5, 6]) 
+		 current group structure: ([1, 2, 3, 4], [5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972831552
+		 best R2 (penalized) =		 0.9973869819 
+
+** Step 2 updated group structure is: ([1, 2, 4, 5], [3], [6]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996233031 	 *
+		 best R2 (penalized) =		 0.9996233031 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5], [2], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996155312
+		 best R2 (penalized) =		 0.9996233031 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5], [3], [4], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996099580
+		 best R2 (penalized) =		 0.9996233031 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4], [3], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996147313
+		 best R2 (penalized) =		 0.9996233031 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5], [6]) 
+		 current group structure: ([1, 3], [2, 4, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995723405
+		 best R2 (penalized) =		 0.9996233031 
+
+	   in other group 2 ...
+		 current group structure: ([1, 6], [2, 4, 5], [3]) 
+		 current group structure: ([1, 6], [2, 4, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995362137
+		 best R2 (penalized) =		 0.9996233031 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 3], [6]) 
+		 current group structure: ([1, 4, 5], [2, 3], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995986378
+		 best R2 (penalized) =		 0.9996233031 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 5], [2, 6], [3]) 
+		 current group structure: ([1, 4, 5], [2, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995685377
+		 best R2 (penalized) =		 0.9996233031 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5], [3, 4], [6]) 
+		 current group structure: ([1, 2, 5], [3, 4], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995559622
+		 best R2 (penalized) =		 0.9996233031 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 5], [3], [4, 6]) 
+		 current group structure: ([1, 2, 5], [3], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995016891
+		 best R2 (penalized) =		 0.9996233031 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3, 5], [6]) 
+		 current group structure: ([1, 2, 4], [3, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995587482
+		 best R2 (penalized) =		 0.9996233031 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 4], [3], [5, 6]) 
+		 current group structure: ([1, 2, 4], [3], [5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995429944
+		 best R2 (penalized) =		 0.9996233031 
+
+** Step 3 updated group structure is: ([1], [2, 4, 5], [3], [6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1], [2], [3], [4, 5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997960089 	 *
+		 best R2 (penalized) =		 0.9997960089 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1], [2, 5], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997911125
+		 best R2 (penalized) =		 0.9997960089 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1], [2, 4], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997958419
+		 best R2 (penalized) =		 0.9997960089 
+
+** Add to an existing group: **
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3], [4, 5], [6]) 
+		 current group structure: ([1, 2], [3], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997944716
+		 best R2 (penalized) =		 0.9997960089 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 3], [4, 5], [6]) 
+		 current group structure: ([1], [2, 3], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997586698
+		 best R2 (penalized) =		 0.9997960089 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2, 6], [3], [4, 5]) 
+		 current group structure: ([1], [2, 6], [3], [4, 5]) with capacity: 10
+		 current R2 (penalized) =	 0.9996804477
+		 best R2 (penalized) =		 0.9997960089 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 4], [2, 5], [3], [6]) 
+		 current group structure: ([1, 4], [2, 5], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997786720
+		 best R2 (penalized) =		 0.9997960089 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 5], [3, 4], [6]) 
+		 current group structure: ([1], [2, 5], [3, 4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997208441
+		 best R2 (penalized) =		 0.9997960089 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2, 5], [3], [4, 6]) 
+		 current group structure: ([1], [2, 5], [3], [4, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996095166
+		 best R2 (penalized) =		 0.9997960089 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 4], [3], [6]) 
+		 current group structure: ([1, 5], [2, 4], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997856601
+		 best R2 (penalized) =		 0.9997960089 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 4], [3, 5], [6]) 
+		 current group structure: ([1], [2, 4], [3, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997243502
+		 best R2 (penalized) =		 0.9997960089 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2, 4], [3], [5, 6]) 
+		 current group structure: ([1], [2, 4], [3], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996210867
+		 best R2 (penalized) =		 0.9997960089 
+
+** Step 4 updated group structure is: ([1], [2], [3], [4, 5], [6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9997961493 	 *
+		 best R2 (penalized) =		 0.9997961493 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9997961493
+		 best R2 (penalized) =		 0.9997961493 
+
+** Add to an existing group: **
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 4], [2], [3], [5], [6]) 
+		 current group structure: ([1, 4], [2], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997866599
+		 best R2 (penalized) =		 0.9997961493 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 4], [3], [5], [6]) 
+		 current group structure: ([1], [2, 4], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997958419
+		 best R2 (penalized) =		 0.9997961493 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2], [3, 4], [5], [6]) 
+		 current group structure: ([1], [2], [3, 4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997184256
+		 best R2 (penalized) =		 0.9997961493 
+
+	   in other group 4 ...
+		 current group structure: ([1], [2], [3], [4, 6], [5]) 
+		 current group structure: ([1], [2], [3], [4, 6], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9995908135
+		 best R2 (penalized) =		 0.9997961493 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) 
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997846226
+		 best R2 (penalized) =		 0.9997961493 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 5], [3], [4], [6]) 
+		 current group structure: ([1], [2, 5], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997911125
+		 best R2 (penalized) =		 0.9997961493 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2], [3, 5], [4], [6]) 
+		 current group structure: ([1], [2], [3, 5], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997234793
+		 best R2 (penalized) =		 0.9997961493 
+
+	   in other group 4 ...
+		 current group structure: ([1], [2], [3], [4], [5, 6]) 
+		 current group structure: ([1], [2], [3], [4], [5, 6]) with capacity: 8
+		 current R2 (penalized) =	 0.9995874947
+		 best R2 (penalized) =		 0.9997961493 
+
+** Step 5 updated group structure is: ([1], [2], [3], [4], [5], [6]) 
+
+** Finish with complete iterations. ** 
+
+** SELECTED GROUP STRUCTURE: ([1], [2], [3], [4], [5], [6]) with R2 (penalized) = 0.999796 ** 
+
+=== seed: 95 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9684857885 	 *
+		 best R2 (penalized) =		 0.9684857885 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9684890994 	 *
+		 best R2 (penalized) =		 0.9684890994 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9686647282 	 *
+		 best R2 (penalized) =		 0.9686647282 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685046984
+		 best R2 (penalized) =		 0.9686647282 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685059915
+		 best R2 (penalized) =		 0.9686647282 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9684953164
+		 best R2 (penalized) =		 0.9686647282 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 2, 4, 5, 6], [3]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5, 6], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9973451872 	 *
+		 best R2 (penalized) =		 0.9973451872 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5, 6], [2], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9973522603 	 *
+		 best R2 (penalized) =		 0.9973522603 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5, 6], [3], [4]) with capacity: 258
+		 current R2 (penalized) =	 0.9973462678
+		 best R2 (penalized) =		 0.9973522603 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4, 6], [3], [5]) with capacity: 258
+		 current R2 (penalized) =	 0.9973391932
+		 best R2 (penalized) =		 0.9973522603 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 4, 5], [3], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973647774 	 *
+		 best R2 (penalized) =		 0.9973647774 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5, 6]) 
+		 current group structure: ([1, 3], [2, 4, 5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972873971
+		 best R2 (penalized) =		 0.9973647774 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5, 6], [2, 3]) 
+		 current group structure: ([1, 4, 5, 6], [2, 3]) with capacity: 260
+		 current R2 (penalized) =	 0.9973086691
+		 best R2 (penalized) =		 0.9973647774 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5, 6], [3, 4]) 
+		 current group structure: ([1, 2, 5, 6], [3, 4]) with capacity: 260
+		 current R2 (penalized) =	 0.9972937968
+		 best R2 (penalized) =		 0.9973647774 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 6], [3, 5]) 
+		 current group structure: ([1, 2, 4, 6], [3, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9972912610
+		 best R2 (penalized) =		 0.9973647774 
+
+	 try adding covariate 6 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 5], [3, 6]) 
+		 current group structure: ([1, 2, 4, 5], [3, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973275663
+		 best R2 (penalized) =		 0.9973647774 
+
+** Step 2 updated group structure is: ([1, 2, 4, 5], [3], [6]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995589882 	 *
+		 best R2 (penalized) =		 0.9995589882 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5], [2], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995383792
+		 best R2 (penalized) =		 0.9995589882 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5], [3], [4], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995954315 	 *
+		 best R2 (penalized) =		 0.9995954315 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4], [3], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995424394
+		 best R2 (penalized) =		 0.9995954315 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5], [6]) 
+		 current group structure: ([1, 3], [2, 4, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9994568667
+		 best R2 (penalized) =		 0.9995954315 
+
+	   in other group 2 ...
+		 current group structure: ([1, 6], [2, 4, 5], [3]) 
+		 current group structure: ([1, 6], [2, 4, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995472376
+		 best R2 (penalized) =		 0.9995954315 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 3], [6]) 
+		 current group structure: ([1, 4, 5], [2, 3], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995319389
+		 best R2 (penalized) =		 0.9995954315 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 5], [2, 6], [3]) 
+		 current group structure: ([1, 4, 5], [2, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995444187
+		 best R2 (penalized) =		 0.9995954315 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5], [3, 4], [6]) 
+		 current group structure: ([1, 2, 5], [3, 4], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995264240
+		 best R2 (penalized) =		 0.9995954315 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 5], [3], [4, 6]) 
+		 current group structure: ([1, 2, 5], [3], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995601870
+		 best R2 (penalized) =		 0.9995954315 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3, 5], [6]) 
+		 current group structure: ([1, 2, 4], [3, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995186940
+		 best R2 (penalized) =		 0.9995954315 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 4], [3], [5, 6]) 
+		 current group structure: ([1, 2, 4], [3], [5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995275562
+		 best R2 (penalized) =		 0.9995954315 
+
+** Step 3 updated group structure is: ([1, 2, 5], [3], [4], [6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 5], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9996893130 	 *
+		 best R2 (penalized) =		 0.9996893130 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9996766136
+		 best R2 (penalized) =		 0.9996893130 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2], [3], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9996764495
+		 best R2 (penalized) =		 0.9996893130 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 5], [4], [6]) 
+		 current group structure: ([1, 3], [2, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996013973
+		 best R2 (penalized) =		 0.9996893130 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2, 5], [3], [6]) 
+		 current group structure: ([1, 4], [2, 5], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996984261 	 *
+		 best R2 (penalized) =		 0.9996984261 
+
+	   in other group 3 ...
+		 current group structure: ([1, 6], [2, 5], [3], [4]) 
+		 current group structure: ([1, 6], [2, 5], [3], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9996515633
+		 best R2 (penalized) =		 0.9996984261 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 3], [4], [6]) 
+		 current group structure: ([1, 5], [2, 3], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996872810
+		 best R2 (penalized) =		 0.9996984261 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5], [2, 4], [3], [6]) 
+		 current group structure: ([1, 5], [2, 4], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997153312 	 *
+		 best R2 (penalized) =		 0.9997153312 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2, 6], [3], [4]) 
+		 current group structure: ([1, 5], [2, 6], [3], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9996962980
+		 best R2 (penalized) =		 0.9997153312 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3, 5], [4], [6]) 
+		 current group structure: ([1, 2], [3, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996697579
+		 best R2 (penalized) =		 0.9997153312 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2], [3], [4, 5], [6]) 
+		 current group structure: ([1, 2], [3], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996887336
+		 best R2 (penalized) =		 0.9997153312 
+
+	   in other group 3 ...
+		 current group structure: ([1, 2], [3], [4], [5, 6]) 
+		 current group structure: ([1, 2], [3], [4], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996722162
+		 best R2 (penalized) =		 0.9997153312 
+
+** Step 4 updated group structure is: ([1, 5], [2, 4], [3], [6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9996551529
+		 best R2 (penalized) =		 0.9997153312 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1], [2, 4], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9996551529
+		 best R2 (penalized) =		 0.9997153312 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3], [5], [6]) 
+		 current group structure: ([1, 2, 4], [3], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995424394
+		 best R2 (penalized) =		 0.9997153312 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2, 4], [5], [6]) 
+		 current group structure: ([1, 3], [2, 4], [5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9995896177
+		 best R2 (penalized) =		 0.9997153312 
+
+	   in other group 3 ...
+		 current group structure: ([1, 6], [2, 4], [3], [5]) 
+		 current group structure: ([1, 6], [2, 4], [3], [5]) with capacity: 10
+		 current R2 (penalized) =	 0.9996257695
+		 best R2 (penalized) =		 0.9997153312 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1], [2, 4, 5], [3], [6]) 
+		 current group structure: ([1], [2, 4, 5], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995589882
+		 best R2 (penalized) =		 0.9997153312 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 4], [3, 5], [6]) 
+		 current group structure: ([1], [2, 4], [3, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996613319
+		 best R2 (penalized) =		 0.9997153312 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2, 4], [3], [5, 6]) 
+		 current group structure: ([1], [2, 4], [3], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996694860
+		 best R2 (penalized) =		 0.9997153312 
+
+** Step 5 updated group structure is: ([1, 5], [2, 4], [3], [6]) 
+
+** Finish with early termination at step 5 due to no further improvement of R2. ** 
+
+** SELECTED GROUP STRUCTURE: ([1, 5], [2, 4], [3], [6]) with R2 (penalized) = 0.999715 ** 
+
+=== seed: 96 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685375129 	 *
+		 best R2 (penalized) =		 0.9685375129 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685253557
+		 best R2 (penalized) =		 0.9685375129 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685792183 	 *
+		 best R2 (penalized) =		 0.9685792183 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685347685
+		 best R2 (penalized) =		 0.9685792183 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685324641
+		 best R2 (penalized) =		 0.9685792183 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685458284
+		 best R2 (penalized) =		 0.9685792183 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 2, 4, 5, 6], [3]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5, 6], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9972621133 	 *
+		 best R2 (penalized) =		 0.9972621133 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5, 6], [2], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9972942180 	 *
+		 best R2 (penalized) =		 0.9972942180 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5, 6], [3], [4]) with capacity: 258
+		 current R2 (penalized) =	 0.9972641592
+		 best R2 (penalized) =		 0.9972942180 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4, 6], [3], [5]) with capacity: 258
+		 current R2 (penalized) =	 0.9972698488
+		 best R2 (penalized) =		 0.9972942180 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 4, 5], [3], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973021659 	 *
+		 best R2 (penalized) =		 0.9973021659 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5, 6]) 
+		 current group structure: ([1, 3], [2, 4, 5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972391484
+		 best R2 (penalized) =		 0.9973021659 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5, 6], [2, 3]) 
+		 current group structure: ([1, 4, 5, 6], [2, 3]) with capacity: 260
+		 current R2 (penalized) =	 0.9972629666
+		 best R2 (penalized) =		 0.9973021659 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5, 6], [3, 4]) 
+		 current group structure: ([1, 2, 5, 6], [3, 4]) with capacity: 260
+		 current R2 (penalized) =	 0.9972426237
+		 best R2 (penalized) =		 0.9973021659 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 6], [3, 5]) 
+		 current group structure: ([1, 2, 4, 6], [3, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9972345833
+		 best R2 (penalized) =		 0.9973021659 
+
+	 try adding covariate 6 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 5], [3, 6]) 
+		 current group structure: ([1, 2, 4, 5], [3, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973844328 	 *
+		 best R2 (penalized) =		 0.9973844328 
+
+** Step 2 updated group structure is: ([1, 2, 4, 5], [3, 6]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5], [3, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996362710 	 *
+		 best R2 (penalized) =		 0.9996362710 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5], [2], [3, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996375131 	 *
+		 best R2 (penalized) =		 0.9996375131 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5], [3, 6], [4]) with capacity: 32
+		 current R2 (penalized) =	 0.9996420748 	 *
+		 best R2 (penalized) =		 0.9996420748 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4], [3, 6], [5]) with capacity: 32
+		 current R2 (penalized) =	 0.9996401564
+		 best R2 (penalized) =		 0.9996420748 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 6], [2, 4, 5]) 
+		 current group structure: ([1, 3, 6], [2, 4, 5]) with capacity: 54
+		 current R2 (penalized) =	 0.9993813157
+		 best R2 (penalized) =		 0.9996420748 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 3, 6]) 
+		 current group structure: ([1, 4, 5], [2, 3, 6]) with capacity: 54
+		 current R2 (penalized) =	 0.9993881610
+		 best R2 (penalized) =		 0.9996420748 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5], [3, 4, 6]) 
+		 current group structure: ([1, 2, 5], [3, 4, 6]) with capacity: 54
+		 current R2 (penalized) =	 0.9993888282
+		 best R2 (penalized) =		 0.9996420748 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3, 5, 6]) 
+		 current group structure: ([1, 2, 4], [3, 5, 6]) with capacity: 54
+		 current R2 (penalized) =	 0.9993858958
+		 best R2 (penalized) =		 0.9996420748 
+
+** Step 3 updated group structure is: ([1, 2, 5], [3, 6], [4]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 5], [3, 6], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9998269101 	 *
+		 best R2 (penalized) =		 0.9998269101 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 5], [2], [3, 6], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9998264415
+		 best R2 (penalized) =		 0.9998269101 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2], [3, 6], [4], [5]) with capacity: 10
+		 current R2 (penalized) =	 0.9998295609 	 *
+		 best R2 (penalized) =		 0.9998295609 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 6], [2, 5], [4]) 
+		 current group structure: ([1, 3, 6], [2, 5], [4]) with capacity: 32
+		 current R2 (penalized) =	 0.9995405836
+		 best R2 (penalized) =		 0.9998295609 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2, 5], [3, 6]) 
+		 current group structure: ([1, 4], [2, 5], [3, 6]) with capacity: 12
+		 current R2 (penalized) =	 0.9998193712
+		 best R2 (penalized) =		 0.9998295609 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 3, 6], [4]) 
+		 current group structure: ([1, 5], [2, 3, 6], [4]) with capacity: 32
+		 current R2 (penalized) =	 0.9995577854
+		 best R2 (penalized) =		 0.9998295609 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5], [2, 4], [3, 6]) 
+		 current group structure: ([1, 5], [2, 4], [3, 6]) with capacity: 12
+		 current R2 (penalized) =	 0.9998163197
+		 best R2 (penalized) =		 0.9998295609 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3, 5, 6], [4]) 
+		 current group structure: ([1, 2], [3, 5, 6], [4]) with capacity: 32
+		 current R2 (penalized) =	 0.9995488848
+		 best R2 (penalized) =		 0.9998295609 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2], [3, 6], [4, 5]) 
+		 current group structure: ([1, 2], [3, 6], [4, 5]) with capacity: 12
+		 current R2 (penalized) =	 0.9998193383
+		 best R2 (penalized) =		 0.9998295609 
+
+** Step 4 updated group structure is: ([1, 2], [3, 6], [4], [5]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3, 6], [4], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9998366570 	 *
+		 best R2 (penalized) =		 0.9998366570 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1], [2], [3, 6], [4], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9998366570
+		 best R2 (penalized) =		 0.9998366570 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 6], [2], [4], [5]) 
+		 current group structure: ([1, 3, 6], [2], [4], [5]) with capacity: 30
+		 current R2 (penalized) =	 0.9995404856
+		 best R2 (penalized) =		 0.9998366570 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2], [3, 6], [5]) 
+		 current group structure: ([1, 4], [2], [3, 6], [5]) with capacity: 10
+		 current R2 (penalized) =	 0.9998279431
+		 best R2 (penalized) =		 0.9998366570 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2], [3, 6], [4]) 
+		 current group structure: ([1, 5], [2], [3, 6], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9998264415
+		 best R2 (penalized) =		 0.9998366570 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1], [2, 3, 6], [4], [5]) 
+		 current group structure: ([1], [2, 3, 6], [4], [5]) with capacity: 30
+		 current R2 (penalized) =	 0.9995492293
+		 best R2 (penalized) =		 0.9998366570 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 4], [3, 6], [5]) 
+		 current group structure: ([1], [2, 4], [3, 6], [5]) with capacity: 10
+		 current R2 (penalized) =	 0.9998268541
+		 best R2 (penalized) =		 0.9998366570 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2, 5], [3, 6], [4]) 
+		 current group structure: ([1], [2, 5], [3, 6], [4]) with capacity: 10
+		 current R2 (penalized) =	 0.9998269101
+		 best R2 (penalized) =		 0.9998366570 
+
+** Step 5 updated group structure is: ([1], [2], [3, 6], [4], [5]) 
+
+** Finish with complete iterations. ** 
+
+** SELECTED GROUP STRUCTURE: ([1], [2], [3, 6], [4], [5]) with R2 (penalized) = 0.999837 ** 
+
+=== seed: 97 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685004785 	 *
+		 best R2 (penalized) =		 0.9685004785 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9684813934
+		 best R2 (penalized) =		 0.9685004785 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685647565 	 *
+		 best R2 (penalized) =		 0.9685647565 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685181473
+		 best R2 (penalized) =		 0.9685647565 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685182437
+		 best R2 (penalized) =		 0.9685647565 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9686073714 	 *
+		 best R2 (penalized) =		 0.9686073714 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 2, 3, 4, 5], [6]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973002710 	 *
+		 best R2 (penalized) =		 0.9973002710 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5], [2], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9972924091
+		 best R2 (penalized) =		 0.9973002710 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5], [3], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973739079 	 *
+		 best R2 (penalized) =		 0.9973739079 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5], [4], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9972903899
+		 best R2 (penalized) =		 0.9973739079 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4], [5], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973014691
+		 best R2 (penalized) =		 0.9973739079 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 6], [2, 3, 4, 5]) 
+		 current group structure: ([1, 6], [2, 3, 4, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9972597294
+		 best R2 (penalized) =		 0.9973739079 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4, 5], [2, 6]) 
+		 current group structure: ([1, 3, 4, 5], [2, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972536126
+		 best R2 (penalized) =		 0.9973739079 
+
+	 try adding covariate 3 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 5], [3, 6]) 
+		 current group structure: ([1, 2, 4, 5], [3, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973703927
+		 best R2 (penalized) =		 0.9973739079 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3, 5], [4, 6]) 
+		 current group structure: ([1, 2, 3, 5], [4, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972431485
+		 best R2 (penalized) =		 0.9973739079 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 3, 4], [5, 6]) 
+		 current group structure: ([1, 2, 3, 4], [5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972500398
+		 best R2 (penalized) =		 0.9973739079 
+
+** Step 2 updated group structure is: ([1, 2, 4, 5], [3], [6]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996233696 	 *
+		 best R2 (penalized) =		 0.9996233696 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5], [2], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996281557 	 *
+		 best R2 (penalized) =		 0.9996281557 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5], [3], [4], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995998579
+		 best R2 (penalized) =		 0.9996281557 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4], [3], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996083474
+		 best R2 (penalized) =		 0.9996281557 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5], [6]) 
+		 current group structure: ([1, 3], [2, 4, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995720545
+		 best R2 (penalized) =		 0.9996281557 
+
+	   in other group 2 ...
+		 current group structure: ([1, 6], [2, 4, 5], [3]) 
+		 current group structure: ([1, 6], [2, 4, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995095317
+		 best R2 (penalized) =		 0.9996281557 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 3], [6]) 
+		 current group structure: ([1, 4, 5], [2, 3], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995762204
+		 best R2 (penalized) =		 0.9996281557 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 5], [2, 6], [3]) 
+		 current group structure: ([1, 4, 5], [2, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995591370
+		 best R2 (penalized) =		 0.9996281557 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5], [3, 4], [6]) 
+		 current group structure: ([1, 2, 5], [3, 4], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995506678
+		 best R2 (penalized) =		 0.9996281557 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 5], [3], [4, 6]) 
+		 current group structure: ([1, 2, 5], [3], [4, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995114362
+		 best R2 (penalized) =		 0.9996281557 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4], [3, 5], [6]) 
+		 current group structure: ([1, 2, 4], [3, 5], [6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995610083
+		 best R2 (penalized) =		 0.9996281557 
+
+	   in other group 2 ...
+		 current group structure: ([1, 2, 4], [3], [5, 6]) 
+		 current group structure: ([1, 2, 4], [3], [5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995163826
+		 best R2 (penalized) =		 0.9996281557 
+
+** Step 3 updated group structure is: ([1, 4, 5], [2], [3], [6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3], [4, 5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997962185 	 *
+		 best R2 (penalized) =		 0.9997962185 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997783846
+		 best R2 (penalized) =		 0.9997962185 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 4], [2], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997734229
+		 best R2 (penalized) =		 0.9997962185 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3], [4, 5], [6]) 
+		 current group structure: ([1, 2], [3], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997855848
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2], [4, 5], [6]) 
+		 current group structure: ([1, 3], [2], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997206085
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 3 ...
+		 current group structure: ([1, 6], [2], [3], [4, 5]) 
+		 current group structure: ([1, 6], [2], [3], [4, 5]) with capacity: 10
+		 current R2 (penalized) =	 0.9996585165
+		 best R2 (penalized) =		 0.9997962185 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 4], [3], [6]) 
+		 current group structure: ([1, 5], [2, 4], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997671194
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5], [2], [3, 4], [6]) 
+		 current group structure: ([1, 5], [2], [3, 4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997184035
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2], [3], [4, 6]) 
+		 current group structure: ([1, 5], [2], [3], [4, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996753208
+		 best R2 (penalized) =		 0.9997962185 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 4], [2, 5], [3], [6]) 
+		 current group structure: ([1, 4], [2, 5], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997680590
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2], [3, 5], [6]) 
+		 current group structure: ([1, 4], [2], [3, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997358570
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 3 ...
+		 current group structure: ([1, 4], [2], [3], [5, 6]) 
+		 current group structure: ([1, 4], [2], [3], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996621262
+		 best R2 (penalized) =		 0.9997962185 
+
+** Step 4 updated group structure is: ([1], [2], [3], [4, 5], [6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9997826524
+		 best R2 (penalized) =		 0.9997962185 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9997826524
+		 best R2 (penalized) =		 0.9997962185 
+
+** Add to an existing group: **
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 4], [2], [3], [5], [6]) 
+		 current group structure: ([1, 4], [2], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997734229
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 4], [3], [5], [6]) 
+		 current group structure: ([1], [2, 4], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997713280
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2], [3, 4], [5], [6]) 
+		 current group structure: ([1], [2], [3, 4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997188790
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 4 ...
+		 current group structure: ([1], [2], [3], [4, 6], [5]) 
+		 current group structure: ([1], [2], [3], [4, 6], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9996799272
+		 best R2 (penalized) =		 0.9997962185 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) 
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997783846
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2, 5], [3], [4], [6]) 
+		 current group structure: ([1], [2, 5], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997752668
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2], [3, 5], [4], [6]) 
+		 current group structure: ([1], [2], [3, 5], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997467131
+		 best R2 (penalized) =		 0.9997962185 
+
+	   in other group 4 ...
+		 current group structure: ([1], [2], [3], [4], [5, 6]) 
+		 current group structure: ([1], [2], [3], [4], [5, 6]) with capacity: 8
+		 current R2 (penalized) =	 0.9996615791
+		 best R2 (penalized) =		 0.9997962185 
+
+** Step 5 updated group structure is: ([1], [2], [3], [4, 5], [6]) 
+
+** Finish with early termination at step 5 due to no further improvement of R2. ** 
+
+** SELECTED GROUP STRUCTURE: ([1], [2], [3], [4, 5], [6]) with R2 (penalized) = 0.999796 ** 
+
+=== seed: 98 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685279575 	 *
+		 best R2 (penalized) =		 0.9685279575 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685220223
+		 best R2 (penalized) =		 0.9685279575 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9687125346 	 *
+		 best R2 (penalized) =		 0.9687125346 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685333502
+		 best R2 (penalized) =		 0.9687125346 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685325977
+		 best R2 (penalized) =		 0.9687125346 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685351576
+		 best R2 (penalized) =		 0.9687125346 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 2, 4, 5, 6], [3]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 4, 5, 6], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9973857736 	 *
+		 best R2 (penalized) =		 0.9973857736 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 4, 5, 6], [2], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9974020018 	 *
+		 best R2 (penalized) =		 0.9974020018 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 5, 6], [3], [4]) with capacity: 258
+		 current R2 (penalized) =	 0.9973855012
+		 best R2 (penalized) =		 0.9974020018 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 4, 6], [3], [5]) with capacity: 258
+		 current R2 (penalized) =	 0.9973871375
+		 best R2 (penalized) =		 0.9974020018 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 4, 5], [3], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973874709
+		 best R2 (penalized) =		 0.9974020018 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 3], [2, 4, 5, 6]) 
+		 current group structure: ([1, 3], [2, 4, 5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973407291
+		 best R2 (penalized) =		 0.9974020018 
+
+	 try adding covariate 2 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5, 6], [2, 3]) 
+		 current group structure: ([1, 4, 5, 6], [2, 3]) with capacity: 260
+		 current R2 (penalized) =	 0.9973877457
+		 best R2 (penalized) =		 0.9974020018 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 5, 6], [3, 4]) 
+		 current group structure: ([1, 2, 5, 6], [3, 4]) with capacity: 260
+		 current R2 (penalized) =	 0.9973466931
+		 best R2 (penalized) =		 0.9974020018 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 6], [3, 5]) 
+		 current group structure: ([1, 2, 4, 6], [3, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9973449634
+		 best R2 (penalized) =		 0.9974020018 
+
+	 try adding covariate 6 
+	   in other group 1 ...
+		 current group structure: ([1, 2, 4, 5], [3, 6]) 
+		 current group structure: ([1, 2, 4, 5], [3, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9973439488
+		 best R2 (penalized) =		 0.9974020018 
+
+** Step 2 updated group structure is: ([1, 4, 5, 6], [2], [3]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3], [4, 5, 6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996109557 	 *
+		 best R2 (penalized) =		 0.9996109557 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 5, 6], [2], [3], [4]) with capacity: 30
+		 current R2 (penalized) =	 0.9996100728
+		 best R2 (penalized) =		 0.9996109557 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 4, 6], [2], [3], [5]) with capacity: 30
+		 current R2 (penalized) =	 0.9996218800 	 *
+		 best R2 (penalized) =		 0.9996218800 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 4, 5], [2], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996488778 	 *
+		 best R2 (penalized) =		 0.9996488778 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3], [4, 5, 6]) 
+		 current group structure: ([1, 2], [3], [4, 5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9996013020
+		 best R2 (penalized) =		 0.9996488778 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2], [4, 5, 6]) 
+		 current group structure: ([1, 3], [2], [4, 5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995862095
+		 best R2 (penalized) =		 0.9996488778 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 5, 6], [2, 4], [3]) 
+		 current group structure: ([1, 5, 6], [2, 4], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9996023587
+		 best R2 (penalized) =		 0.9996488778 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5, 6], [2], [3, 4]) 
+		 current group structure: ([1, 5, 6], [2], [3, 4]) with capacity: 32
+		 current R2 (penalized) =	 0.9995817986
+		 best R2 (penalized) =		 0.9996488778 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 6], [2, 5], [3]) 
+		 current group structure: ([1, 4, 6], [2, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9996089202
+		 best R2 (penalized) =		 0.9996488778 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 6], [2], [3, 5]) 
+		 current group structure: ([1, 4, 6], [2], [3, 5]) with capacity: 32
+		 current R2 (penalized) =	 0.9995806485
+		 best R2 (penalized) =		 0.9996488778 
+
+	 try adding covariate 6 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 6], [3]) 
+		 current group structure: ([1, 4, 5], [2, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9996270062
+		 best R2 (penalized) =		 0.9996488778 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 5], [2], [3, 6]) 
+		 current group structure: ([1, 4, 5], [2], [3, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995761086
+		 best R2 (penalized) =		 0.9996488778 
+
+** Step 3 updated group structure is: ([1, 4, 5], [2], [3], [6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3], [4, 5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997948065 	 *
+		 best R2 (penalized) =		 0.9997948065 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997945959
+		 best R2 (penalized) =		 0.9997948065 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 4], [2], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997975882 	 *
+		 best R2 (penalized) =		 0.9997975882 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3], [4, 5], [6]) 
+		 current group structure: ([1, 2], [3], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997765388
+		 best R2 (penalized) =		 0.9997975882 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2], [4, 5], [6]) 
+		 current group structure: ([1, 3], [2], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997424893
+		 best R2 (penalized) =		 0.9997975882 
+
+	   in other group 3 ...
+		 current group structure: ([1, 6], [2], [3], [4, 5]) 
+		 current group structure: ([1, 6], [2], [3], [4, 5]) with capacity: 10
+		 current R2 (penalized) =	 0.9997853419
+		 best R2 (penalized) =		 0.9997975882 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 4], [3], [6]) 
+		 current group structure: ([1, 5], [2, 4], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997797776
+		 best R2 (penalized) =		 0.9997975882 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5], [2], [3, 4], [6]) 
+		 current group structure: ([1, 5], [2], [3, 4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997248092
+		 best R2 (penalized) =		 0.9997975882 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2], [3], [4, 6]) 
+		 current group structure: ([1, 5], [2], [3], [4, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997837561
+		 best R2 (penalized) =		 0.9997975882 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 4], [2, 5], [3], [6]) 
+		 current group structure: ([1, 4], [2, 5], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997776706
+		 best R2 (penalized) =		 0.9997975882 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2], [3, 5], [6]) 
+		 current group structure: ([1, 4], [2], [3, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997534897
+		 best R2 (penalized) =		 0.9997975882 
+
+	   in other group 3 ...
+		 current group structure: ([1, 4], [2], [3], [5, 6]) 
+		 current group structure: ([1, 4], [2], [3], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997865169
+		 best R2 (penalized) =		 0.9997975882 
+
+** Step 4 updated group structure is: ([1, 4], [2], [3], [5], [6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9998062000 	 *
+		 best R2 (penalized) =		 0.9998062000 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1], [2], [3], [4], [5], [6]) with capacity: 6
+		 current R2 (penalized) =	 0.9998062000
+		 best R2 (penalized) =		 0.9998062000 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3], [4], [5], [6]) 
+		 current group structure: ([1, 2], [3], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997870460
+		 best R2 (penalized) =		 0.9998062000 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2], [4], [5], [6]) 
+		 current group structure: ([1, 3], [2], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997263828
+		 best R2 (penalized) =		 0.9998062000 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) 
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997945959
+		 best R2 (penalized) =		 0.9998062000 
+
+	   in other group 4 ...
+		 current group structure: ([1, 6], [2], [3], [4], [5]) 
+		 current group structure: ([1, 6], [2], [3], [4], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9997969419
+		 best R2 (penalized) =		 0.9998062000 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1], [2, 4], [3], [5], [6]) 
+		 current group structure: ([1], [2, 4], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997868930
+		 best R2 (penalized) =		 0.9998062000 
+
+	   in other group 2 ...
+		 current group structure: ([1], [2], [3, 4], [5], [6]) 
+		 current group structure: ([1], [2], [3, 4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997237428
+		 best R2 (penalized) =		 0.9998062000 
+
+	   in other group 3 ...
+		 current group structure: ([1], [2], [3], [4, 5], [6]) 
+		 current group structure: ([1], [2], [3], [4, 5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997948065
+		 best R2 (penalized) =		 0.9998062000 
+
+	   in other group 4 ...
+		 current group structure: ([1], [2], [3], [4, 6], [5]) 
+		 current group structure: ([1], [2], [3], [4, 6], [5]) with capacity: 8
+		 current R2 (penalized) =	 0.9997943900
+		 best R2 (penalized) =		 0.9998062000 
+
+** Step 5 updated group structure is: ([1], [2], [3], [4], [5], [6]) 
+
+** Finish with complete iterations. ** 
+
+** SELECTED GROUP STRUCTURE: ([1], [2], [3], [4], [5], [6]) with R2 (penalized) = 0.999806 ** 
+
+=== seed: 99 ===
+** === Step 1 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2, 3, 4, 5, 6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685346228 	 *
+		 best R2 (penalized) =		 0.9685346228 
+
+	 Create a new group for covariate 2 ...
+		 current group structure: ([1, 3, 4, 5, 6], [2]) with capacity: 3126
+		 current R2 (penalized) =	 0.9686412795 	 *
+		 best R2 (penalized) =		 0.9686412795 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 2, 4, 5, 6], [3]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685443351
+		 best R2 (penalized) =		 0.9686412795 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 2, 3, 5, 6], [4]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685213439
+		 best R2 (penalized) =		 0.9686412795 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 2, 3, 4, 6], [5]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685348741
+		 best R2 (penalized) =		 0.9686412795 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 2, 3, 4, 5], [6]) with capacity: 3126
+		 current R2 (penalized) =	 0.9685110745
+		 best R2 (penalized) =		 0.9686412795 
+
+** Add to an existing group: **
+	 ** No other groups than the pool. Pass ... ** 
+
+** Step 1 updated group structure is: ([1, 3, 4, 5, 6], [2]) 
+
+** === Step 2 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3, 4, 5, 6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973090655 	 *
+		 best R2 (penalized) =		 0.9973090655 
+
+	 Create a new group for covariate 3 ...
+		 current group structure: ([1, 4, 5, 6], [2], [3]) with capacity: 258
+		 current R2 (penalized) =	 0.9973811657 	 *
+		 best R2 (penalized) =		 0.9973811657 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 3, 5, 6], [2], [4]) with capacity: 258
+		 current R2 (penalized) =	 0.9973411156
+		 best R2 (penalized) =		 0.9973811657 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 3, 4, 6], [2], [5]) with capacity: 258
+		 current R2 (penalized) =	 0.9973184662
+		 best R2 (penalized) =		 0.9973811657 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 3, 4, 5], [2], [6]) with capacity: 258
+		 current R2 (penalized) =	 0.9973251624
+		 best R2 (penalized) =		 0.9973811657 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3, 4, 5, 6]) 
+		 current group structure: ([1, 2], [3, 4, 5, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972837789
+		 best R2 (penalized) =		 0.9973811657 
+
+	 try adding covariate 3 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5, 6], [2, 3]) 
+		 current group structure: ([1, 4, 5, 6], [2, 3]) with capacity: 260
+		 current R2 (penalized) =	 0.9973692668
+		 best R2 (penalized) =		 0.9973811657 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 5, 6], [2, 4]) 
+		 current group structure: ([1, 3, 5, 6], [2, 4]) with capacity: 260
+		 current R2 (penalized) =	 0.9973067886
+		 best R2 (penalized) =		 0.9973811657 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4, 6], [2, 5]) 
+		 current group structure: ([1, 3, 4, 6], [2, 5]) with capacity: 260
+		 current R2 (penalized) =	 0.9972946567
+		 best R2 (penalized) =		 0.9973811657 
+
+	 try adding covariate 6 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4, 5], [2, 6]) 
+		 current group structure: ([1, 3, 4, 5], [2, 6]) with capacity: 260
+		 current R2 (penalized) =	 0.9972953160
+		 best R2 (penalized) =		 0.9973811657 
+
+** Step 2 updated group structure is: ([1, 4, 5, 6], [2], [3]) 
+
+** === Step 3 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3], [4, 5, 6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995936774 	 *
+		 best R2 (penalized) =		 0.9995936774 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 5, 6], [2], [3], [4]) with capacity: 30
+		 current R2 (penalized) =	 0.9995931691
+		 best R2 (penalized) =		 0.9995936774 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 4, 6], [2], [3], [5]) with capacity: 30
+		 current R2 (penalized) =	 0.9996137763 	 *
+		 best R2 (penalized) =		 0.9996137763 
+
+	 Create a new group for covariate 6 ...
+		 current group structure: ([1, 4, 5], [2], [3], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9996220939 	 *
+		 best R2 (penalized) =		 0.9996220939 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3], [4, 5, 6]) 
+		 current group structure: ([1, 2], [3], [4, 5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995584812
+		 best R2 (penalized) =		 0.9996220939 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2], [4, 5, 6]) 
+		 current group structure: ([1, 3], [2], [4, 5, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995964159
+		 best R2 (penalized) =		 0.9996220939 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 5, 6], [2, 4], [3]) 
+		 current group structure: ([1, 5, 6], [2, 4], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995422501
+		 best R2 (penalized) =		 0.9996220939 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5, 6], [2], [3, 4]) 
+		 current group structure: ([1, 5, 6], [2], [3, 4]) with capacity: 32
+		 current R2 (penalized) =	 0.9995895147
+		 best R2 (penalized) =		 0.9996220939 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 6], [2, 5], [3]) 
+		 current group structure: ([1, 4, 6], [2, 5], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995631740
+		 best R2 (penalized) =		 0.9996220939 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 6], [2], [3, 5]) 
+		 current group structure: ([1, 4, 6], [2], [3, 5]) with capacity: 32
+		 current R2 (penalized) =	 0.9996095794
+		 best R2 (penalized) =		 0.9996220939 
+
+	 try adding covariate 6 
+	   in other group 1 ...
+		 current group structure: ([1, 4, 5], [2, 6], [3]) 
+		 current group structure: ([1, 4, 5], [2, 6], [3]) with capacity: 32
+		 current R2 (penalized) =	 0.9995620655
+		 best R2 (penalized) =		 0.9996220939 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4, 5], [2], [3, 6]) 
+		 current group structure: ([1, 4, 5], [2], [3, 6]) with capacity: 32
+		 current R2 (penalized) =	 0.9995838870
+		 best R2 (penalized) =		 0.9996220939 
+
+** Step 3 updated group structure is: ([1, 4, 5], [2], [3], [6]) 
+
+** === Step 4 === **
+** Create a new group: **
+	 Create a new group for covariate 1 ...
+		 current group structure: ([1], [2], [3], [4, 5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997136754 	 *
+		 best R2 (penalized) =		 0.9997136754 
+
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 5], [2], [3], [4], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997306964 	 *
+		 best R2 (penalized) =		 0.9997306964 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 4], [2], [3], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997354838 	 *
+		 best R2 (penalized) =		 0.9997354838 
+
+** Add to an existing group: **
+	 try adding covariate 1 
+	   in other group 1 ...
+		 current group structure: ([1, 2], [3], [4, 5], [6]) 
+		 current group structure: ([1, 2], [3], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996851566
+		 best R2 (penalized) =		 0.9997354838 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2], [4, 5], [6]) 
+		 current group structure: ([1, 3], [2], [4, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997833678 	 *
+		 best R2 (penalized) =		 0.9997833678 
+
+	   in other group 3 ...
+		 current group structure: ([1, 6], [2], [3], [4, 5]) 
+		 current group structure: ([1, 6], [2], [3], [4, 5]) with capacity: 10
+		 current R2 (penalized) =	 0.9997245310
+		 best R2 (penalized) =		 0.9997833678 
+
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 5], [2, 4], [3], [6]) 
+		 current group structure: ([1, 5], [2, 4], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996834747
+		 best R2 (penalized) =		 0.9997833678 
+
+	   in other group 2 ...
+		 current group structure: ([1, 5], [2], [3, 4], [6]) 
+		 current group structure: ([1, 5], [2], [3, 4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997517659
+		 best R2 (penalized) =		 0.9997833678 
+
+	   in other group 3 ...
+		 current group structure: ([1, 5], [2], [3], [4, 6]) 
+		 current group structure: ([1, 5], [2], [3], [4, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997674558
+		 best R2 (penalized) =		 0.9997833678 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 4], [2, 5], [3], [6]) 
+		 current group structure: ([1, 4], [2, 5], [3], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996743029
+		 best R2 (penalized) =		 0.9997833678 
+
+	   in other group 2 ...
+		 current group structure: ([1, 4], [2], [3, 5], [6]) 
+		 current group structure: ([1, 4], [2], [3, 5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997604095
+		 best R2 (penalized) =		 0.9997833678 
+
+	   in other group 3 ...
+		 current group structure: ([1, 4], [2], [3], [5, 6]) 
+		 current group structure: ([1, 4], [2], [3], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997315841
+		 best R2 (penalized) =		 0.9997833678 
+
+** Step 4 updated group structure is: ([1, 3], [2], [4, 5], [6]) 
+
+** === Step 5 === **
+** Create a new group: **
+	 Create a new group for covariate 4 ...
+		 current group structure: ([1, 3], [2], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997926847 	 *
+		 best R2 (penalized) =		 0.9997926847 
+
+	 Create a new group for covariate 5 ...
+		 current group structure: ([1, 3], [2], [4], [5], [6]) with capacity: 8
+		 current R2 (penalized) =	 0.9997926847
+		 best R2 (penalized) =		 0.9997926847 
+
+** Add to an existing group: **
+	 try adding covariate 4 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 4], [2], [5], [6]) 
+		 current group structure: ([1, 3, 4], [2], [5], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995685016
+		 best R2 (penalized) =		 0.9997926847 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2, 4], [5], [6]) 
+		 current group structure: ([1, 3], [2, 4], [5], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9996999567
+		 best R2 (penalized) =		 0.9997926847 
+
+	   in other group 3 ...
+		 current group structure: ([1, 3], [2], [4, 6], [5]) 
+		 current group structure: ([1, 3], [2], [4, 6], [5]) with capacity: 10
+		 current R2 (penalized) =	 0.9997810691
+		 best R2 (penalized) =		 0.9997926847 
+
+	 try adding covariate 5 
+	   in other group 1 ...
+		 current group structure: ([1, 3, 5], [2], [4], [6]) 
+		 current group structure: ([1, 3, 5], [2], [4], [6]) with capacity: 30
+		 current R2 (penalized) =	 0.9995723417
+		 best R2 (penalized) =		 0.9997926847 
+
+	   in other group 2 ...
+		 current group structure: ([1, 3], [2, 5], [4], [6]) 
+		 current group structure: ([1, 3], [2, 5], [4], [6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997279304
+		 best R2 (penalized) =		 0.9997926847 
+
+	   in other group 3 ...
+		 current group structure: ([1, 3], [2], [4], [5, 6]) 
+		 current group structure: ([1, 3], [2], [4], [5, 6]) with capacity: 10
+		 current R2 (penalized) =	 0.9997792329
+		 best R2 (penalized) =		 0.9997926847 
+
+** Step 5 updated group structure is: ([1, 3], [2], [4], [5], [6]) 
+
+** Finish with complete iterations. ** 
+
+** SELECTED GROUP STRUCTURE: ([1, 3], [2], [4], [5], [6]) with R2 (penalized) = 0.999793 ** 
+
