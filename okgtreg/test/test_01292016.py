@@ -12,7 +12,8 @@ from scipy import spatial
 
 from okgtreg import *
 
-n = 1000
+# Simulate data and set kernel
+n = 500
 np.random.seed(25)
 data, group = DataSimulator.SimData_Wang04WithInteraction(n)
 kernel = Kernel('gaussian', sigma=0.5)
@@ -44,7 +45,14 @@ print "time used: ", elapse, '\n'
 print "=== Difference between the estimates of g ==="
 print "Cosine similarity of g: ", 1 - spatial.distance.cosine(fit['g'], fit2['g'])
 print "L2 norm of g1 - g2: ", np.linalg.norm(fit['g'] - fit2['g'])
-print "Sup norm of g1 - g2: ", np.abs(fit['g'] - fit2['g']).max()
+print "Sup norm of g1 - g2: ", np.abs(fit['g'] - fit2['g']).max(), '\n'
+
+# Difference between f
+print "=== Difference between the estimates of f ==="
+print "Cosine similarity:"
+for j in range(group.size):
+    cosineSimilarity = 1 - spatial.distance.cosine(fit['f'][:, j], fit2['f'][:, j])
+    print("\tf%d: %.10f" % (j + 1, cosineSimilarity))
 
 # # Plot two g's
 # plt.scatter(data.y, fit['g'])
