@@ -44,10 +44,25 @@ is done. There is no need to test for the last variable in the
 pool.
 """
 
+
+def rkhsCapacity(group, a):
+    return sum([a ** len(g) for g in group.partition])
+
 # ------------------------
 # Start forward selection
 # ------------------------
-def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None, lmbda=1e-5):
+def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None, lmbda=1e-5, a=np.e):
+    '''
+
+    :param data:
+    :param kernel:
+    :param method:
+    :param rank:
+    :param seed:
+    :param lmbda: tuning parameter for the penalty
+    :param a: parameter for capacity measure of $a^d$
+    :return:
+    '''
     covariatesPool = list(np.arange(data.p) + 1)
     oldGroup = Group(covariatesPool)  # start with a large single group
     p = oldGroup.p
@@ -74,8 +89,9 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None, lmbda=
             # Train OKGT
             res = currentOKGT.train(method, rank, seed)
             # currentR2 = res['r2']
-            capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
-            print("\t\t current group structure: %s with capacity: %d" %
+            # capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
+            capacity = rkhsCapacity(currentGroup, a)
+            print("\t\t current group structure: %s with capacity: %.04f" %
                   (currentGroup.getPartitions(), capacity))
             currentR2 = res['r2'] - lmbda * capacity
             if currentR2 > bestR2:
@@ -123,8 +139,9 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None, lmbda=
                     # Train OKGT
                     res = currentOKGT.train(method, rank, seed)
                     # currentR2 = res['r2']
-                    capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
-                    print("\t\t current group structure: %s with capacity: %d" %
+                    # capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
+                    capacity = rkhsCapacity(currentGroup, a)
+                    print("\t\t current group structure: %s with capacity: %.04f" %
                           (currentGroup.getPartitions(), capacity))
                     currentR2 = res['r2'] - lmbda * capacity
                     # Check if there is improvement
