@@ -308,7 +308,7 @@ class OKGTReg2(object):
 
         # print "** Start OKGT Training (Vanilla)**"
 
-        Rxx, Gx = self.parameterizedData.covarianceOperatorForX(returnAll=True)
+        Rxx, Gx, Gx_list = self.parameterizedData.covarianceOperatorForX(returnAll=True)
         Ryy, Gy = self.parameterizedData.covarianceOperatorForY(returnAll=True)
         # Ryx = self.parameterizedData.crossCovarianceOperator()
         Ryx = Gy.dot(Gx.T) / n
@@ -333,23 +333,21 @@ class OKGTReg2(object):
 
         # f: optimal transformation for x
         # TODO: use matrix multiplication to replace the following loop
-        # _x_i = Ryx.T.dot(g_opt)
-        # x_i = Rxx_inv.dot(_x_i)
-        # f_opt_ls = []
-        # for i in range(l):
-        #     x_ii = x_i[i*n : (i+1)*n]
-        #     Gx_i = Gx[i*n : (i+1)*n, :]
-        #     f_i_opt = Gx_i.dot(x_ii)
-        #     f_i_norm = np.sqrt(x_ii.T.dot(f_i_opt))
-        #     f_i_opt = f_i_opt / f_i_norm
-        #     f_opt_ls.append(f_i_opt)
+        _alpha_i = Ryx.T.dot(g_opt)
+        alpha_i = Rxx_inv.dot(_alpha_i)
+        f_opt_ls = []
+        for i in range(l):
+            # x_ii = x_i[i*n : (i+1)*n]
+            f_i_opt = Gx_list[i].dot(alpha_i)
+            f_i_norm = np.sqrt(alpha_i.T.dot(f_i_opt))
+            f_i_opt = f_i_opt / f_i_norm
+            f_opt_ls.append(f_i_opt)
 
-
-        # f_opt = np.column_stack(f_opt_ls)
+        f_opt = np.column_stack(f_opt_ls)
 
         # print "** Success **"
-        # return dict(g=g_opt, f=f_opt, r2=float(r2))
-        return dict(g=g_opt, r2=float(r2))
+        return dict(g=g_opt, f=f_opt, r2=float(r2))
+        # return dict(g=g_opt, r2=float(r2))
         # self.f = f_opt
         # self.g = g_opt
         # self.r2 = float(r2)

@@ -337,12 +337,16 @@ class ParameterizedDataWithAdditiveKernel(ParameterizedData):
         :param self:
         :return:
         """
-        Kx = self._addGramsForX()
-        cov = Kx.dot(Kx.T) / self.n
+        grams = self._getGramsForX()
         if returnAll:
-            return cov, Kx
+            Gx = reduce(lambda x, y: x + y, grams)
+            Rxx = Gx.dot(Gx.T) / self.n
+            return Rxx, Gx, grams
         else:
-            return cov
+            Gx = reduce(lambda x, y: x + y, grams)
+            Rxx = Gx.dot(Gx.T) / self.n
+            return Gx
+
 
     def crossCovarianceOperator(self):
         """
