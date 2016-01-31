@@ -2,7 +2,7 @@ import numpy as np
 import copy
 
 from okgtreg.Group import Group
-from okgtreg.OKGTReg import OKGTReg
+from okgtreg.OKGTReg import OKGTReg2
 from okgtreg.Parameters import Parameters
 
 
@@ -86,7 +86,7 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
             # Contrary to forward selection, the data matrix doesn't
             # change.
             parameters = Parameters(currentGroup, kernel, [kernel]*currentGroup.size)
-            currentOKGT = OKGTReg(data, parameters)
+            currentOKGT = OKGTReg2(data, parameters)
             # Train OKGT
             res = currentOKGT.train(method, rank, seed)
             # currentR2 = res['r2']
@@ -136,7 +136,7 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
                     currentGroup = updatedOtherGroup + updatedCovariatesPool
                     print("\t\t current group structure: %s " % (currentGroup.getPartitions(),))
                     parameters = Parameters(currentGroup, kernel, [kernel]*currentGroup.size)
-                    currentOKGT = OKGTReg(data, parameters)
+                    currentOKGT = OKGTReg2(data, parameters)
                     # Train OKGT
                     res = currentOKGT.train(method, rank, seed)
                     # currentR2 = res['r2']
