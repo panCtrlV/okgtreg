@@ -317,6 +317,16 @@ class ParameterizedData(object):
             raise ValueError("** Covariate names are not assigned to the data. **")
 
 
+# The following ParameterizedDataWithAdditiveKernel class is a
+# subclass of ParameterizedData.
+#
+# In the subclass, a new function
+# `_addGramsForX` is created to evaluate the gram matrix for X as
+# a sum of the individual gram matrices.
+#
+# In addition, the two functions `covarianceOperatorForX` and
+# `crossCovarianceOperator` are overridden to accommodate the
+# new structure of $K_X$.
 class ParameterizedDataWithAdditiveKernel(ParameterizedData):
     def _addGramsForX(self):
         """
@@ -346,7 +356,6 @@ class ParameterizedDataWithAdditiveKernel(ParameterizedData):
             Gx = reduce(lambda x, y: x + y, grams)
             Rxx = Gx.dot(Gx.T) / self.n
             return Gx
-
 
     def crossCovarianceOperator(self):
         """
