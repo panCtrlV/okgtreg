@@ -51,7 +51,8 @@ def rkhsCapacity(group, a):
 # ------------------------
 # Start forward selection
 # ------------------------
-def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None, lmbda=1e-5, a=np.e):
+def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
+                      lmbda=1e-5, a=np.e):
     '''
 
     :param data:
@@ -59,8 +60,8 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None, lmbda=
     :param method:
     :param rank:
     :param seed:
-    :param lmbda: tuning parameter for the penalty
-    :param a: parameter for capacity measure of $a^d$
+    :param lmbda: the first tuning parameter for the capacity penalty $\lambda * a^d$
+    :param a: the second tuning parameter for capacity penalty in $\lambda * a^d$
     :return:
     '''
     covariatesPool = list(np.arange(data.p) + 1)
