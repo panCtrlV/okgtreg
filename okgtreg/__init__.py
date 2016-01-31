@@ -8,6 +8,6 @@ from okgtreg.DataSimulator import DataSimulator
 from okgtreg.Data import Data, ParameterizedData
 from okgtreg.Group import Group, RandomGroup
 from okgtreg.Kernel import Kernel
-from okgtreg.OKGTReg import OKGTReg, OKGTRegForDetermineGroupStructure
+from okgtreg.OKGTReg import OKGTReg, OKGTReg2, OKGTRegForDetermineGroupStructure
 from Parameters import Parameters
 from DataUtils import readSkillCraft1

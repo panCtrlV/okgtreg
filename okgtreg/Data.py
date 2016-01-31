@@ -263,8 +263,8 @@ class ParameterizedData(object):
 
     def _getGramsForX(self):
         """
-        Contruct the gram matrix (centered) for each covariate group, the results are returned
-        as a list.
+        Contruct the gram matrix (centered) for each covariate group,
+        the results are returned as a list.
 
         :rtype: list
         :return: centered gram matrices, one for each group
@@ -280,12 +280,13 @@ class ParameterizedData(object):
         Calculate the covariance for X under the given group structure.
 
         :type returnAll: bool
-        :param returnAll: if the column stack of the gram matrices (one for each group in the group structure)
-                          is returned along with the covariance operator
+        :param returnAll: if the column stack of the gram matrices (one
+                          for each group in the group structure) is returned
+                          along with the covariance operator
 
         :rtype: 2d array or tuple of two 2d arrays
-        :return: either the covariance oeprator by itself or the covariance operator together with
-                 the column stack of the gram matrices.
+        :return: either the covariance oeprator by itself or the covariance
+                 operator together with the column stack of the gram matrices.
         """
         vstackedGrams = self._stackGramsForX()
         cov = vstackedGrams.dot(vstackedGrams.T) / self.n
@@ -314,3 +315,69 @@ class ParameterizedData(object):
             return [[self.xnames[i-1] for i in part] for part in self.group.getPartitions()]
         else:
             raise ValueError("** Covariate names are not assigned to the data. **")
+
+
+class ParameterizedDataWithAdditiveKernel(ParameterizedData):
+    def _addGramsForX(self):
+        """
+        Add component gram matrices (each of size n*n) together
+        instead of stack them. The result is still a n*n matrix.
+
+        :return:
+        """
+        grams = self._getGramsForX()
+        return reduce(lambda x, y: x + y, grams)
+
+    def covarianceOperatorForX(self, returnAll=False):
+        """
+        Covariance operator by multiplying the gram matrix with
+        itself, where the gram matrix is constructed from the
+        additive kernel as a sum of component gram matrices.
+
+        :param self:
+        :return:
+        """
+        grams = self._getGramsForX()
+        if returnAll:
+            Gx = reduce(lambda x, y: x + y, grams)
+            Rxx = Gx.dot(Gx.T) / self.n
+            return Rxx, Gx, grams
+        else:
+            Gx = reduce(lambda x, y: x + y, grams)
+            Rxx = Gx.dot(Gx.T) / self.n
+            return Gx
+
+
+    def crossCovarianceOperator(self):
+        """
+        # return KyKx as R_yx: H_x -> H_y, where Kx is the additive gram
+
+        xStackedGrams = self._stackGramsForX()
+        crossCov = yGram.dot(xStackedGrams.T) / self.n
+        return crossCov
+
+        :param self:
+        :return:
+        """
+        Ky = self.ykernel.gram(self.y[:, np.newaxis])  # need kernel for y
+        Kx = self._addGramsForX()
+        Ryx = Ky.dot(Kx.T) / self.n
+        return Ryx
+
+
+if __name__ == '__main__':
+    from okgtreg.DataSimulator import DataSimulator
+    from okgtreg.Parameters import Parameters
+    from okgtreg.Kernel import Kernel
+
+    data, group = DataSimulator.SimData_Wang04WithInteraction(500)
+    kernel = Kernel('gaussian', sigma=0.5)
+    parameters = Parameters(group, kernel, [kernel] * group.size)
+    parametersData = ParameterizedDataWithAdditiveKernel(data, parameters)
+
+    Rxx, Kx = parametersData.covarianceOperatorForX(True)
+    print "Rxx shape: ", Rxx.shape
+    print "Kx shape: ", Kx.shape
+
+    Ryx = parametersData.crossCovarianceOperator()
+    print "Ryx shape: ", Ryx.shape
