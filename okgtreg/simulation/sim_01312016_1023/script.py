@@ -79,11 +79,18 @@ validateR2 = fit['r2']
 
 # Pickle results
 mydir = os.getcwd()
-filename = "script-a-%d.pkl" % a
+filename = "script-a-%.01f.pkl" % a
 saveto = mydir + '/' + filename
 pickle.dump((), open(saveto, 'wb'))
-
 
 # # Create shell script
 # for a in range(1, 11):
 #     print("python -u script.py %d > script-a-%d.out" % (a, a))
+
+# # Create shell script for a in [2, 2.9]
+# for a in np.linspace(2, 2.9, 10):
+#     print("python -u script.py %.01f > script-a-%.01f.out" % (a, a))
+
+# # Create shell script for a in [3.1, 3.9]
+# for a in np.linspace(3.1, 3.9, 9):
+#     print("python -u script.py %.01f > script-a-%.01f.out" % (a, a))
