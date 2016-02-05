@@ -23,11 +23,12 @@ def model1(n):
 
 
 def model2(n):
-    x = np.random.standard_normal((n, p - 2))
+    x1 = np.random.standard_normal((n, p - 2))
     x2 = np.random.uniform(1, 3, (n, 2))
+    x = np.hstack([x1, x2])
     e = np.random.standard_normal((n,)) * 0.1
-    g = (x[:, :2].sum(axis=1)) ** 2 + \
-        np.log((x[:, 2:4] ** 2).sum(axis=1) + 5.) + \
+    g = (x1[:, :2].sum(axis=1)) ** 2 + \
+        np.log((x1[:, 2:4] ** 2).sum(axis=1) + 5.) + \
         x2[:, 0] ** x2[:, 1] + \
         e
     y = g ** 2
