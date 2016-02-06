@@ -182,7 +182,7 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
     print ("** SELECTED GROUP STRUCTURE: %s with R2 (penalized) = %f ** \n" %
            (oldGroup.getPartitions(), bestR2))
     # return dict(group=oldGroup, r2=bestR2)
-    return dict(group=oldGroup, r2p=bestR2)
+    return dict(group=oldGroup, r2=bestR2)
 
 
 if __name__ == "__main__":
