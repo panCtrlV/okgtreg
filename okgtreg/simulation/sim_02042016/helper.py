@@ -22,9 +22,30 @@ def partitions(set_):
             yield [parts[0]] + b
 
 
+# Capacity functions
 # Direct sum RKHS capacity for a given group structure
 def rkhsCapacity(group, a):
     return sum([a ** len(g) for g in group.partition])
+
+
+def ptopCapacity(group):
+    return sum([len(g) ** len(g) for g in group.partition])
+
+
+def etopCapacity(group):
+    return sum([np.e ** len(g) for g in group.partition])
+
+
+def pto2Capacity(group):
+    return sum([len(g) ** 2 for g in group.partition])
+
+
+def selectCapacity(id):
+    capacities = {1: rkhsCapacity,
+                  2: ptopCapacity,
+                  3: etopCapacity,
+                  4: pto2Capacity}
+    return capacities[id]
 
 
 def _mapGroupToDictionary(g):
