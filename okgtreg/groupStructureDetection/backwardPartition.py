@@ -45,14 +45,14 @@ pool.
 """
 
 
-def rkhsCapacity(group, a):
-    return sum([a ** len(g) for g in group.partition])
+def rkhsCapacity(group, alpha):
+    return sum([alpha ** len(g) for g in group.partition])
 
 # ------------------------
 # Start forward selection
 # ------------------------
 def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
-                      lmbda=1e-5, a=np.e):
+                      mu=1e-5, alpha=np.e):
     '''
 
     :param data:
@@ -60,8 +60,8 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
     :param method:
     :param rank:
     :param seed:
-    :param lmbda: the first tuning parameter for the capacity penalty $\lambda * a^d$
-    :param a: the second tuning parameter for capacity penalty in $\lambda * a^d$
+    :param mu: the first tuning parameter for the capacity penalty $\lambda * a^d$
+    :param alpha: the second tuning parameter for capacity penalty in $\lambda * a^d$
     :return:
     '''
     covariatesPool = list(np.arange(data.p) + 1)
@@ -91,10 +91,10 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
             res = currentOKGT.train(method, rank, seed)
             # currentR2 = res['r2']
             # capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
-            capacity = rkhsCapacity(currentGroup, a)
+            capacity = rkhsCapacity(currentGroup, alpha)
             print("\t\t current group structure: %s with capacity: %.04f" %
                   (currentGroup.getPartitions(), capacity))
-            currentR2 = res['r2'] - lmbda * capacity
+            currentR2 = res['r2'] - mu * capacity
             if currentR2 > bestR2:
                 # print("\t\t current R2 =\t %.10f \t *" % currentR2)
                 print("\t\t current R2 (penalized) =\t %.10f \t *" % currentR2)
@@ -141,10 +141,10 @@ def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
                     res = currentOKGT.train(method, rank, seed)
                     # currentR2 = res['r2']
                     # capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
-                    capacity = rkhsCapacity(currentGroup, a)
+                    capacity = rkhsCapacity(currentGroup, alpha)
                     print("\t\t current group structure: %s with capacity: %.04f" %
                           (currentGroup.getPartitions(), capacity))
-                    currentR2 = res['r2'] - lmbda * capacity
+                    currentR2 = res['r2'] - mu * capacity
                     # Check if there is improvement
                     if currentR2 > bestR2:
                         # print("\t\t current R2 =\t %.10f \t *" % currentR2)
