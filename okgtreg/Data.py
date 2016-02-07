@@ -1,5 +1,6 @@
 import numpy as np
 import traceback, sys
+import collections
 
 from okgtreg.Group import Group
 
@@ -157,10 +158,13 @@ class Data(object):
                                           limit=2, file=sys.stdout)
             else:
                 raise IndexError("** Index %d is out of bounds. **" % key)
-        elif all(isinstance(k, str) for k in key):
-            return np.vstack([self.__getitem__(k) for k in key]).T  # recursion
-        elif all(isinstance(k, int) for k in key):
-            return np.vstack([self.__getitem__(k) for k in key]).T  # recursion
+        elif isinstance(key, collections.Iterable):
+            if all(isinstance(k, str) for k in key):
+                return np.vstack([self.__getitem__(k) for k in key]).T  # recursion
+            elif all(isinstance(k, int) for k in key):
+                return np.vstack([self.__getitem__(k) for k in key]).T  # recursion
+        elif isinstance(key, slice):
+            return Data(self.y[key], self.X[key, :])
         else:
             raise IndexError("** Index type %s is not recognized. **" % type(key))
 
