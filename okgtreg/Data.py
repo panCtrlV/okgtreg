@@ -160,13 +160,28 @@ class Data(object):
                 raise IndexError("** Index %d is out of bounds. **" % key)
         elif isinstance(key, collections.Iterable):
             if all(isinstance(k, str) for k in key):
+                # get columns by list of names
                 return np.vstack([self.__getitem__(k) for k in key]).T  # recursion
             elif all(isinstance(k, int) for k in key):
+                # get columns by list of indices
                 return np.vstack([self.__getitem__(k) for k in key]).T  # recursion
         elif isinstance(key, slice):
             return Data(self.y[key], self.X[key, :])
         else:
             raise IndexError("** Index type %s is not recognized. **" % type(key))
+
+    def __add__(self, other):
+        """
+        Combine two conformable Data objects
+
+        :type other: Data
+        :param other:
+        :return:
+        """
+        # TODO: check self and other are conformable
+        y = np.hstack([self.y, other.y])  # y is univariate
+        x = np.vstack([self.X, other.X])
+        return Data(y, x)
 
     def __str__(self):
         # Used for `print Data`
