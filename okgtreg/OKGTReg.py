@@ -372,7 +372,6 @@ class OKGTReg2(object):
         # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=float(r2))
 
-
     def _train_Nystroem(self, nComponents, seed=None):
         """
         Training an OKGT where the kernel matrices are approximated by low rank matrices
@@ -460,7 +459,7 @@ class OKGTReg2(object):
         :param h:
         :return:
         """
-        print "** Start OKGT Training (Vanilla) with Known h **"
+        # print "** Start OKGT Training (Vanilla) with Known h **"
 
         n = self.getSampleSize()
         l = self.getGroupSize()
@@ -500,7 +499,8 @@ class OKGTReg2(object):
             f_opt_ls.append(f_i_opt)
         f_opt = np.column_stack(f_opt_ls)
 
-        print "** Success **"
+        # print "** Success **"
+
         return dict(g=g_opt, f=f_opt, r2=float(r2))
 
 
