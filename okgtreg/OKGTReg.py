@@ -8,7 +8,7 @@ import sys, traceback
 from .Data import Data, ParameterizedData, ParameterizedDataWithAdditiveKernel
 from .Parameters import Parameters
 from .Group import Group
-
+from okgtreg.Kernel import Kernel
 
 """
 X: covariate matrix (high dimensional)
@@ -337,7 +337,6 @@ class OKGTReg2(object):
 
         Rxx, Gx, Gx_list = self.parameterizedData.covarianceOperatorForX(returnAll=True)
         Ryy, Gy = self.parameterizedData.covarianceOperatorForY(returnAll=True)
-        # Ryx = self.parameterizedData.crossCovarianceOperator()
         Ryx = Gy.dot(Gx.T) / n
 
         D, P = np.linalg.eigh(Ryy + self.eps * np.identity(n))
@@ -346,7 +345,6 @@ class OKGTReg2(object):
         D_inv = np.diag(1. / np.sqrt(D))
         Gy_inv = D_inv.dot(P.T)  # Ryy^{-1/2}
 
-        # Rxx_inv = np.linalg.inv(Rxx + self.eps * np.identity(n * l))
         Rxx_inv = np.linalg.inv(Rxx + self.eps * np.identity(n))
 
         # TODO: if Rxx is large, the inverse would be slow.
@@ -364,7 +362,6 @@ class OKGTReg2(object):
         alpha_i = Rxx_inv.dot(_alpha_i)
         f_opt_ls = []
         for i in range(l):
-            # x_ii = x_i[i*n : (i+1)*n]
             f_i_opt = Gx_list[i].dot(alpha_i)
             f_i_norm = np.sqrt(alpha_i.T.dot(f_i_opt))
             f_i_opt = f_i_opt / f_i_norm
@@ -374,11 +371,7 @@ class OKGTReg2(object):
 
         # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=float(r2))
-        # return dict(g=g_opt, r2=float(r2))
-        # self.f = f_opt
-        # self.g = g_opt
-        # self.r2 = float(r2)
-        # return
+
 
     def _train_Nystroem(self, nComponents, seed=None):
         """
@@ -459,6 +452,56 @@ class OKGTReg2(object):
             return trainFunctions[method]()
         except KeyError:
             print("** Method \"%s\" could not be found. **" % method)
+
+    def _train_Vanilla2(self, h):
+        """
+        Train OKGT with known response function.
+
+        :param h:
+        :return:
+        """
+        print "** Start OKGT Training (Vanilla) with Known h **"
+
+        n = self.getSampleSize()
+        l = self.getGroupSize()
+
+        Rxx, Gx, Gx_list = self.parameterizedData.covarianceOperatorForX(returnAll=True)
+        yKernel = Kernel('linear')
+        Gy = yKernel.gram(h[:, np.newaxis])
+        Ryy = Gy.dot(Gy.T) / n
+        Ryx = Gy.dot(Gx.T) / n
+
+        D, P = np.linalg.eigh(Ryy + self.eps * np.identity(n))
+        D = D[::-1]
+        P = P[:, ::-1]
+        D_inv = np.diag(1. / np.sqrt(D))
+        Gy_inv = D_inv.dot(P.T)  # Ryy^{-1/2}
+
+        Rxx_inv = np.linalg.inv(Rxx + self.eps * np.identity(n))
+
+        # TODO: if Rxx is large, the inverse would be slow.
+        VyxVxy = reduce(np.dot, [Gy_inv, Ryx, Rxx_inv, Ryx.T, Gy_inv.T])
+
+        # g: optimal transformation for y
+        r2, beta = slin.eigh(VyxVxy, eigvals=(n - 1, n - 1))  # only need the largest eigen value and vector
+        _zeta = D_inv.dot(beta)
+        zeta = P.dot(_zeta)
+        g_opt = Gy.dot(zeta)
+
+        # f: optimal transformation for x
+        # TODO: use matrix multiplication to replace the following loop
+        _alpha_i = Ryx.T.dot(g_opt)
+        alpha_i = Rxx_inv.dot(_alpha_i)
+        f_opt_ls = []
+        for i in range(l):
+            f_i_opt = Gx_list[i].dot(alpha_i)
+            f_i_norm = np.sqrt(alpha_i.T.dot(f_i_opt))
+            f_i_opt = f_i_opt / f_i_norm
+            f_opt_ls.append(f_i_opt)
+        f_opt = np.column_stack(f_opt_ls)
+
+        print "** Success **"
+        return dict(g=g_opt, f=f_opt, r2=float(r2))
 
 
 # TODO: For optimal split and merge methods, they can either using the existing kernel

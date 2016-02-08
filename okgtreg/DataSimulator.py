@@ -86,16 +86,17 @@ class DataSimulator(object):
         # x = np.vstack(np.random.random(n) * 2.0 - 1.0 for j in range(7)).T
         x = np.random.uniform(-1., 1., (n, group.p))
         noise = np.random.standard_normal(n) * 0.1
-        y = np.log(4.0 +
-                   np.sin(4 * x[:, 0]) +
-                   np.abs(x[:, 1]) +
-                   x[:, 2]**2 +
-                   x[:, 3]**3 +
-                   x[:, 4] +
-                   x[:, 5] * x[:, 6] +
-                   noise)
+        h = 4.0 + \
+            np.sin(4 * x[:, 0]) + \
+            np.abs(x[:, 1]) + \
+            x[:, 2] ** 2 + \
+            x[:, 3] ** 3 + \
+            x[:, 4] + \
+            x[:, 5] * x[:, 6] + \
+            noise
+        y = np.log(h)
 
-        return Data(y, x), group
+        return Data(y, x), group, h
 
     @staticmethod
     def SimData_Wang04WithInteraction2(n):

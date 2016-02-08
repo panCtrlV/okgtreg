@@ -355,7 +355,8 @@ class ParameterizedDataWithAdditiveKernel(ParameterizedData):
         :return:
         """
         grams = self._getGramsForX()
-        return reduce(lambda x, y: x + y, grams)
+        # return reduce(lambda x, y: x + y, grams)
+        return sum(grams)
 
     def covarianceOperatorForX(self, returnAll=False):
         """
@@ -368,11 +369,13 @@ class ParameterizedDataWithAdditiveKernel(ParameterizedData):
         """
         grams = self._getGramsForX()
         if returnAll:
-            Gx = reduce(lambda x, y: x + y, grams)
+            # Gx = reduce(lambda x, y: x + y, grams)
+            Gx = sum(grams)
             Rxx = Gx.dot(Gx.T) / self.n
             return Rxx, Gx, grams
         else:
-            Gx = reduce(lambda x, y: x + y, grams)
+            # Gx = reduce(lambda x, y: x + y, grams)
+            Gx = sum(grams)
             Rxx = Gx.dot(Gx.T) / self.n
             return Gx
 
