@@ -3,6 +3,7 @@ import itertools
 import copy
 import warnings
 import random
+import re
 
 
 class Group(object):
@@ -22,6 +23,14 @@ class Group(object):
         :rtype: Group
         :return:
         """
+
+        self.group_struct_string = kwargs.get('group_struct_string', None)
+        # TODO: args and group_struct_string should not be both given
+        if self.group_struct_string is not None:
+            # TODO: verify if the group structure string is formatted correctly
+            groupStrList = re.findall('\[[^\]]*\]', self.group_struct_string)
+            groupTuple = tuple([[int(d) for d in re.findall('\d', s)] for s in groupStrList])
+            args = groupTuple
 
         # group with one covariate must input explicitly
 
@@ -54,15 +63,19 @@ class Group(object):
         # or set automatically as the size of the flattened args if not given
         # if len(kwargs) > 0:
             # for key in ('p'): setattr(self, key, kwargs.get(key))
-        if 'p' in kwargs.keys():
-            setattr(self, 'p', kwargs.get('p'))
-        else:
-            self.p = len(inputs)
 
-        if 'name' in kwargs.keys():
-            setattr(self, 'name', kwargs.get('name'))
-        else:
-            self.name = None
+
+        # if 'p' in kwargs.keys():
+        #     setattr(self, 'p', kwargs.get('p'))
+        # else:
+        #     self.p = len(inputs)
+        self.p = kwargs.get('p', len(inputs))
+
+        # if 'name' in kwargs.keys():
+        #     setattr(self, 'name', kwargs.get('name'))
+        # else:
+        #     self.name = None
+        self.name = kwargs.get('name', None)
 
         # fields:
         #   partition, size, p, name
@@ -597,3 +610,5 @@ if __name__=='__main__':
     randomGroup = RandomGroup(size=4, nCovariates=10)
     print(randomGroup)
 
+    group_structure_string = '([1], [2,3], [4,5,6])'
+    gs = Group(group_struct_string=group_structure_string)
