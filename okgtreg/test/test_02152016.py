@@ -28,3 +28,6 @@ g5 < g1  # False
 # All possible group structures for the
 # covariates in the current group structure
 g1.allGroupStructures()
+
+# All amiable group structures
+g1.amiableGroupStructures()

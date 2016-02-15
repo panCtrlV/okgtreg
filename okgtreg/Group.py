@@ -169,7 +169,11 @@ class Group(object):
 
     def amiableGroupStructures(self):
         # all possible group structures for the self
-        pass
+        # TODO: use generator would be more memory efficient
+        all_group_struct = self.allGroupStructures()
+        amiable_group_struct = [gstruct for gstruct in all_group_struct
+                                if self < gstruct]
+        return amiable_group_struct
 
     def __le__(self, other):
         return self.__lt__(other) or self.__eq__(other)
