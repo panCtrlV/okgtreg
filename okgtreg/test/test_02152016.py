@@ -31,3 +31,4 @@ g1.allGroupStructures()
 
 # All amiable group structures
 g1.amiableGroupStructures()
+Group(group_struct_string="[[1], [2,3], [4], [5]]").amiableGroupStructures()
