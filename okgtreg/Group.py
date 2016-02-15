@@ -5,6 +5,8 @@ import warnings
 import random
 import re
 
+from okgtreg.utility import partitions
+
 
 class Group(object):
     def __init__(self, *args, **kwargs):
@@ -20,15 +22,25 @@ class Group(object):
         :type [name]: str, optional
         :param [name]: an identity for the current group structure
 
+        :type [group_struct_string]: str, optional
+        :param [group_struct_string]: a group structure string, which
+                                      provides an alternative constructor.
+
         :rtype: Group
         :return:
         """
 
         self.group_struct_string = kwargs.get('group_struct_string', None)
-        # TODO: args and group_struct_string should not be both given
+        # TODO: `args` and `group_struct_string` should not be both given
         if self.group_struct_string is not None:
             # TODO: verify if the group structure string is formatted correctly
-            groupStrList = re.findall('\[[^\]]*\]', self.group_struct_string)
+            # The following regex can handle two types of group structure strings:
+            #   [[1], [2,3], [4,5,6]]
+            #   [(1), (2,3), (4,5,6)]
+            # Reference:
+            # 1. choose one of two characters, i.e. \( or \[ in this script
+            #    http://stackoverflow.com/questions/6863518/regex-match-one-of-two-words
+            groupStrList = re.findall('(?:\(|\[)\d[^(?:\)|\])]*(?:\)|\])', self.group_struct_string)
             groupTuple = tuple([[int(d) for d in re.findall('\d', s)] for s in groupStrList])
             args = groupTuple
 
@@ -101,9 +113,8 @@ class Group(object):
     def __lt__(self, other):
         """
         Specify the relative order, strictly smaller, between two Group objects. If each
-        group of covariates in `self` is a subset of a group in `other`, and at least one
-        is a proper subset, then `self` < `other`. For example, with the following group
-        structures:
+        group of covariates in `self` is a subset of a single group in `other`, and at
+        least one is a proper subset, then `self` < `other`.
 
             g1: ([1], [2,3])
             g2: ([1,4], [2,3])
@@ -111,17 +122,20 @@ class Group(object):
             g4: ([1], [2,3], [4])
             g5: ([1], [4], [2,3])
 
-        we have the relationships:
+        we have the inequality relationships:
 
-            g1 < g2,
-            g1 < g3,
-            g1 < g4,
-            g1 < g5
+            g4 < g3
+            g5 < g3
 
-        while g4 == g5, so g4 < g5 false False.
+        Because g4 == g5, so g4 < g5 is False.
 
-        If g1 < g2 and g2 is the true group structure, then g1 is called a "correct"
-        in our OKGT paper.
+        Since g1 has different number of covariates (fewer) than all the other
+        group structures. The "<" between g1 and other group structures are not
+        defined.
+
+        It has to be emphasized that the "<" relationship applies to two group
+        structures with the same number of covariates. It is equivalent to the
+        concept of amiable group structures.
 
         :type other: Group
         :param other: the other group structure to compare to.
@@ -129,15 +143,41 @@ class Group(object):
         :rtype: bool
         :return: if `self` is strictly smaller than `other`.
         """
-        return np.all([np.any([set(g1) <= set(g2) for g2 in other.partition]) for g1 in self.partition]) and \
-               self != other
+        # Check if the number of covariates in self is the same
+        # as that in other. If not, the "amiable" relationship
+        # is not well defined.
+        if self.p == other.p:
+            # if each group in self is a subset of a single
+            # group in other
+            isAllSubsets = np.all(
+                [np.any([set(g1) <= set(g2) for g2 in other.partition])
+                 for g1 in self.partition]
+            )
+            return isAllSubsets and self != other
+        else:
+            raise ValueError("** self and other have different number of covariates. "
+                             "__lt__() is not well defined. **")
+
+    def allGroupStructures(self):
+        # set of all covariates
+        set_all = set(range(1, self.p + 1))
+        # all group structures as a generator
+        all_gstruct_generator = partitions(set_all)
+        all_gstruct_str_list = \
+            [[tuple(s) for s in g].__str__() for g in all_gstruct_generator]
+        return [Group(group_struct_string=gstr) for gstr in all_gstruct_str_list]
+
+    def amiableGroupStructures(self):
+        # all possible group structures for the self
+        pass
 
     def __le__(self, other):
         return self.__lt__(other) or self.__eq__(other)
 
     def __add__(self, other):
         """
-        Add two Group objects to return a bigger Group.
+        Add two group structures and return a bigger
+        group structure.
 
         :type other: Group or list
         :param other:
