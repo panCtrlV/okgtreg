@@ -454,7 +454,9 @@ class OKGTReg2(object):
 
     def _train_Vanilla2(self, h):
         """
-        Train OKGT with known response function.
+        Train OKGT with known response function. That is,
+        the kernel for y is fixed to be linear (inner-product)
+        kernel.
 
         :param h:
         :return:
@@ -465,6 +467,8 @@ class OKGTReg2(object):
         l = self.getGroupSize()
 
         Rxx, Gx, Gx_list = self.parameterizedData.covarianceOperatorForX(returnAll=True)
+        # Since we assume the response transformation is known and
+        # given by h, the kernel for h is fixed to be linear.
         yKernel = Kernel('linear')
         Gy = yKernel.gram(h[:, np.newaxis])
         Ryy = Gy.dot(Gy.T) / n

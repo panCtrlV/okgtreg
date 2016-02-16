@@ -280,15 +280,17 @@ class ParameterizedData(object):
             cols = np.array(self.partition[groupNumber - 1])  # group number start from 1
             return self.X[:, cols - 1]
 
-    def _getGramsForX(self):
+    def _getGramsForX(self, centered=True):
         """
-        Contruct the gram matrix (centered) for each covariate group,
-        the results are returned as a list.
+        Contruct the gram matrix (centered by default) for each
+        covariate group, all the gram matrices are returned in a list.
 
-        :rtype: list
-        :return: centered gram matrices, one for each group
+        :rtype: list of 2d arrays
+        :return: gram matrices (centered by default), one for each group
         """
-        return [kernel.gram(self.getXFromGroup(i+1)) for (i, kernel) in enumerate(self.xkernels)]
+        xgram_list = [kernel.gram(self.getXFromGroup(i + 1), centered)
+                      for (i, kernel) in enumerate(self.xkernels)]
+        return xgram_list
 
     def _stackGramsForX(self):
         grams = self._getGramsForX()
@@ -347,14 +349,14 @@ class ParameterizedData(object):
 # `crossCovarianceOperator` are overridden to accommodate the
 # new structure of $K_X$.
 class ParameterizedDataWithAdditiveKernel(ParameterizedData):
-    def _addGramsForX(self):
+    def _addGramsForX(self, centered=True):
         """
         Add component gram matrices (each of size n*n) together
         instead of stack them. The result is still a n*n matrix.
 
         :return:
         """
-        grams = self._getGramsForX()
+        grams = self._getGramsForX(centered)
         # return reduce(lambda x, y: x + y, grams)
         return sum(grams)
 
