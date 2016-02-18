@@ -138,10 +138,8 @@ class OKGTReg(object):
 
         # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=float(r2))
-        # self.f = f_opt
-        # self.g = g_opt
-        # self.r2 = float(r2)
-        # return
+        # Capture the coefficients
+        # return dict(g=g_opt, f=f_opt, r2=float(r2), coef=x_i.reshape((n,l), order='F'))
 
     def _train_Nystroem(self, nComponents, seed=None):
         """
@@ -224,21 +222,23 @@ class OKGTReg(object):
             print("** Method \"%s\" could not be found. **" % method)
 
 
-# The following OKGTReg2 class has the same function as
+# The following OKGTReg2 class has the same functions as
 # OKGTReg class. The difference lies in how the covariance
 # operator of $R_{XX}$ and cross-covariance operator $R_{XY}$
 # are constructed.
 #
 # In the OKGTReg class, since the centered gram matrices
-# for X are stacked, $R_{XX}$ is of size nd x nd, and $R_{XY}$ is
-# of size nd x n, where n is the sample size and d is the
+# for X are stacked, $R_{XX}$ is of size (nd x nd), and $R_{XY}$
+# is of size (nd x n), where $n$ is the sample size and $d$ is the
 # number of groups in the given group structure. These
-# expanded matrices cause the computation complexity of
-# the vanilla algorithm to be $O(n^3d^3)$.
+# expanded matrices increases the computation complexity of
+# the vanilla algorithm, which is $O(n^3d^3)$.
 #
-# In the new implementation of OKGTReg2 class, the additive
+# In the following implementation of OKGTReg2 class, the additive
 # kernel for X is directly exploited. By using the kernel
-# $K_X = k_1 + K_2 + \ldots + K_d$,
+#
+#       $K_X = K_1 + K_2 + \ldots + K_d$,
+#
 # the gram matrix for $X$ is constructed as the sum (instead
 # of block stack) of the individual gram matrices, which is
 # of size n x n. As a result, the size of $R_{XX}$ and $R_{XY}$
@@ -371,6 +371,8 @@ class OKGTReg2(object):
 
         # print "** Success **"
         return dict(g=g_opt, f=f_opt, r2=float(r2))
+        # Capture the coefficients:
+        # return dict(g=g_opt, f=f_opt, r2=float(r2), coef=alpha_i)
 
     def _train_Nystroem(self, nComponents, seed=None):
         """
