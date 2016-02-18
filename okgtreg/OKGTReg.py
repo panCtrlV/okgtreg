@@ -4,11 +4,13 @@ import scipy.linalg as slin
 import sys, traceback
 # import warnings
 # import copy
+from sklearn import linear_model
 
 from .Data import Data, ParameterizedData, ParameterizedDataWithAdditiveKernel
 from .Parameters import Parameters
 from .Group import Group
 from okgtreg.Kernel import Kernel
+
 
 """
 X: covariate matrix (high dimensional)
@@ -456,7 +458,7 @@ class OKGTReg2(object):
 
     def _train_Vanilla2(self, h):
         """
-        Train OKGT with known response function. That is,
+        OKGT fitting with known response function. That is,
         the kernel for y is fixed to be linear (inner-product)
         kernel.
 
@@ -508,6 +510,41 @@ class OKGTReg2(object):
         # print "** Success **"
 
         return dict(g=g_opt, f=f_opt, r2=float(r2))
+
+    def _train_lr(self, h):
+        '''
+        Since we know the true response, we can use least square
+        regression to estimate the transformations for the covariate
+        groups.
+
+        :type h: 1d array
+        :param h: known response transformation
+        :return:
+        '''
+        n = self.getSampleSize()
+        l = self.getGroupSize()
+        # normalize and center h
+        h = h - np.mean(h)
+        h = h / np.linalg.norm(h, ord=2)
+        # construct the additive kernel matrix,
+        # all component matrices are centered
+        Kx_list = self.parameterizedData._getGramsForX()
+        Kx_add = sum(Kx_list)
+        # construct linear regressor
+        # Reference:
+        # http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+        clf = linear_model.LinearRegression(fit_intercept=False)
+        clf.fit(Kx_add + self.eps * np.identity(n), h)  # TODO: over-fitting?
+        # clf.fit(Kx_add, h)  # TODO: over-fitting?
+        alpha = clf.coef_
+        # construct covariate transformations
+        f_list = [Kx_list[j].dot(alpha) for j in range(l)]
+        # calculate R2
+        h_pred = sum(f_list)
+        r2 = 1 - sum((h - h_pred) ** 2) / sum((h - np.mean(h)) ** 2)
+
+        return dict(g=h, f=np.vstack(f_list).T, r2=r2)
+
 
 
 # TODO: For optimal split and merge methods, they can either using the existing kernel
