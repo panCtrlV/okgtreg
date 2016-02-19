@@ -6,7 +6,7 @@ cd $PBS_O_WORKDIR
 unset DISPLAY
 
 # This is the path on Radon
-python -u /home/panc/research/OKGT/software/okgtreg/okgtreg/simulation/sim_02052016/validate.py ${MODEL_ID} ${SEED_NUM}
+python -u /home/panc/research/OKGT/software/okgtreg/okgtreg/simulation/sim_02052016/validate_backward.py ${MODEL_ID} ${SEED_NUM}
 
 # Once you have a job submission file, you may submit this
 # script to PBS using the qsub command.
