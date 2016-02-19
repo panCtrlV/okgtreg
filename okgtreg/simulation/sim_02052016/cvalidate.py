@@ -102,13 +102,14 @@ dumpObject = dict(cv_dict=cv_dict,
                   report_dict=report_dict)
 
 # Pickle results
-dirpath = os.getcwd()
+# dirpath = os.getcwd()
 filename, file_extension = os.path.splitext(__file__)
 filename = filename + \
            "-model" + str(model_id) + \
            "-seed" + str(seed_num) + \
            "-" + timestamp + ".pkl"
-saveto = dirpath + '/' + filename
+# saveto = dirpath + '/' + filename
+saveto = filename
 with open(saveto, 'wb') as f:
     pickle.dump(dumpObject, f)
 
