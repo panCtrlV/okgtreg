@@ -55,6 +55,30 @@ class Kernel(object):
         # function
         return lambda y: self.fn(x, y)
 
+    def kernelSpan(self, x, coef):
+        """
+        Construct linear combination of kernel mapping
+        of a given set of points (in the form of a 2d
+        array, each row is a data point). The function
+        returns a callable.
+
+        :type x: 2d array
+        :param x: data points, each row is a data point
+
+        :type coef: 1d array
+        :param coef: expansion loadings
+
+        :rtype: callable
+        :return: a function as a linear combination of
+                 the kernel mappings.
+        """
+
+        def kspan(y):
+            # y is a data point
+            return np.sum(self.fn(x[i, :], y) for i in range(x.shape[1]))
+
+        return kspan
+
     def gram(self, x, centered=True):
         # x must be a 2d array
         if x.ndim != 2:
@@ -153,8 +177,22 @@ class Kernel(object):
 
 # Class for additive kernel
 class AdditiveKernel(object):
-    def __init__(self, *args, **kwargs):
-        pass
+    def __init__(self, kernelList):
+        self.kernelList = kernelList  # list of Kernel objects
+
+        def addingKernels(x, y):
+            '''
+            Constructing additive kernels by adding up
+            individual kernel functions. In order to evaluate
+            the additive kernel functions, the user is
+            responsible to prepare the input as list of
+            1d numpy arrays.
+
+            :param x:
+            :param y:
+            :return:
+            '''
+            pass
 
     def kernelMapping(self):
         pass
