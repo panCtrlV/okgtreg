@@ -49,6 +49,12 @@ class Kernel(object):
         else:
             raise NotImplementedError("** %s kernel is not yet implemented. **" % name)
 
+    def kernelMapping(self, x):
+        # return a callable as a kernel mapping for
+        # the given point x, under the given kernel
+        # function
+        return lambda y: self.fn(x, y)
+
     def gram(self, x, centered=True):
         # x must be a 2d array
         if x.ndim != 2:
