@@ -149,3 +149,15 @@ class Kernel(object):
 
     def __str__(self):
         return "kernel: " + str(self.__dict__)
+
+
+# Class for additive kernel
+class AdditiveKernel(object):
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def kernelMapping(self):
+        pass
+
+    def gram(self):
+        pass
