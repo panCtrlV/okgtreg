@@ -5,16 +5,69 @@ from sklearn.kernel_approximation import Nystroem
 """
 Kernel class object contains a kernel function (callable) and related information.
 It also contains some useful methods such as evaluating a gram matrix given data.
+
+# Pickle Kernel Objects
+# =====================
+In the implementation of the Kernel object, the original idea was to add each kernel
+function as a static method. While creating an instance, a kernel function with
+parameter(s) is created as a lambda function. However, using lambda functions prohibited
+a Kernel object being pickled.
+
+Being able to pickle a Kernel object is useful. For example, we want to save the result of
+transformations of OKGT as callables, which is implemented as a span of kernel mappings. They
+cannot be implemented as nested functions in the Kernel class. If so, a Kernel object cannot
+be pickled.
+
+So I decided to implemented the kernel functions and kernel span and kernel mapping as
+external Python classes. According to [this reference](Reference: http://stackoverflow.com/questions/12019961/python-pickling-nested-functions/12022055#12022055)
+The resulting objects can be pickled.
 """
 
 
+class KernelMapping(object):
+    # evaluation of the kernel mapping x -> K(x, .)
+    # at the value of y. K is the under the parameterized
+    # kernel function given by self.kernelEval
+    def __init__(self, x, kernelEval):
+        self.x = x
+        self.kernelEval = kernelEval
+
+    def __call__(self, y):
+        return self.kernelEval(self.x, y)
+
+
 class KernelSpan(object):
+    # Construct linear combination of kernel mappings
+    # x -> K(x, .) at a given set of x (in the form of
+    # a 2d array, where each row is a data point).
     def __init__(self, x, coef, kernelEval):
+        '''
+        :type x: 2d array
+        :param x: data points, each row is a data point
+
+        :type coef: 1d array
+        :param coef: expansion loadings
+
+        :param kernelEval:
+        :return:
+        '''
         self.x = x
         self.coef = coef
         self.kernelEval = kernelEval
 
     def __call__(self, y):
+        '''
+        Evaluation of the kernel span at one or multiple
+        data points.
+
+        :type y: 1d or 2d array
+        :param y: one or multiple data points at which the
+                  kernel span is evaluated. Usually, the kernel
+                  span the solution of kernel method due to
+                  the Representer Theorem.
+        :rtype: 1d array
+        :return: a vector of evaluation values
+        '''
         if y.ndim == 1:  # y is one data point
             keval = pairwise_distances(self.x, y.reshape(1, -1), self.kernelEval).squeeze()
             return keval.dot(self.coef)
@@ -25,15 +78,10 @@ class KernelSpan(object):
             raise ValueError("** [ERROR] the shape of y is not conformable! **")
 
 
-class KernelMapping(object):
-    def __init__(self, x, kernelEval):
-        self.x = x
-        self.kernelEval = kernelEval
-
-    def __call__(self, y):
-        return self.kernelEval(self.x, y)
-
-
+##############################
+# Different Kernel Functions #
+# implemented as classes     #
+##############################
 class GaussianKernel(object):
     def __init__(self, sigma):
         self.sigma = sigma
@@ -45,7 +93,6 @@ class GaussianKernel(object):
             norm2 = np.power(x - y, 2).sum()
             return np.exp(- self.sigma * norm2)
 
-
 class LinearKernel(object):
     def __init__(self, c=0):
         self.c = c
@@ -53,6 +100,12 @@ class LinearKernel(object):
     def __call__(self, x, y):
         return np.sum(x * y) + self.c
 
+
+##############################################
+# Kernel Class which combines all the above  #
+# classes. This is the interface intended to #
+# be publicly exposed.                       #
+##############################################
 class Kernel(object):
     def __init__(self, name, sigma=None, intercept=0., slope=1., degree=None, c=0):
         self.name = name
@@ -247,7 +300,7 @@ class Kernel(object):
         return "kernel: " + str(self.__dict__)
 
 
-# Class for additive kernel
+# TODO: Class for additive kernel
 class AdditiveKernel(object):
     def __init__(self, kernelList):
         self.kernelList = kernelList  # list of Kernel objects

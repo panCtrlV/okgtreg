@@ -169,8 +169,8 @@ print "Test error =", test_error
 import pickle
 
 filepath = 'okgtreg/simulation/sim_02052016/tmp/pickled_f_est.pkl'
-# pickle.dump(fit['f_call'], open(filepath, 'wb'))
-pickle.dump(kernel, open(filepath, 'wb'))
+pickle.dump(fit['f_call'], open(filepath, 'wb'))
+# pickle.dump(kernel, open(filepath, 'wb'))
 
 with open(filepath, 'rb') as f:
     unpickle_file = pickle.load(f)
