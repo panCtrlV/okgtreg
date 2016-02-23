@@ -25,9 +25,11 @@ The resulting objects can be pickled.
 
 
 class KernelMapping(object):
-    # evaluation of the kernel mapping x -> K(x, .)
-    # at the value of y. K is the under the parameterized
-    # kernel function given by self.kernelEval
+    '''
+    Evaluation of the kernel mapping x -> K(x, .)
+    at the value of y. K is the under the parameterized
+    kernel function given by self.kernelEval
+    '''
     def __init__(self, x, kernelEval):
         self.x = x
         self.kernelEval = kernelEval
