@@ -91,7 +91,7 @@ print "# Alpha values: ", alphaList
 print "# OKGT fitting method: LSR"
 print "###############################################"
 
-# Simulate a data set (train + test)
+# Prepare data sets (train + test)
 ntrain = 500  # train size
 ntest = 500  # test size
 
@@ -123,9 +123,9 @@ for gstruct in allGroupStructures:
 # to obtain the penalized R2. We choose the group structure
 # with the highest penalized R2. So each (mu, alpha) is
 # corresponding to one selected group structure.
-print("#######################################################")
-print("# Select a group structure for each (mu, alpha) pair ")
-print("#######################################################")
+print("#############################################################")
+print("# Select the Best Group Structure for Each (mu, alpha) Pair ")
+print("#############################################################")
 selectedGroupStructuresForEachParameter_dict = defaultdict(dict)
 for mu, alpha in itertools.product(muList, alphaList):
     print "mu = {0:10}, alpha = {1:5}".format(mu, alpha)
@@ -153,9 +153,10 @@ uniqueSelectedGroupStructures_set = set(selectedGroupStructuresForEachParameter_
 # Then keep the pair with the highest R2 as the final selected tuning
 # parameters.
 print("#############################################################################")
-print("# Fit OKGT for the selected group structures on the test data without penalty")
+print("# Calculate Prediction Error for Each Selected Group Structure on Test Data")
 print("#############################################################################")
-testedGroupStructures_r2_dict = defaultdict(dict)
+# testedGroupStructures_r2_dict = defaultdict(dict)
+testedGroupStructures_error_dict = defaultdict(dict)
 for gstruct_str in uniqueSelectedGroupStructures_set:
     cur_gstruct = Group(group_struct_string=gstruct_str)
     # === deprecated ===
@@ -170,15 +171,25 @@ for gstruct_str in uniqueSelectedGroupStructures_set:
     # todo: classes to incorporated fixed response more smoothly.
     cur_parameters = Parameters(cur_gstruct, xKernel, [xKernel] * cur_gstruct.size)
     cur_parameterizedTestData = ParameterizedData(test_data, cur_parameters)
-    cur_fns = trainedGroupStructures_f_dict[gstruct_str]  # f estimated from train for this group structure
+    ## f estimated from training phase for this group structure
+    cur_fns = trainedGroupStructures_f_dict[gstruct_str]
+    ## compute the predicted value for X_test
     test_g_pred_list = [cur_fns[i](cur_parameterizedTestData.getXFromGroup(i))
                         for i in range(1, cur_gstruct.size + 1)]
     test_g_pred = np.column_stack(test_g_pred_list).sum(axis=1)
-    test_r2 = 1 - sum((test_g - test_g_pred) ** 2) / sum((test_g - np.mean(test_g)) ** 2)
-    testedGroupStructures_r2_dict[gstruct_str] = test_r2
-    print "group structure {0:30} : test R2 = {1:10}".format(gstruct_str, "%.10f" % test_r2)
+    test_error = sum((test_g - test_g_pred) ** 2) / ntest
+    testedGroupStructures_error_dict[gstruct_str] = test_error
+    print "group structure {0:30} : test error = {1:10}".format(gstruct_str, "%.10f" % test_error)
+    # test_r2 = 1 - sum((test_g - test_g_pred) ** 2) / sum((test_g - np.mean(test_g)) ** 2)
+    # testedGroupStructures_r2_dict[gstruct_str] = test_r2
+    # print "group structure {0:30} : test R2 = {1:10}".format(gstruct_str, "%.10f" % test_r2)
 
-bestGroupStructure = max(testedGroupStructures_r2_dict, key=testedGroupStructures_r2_dict.get)
+print("#####################")
+print("# 1-fold CV Result")
+print("#####################")
+# bestGroupStructure = max(testedGroupStructures_r2_dict, key=testedGroupStructures_r2_dict.get)
+bestGroupStructure = min(testedGroupStructures_error_dict,
+                         key=testedGroupStructures_error_dict.get)
 print "Best group structure: ", bestGroupStructure
 print "Best tuning parameters: "
 bestTuningParameters = []
@@ -187,14 +198,15 @@ for k, v in selectedGroupStructuresForEachParameter_dict.iteritems():
         print k
         bestTuningParameters.append(k)
 
+# Object to pickle
 dumpObject = dict(train_r2=trainedGroupStructures_r2_dict,
                   train_f=trainedGroupStructures_f_dict,
                   select=selectedGroupStructuresForEachParameter_dict,
-                  test=testedGroupStructures_r2_dict,
+                  test_error=testedGroupStructures_error_dict,
                   bestGroupStructure=bestGroupStructure,
                   bestTuningParameters=bestTuningParameters)
 
-# Pickle the results
+# Pickle/Save the results
 filename, file_extension = os.path.splitext(__file__)
 filename = filename + \
            "-model" + str(model_id) + \
