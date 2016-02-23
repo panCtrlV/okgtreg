@@ -2,24 +2,75 @@ import numpy as np
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.kernel_approximation import Nystroem
 
-# pairwise_distances(x, y, kernel.eval)
-
 """
 Kernel class object contains a kernel function (callable) and related information.
 It also contains some useful methods such as evaluating a gram matrix given data.
 """
+
+
+class KernelSpan(object):
+    def __init__(self, x, coef, kernelEval):
+        self.x = x
+        self.coef = coef
+        self.kernelEval = kernelEval
+
+    def __call__(self, y):
+        if y.ndim == 1:  # y is one data point
+            keval = pairwise_distances(self.x, y.reshape(1, -1), self.kernelEval).squeeze()
+            return keval.dot(self.coef)
+        elif y.ndim == 2:  # y is a 2d array, each row is a data point
+            keval = pairwise_distances(self.x, y, self.kernelEval)  # (nrow_x * nrow_y) matrix
+            return keval.T.dot(self.coef)
+        else:
+            raise ValueError("** [ERROR] the shape of y is not conformable! **")
+
+
+class KernelMapping(object):
+    def __init__(self, x, kernelEval):
+        self.x = x
+        self.kernelEval = kernelEval
+
+    def __call__(self, y):
+        return self.kernelEval(self.x, y)
+
+
+class GaussianKernel(object):
+    def __init__(self, sigma):
+        self.sigma = sigma
+
+    def __call__(self, x, y):
+        if len(x) != len(y):
+            raise ValueError("** [ERROR] x and y have different dimensions! **")
+        else:
+            norm2 = np.power(x - y, 2).sum()
+            return np.exp(- self.sigma * norm2)
+
+
+class LinearKernel(object):
+    def __init__(self, c=0):
+        self.c = c
+
+    def __call__(self, x, y):
+        return np.sum(x * y) + self.c
 
 class Kernel(object):
     def __init__(self, name, sigma=None, intercept=0., slope=1., degree=None, c=0):
         self.name = name
         # TODO: replace the following if...else... with a dictionary
 
-        kernels = {'gaussian': lambda x, y: self.gaussianKernel(x, y, sigma),
-                   'laplace': lambda x, y: self.laplaceKernel(x, y, sigma),
-                   'exponential': lambda x, y: self.exponentialKernel(x, y, sigma),
-                   'polynomial': lambda x, y: self.polynomialKernel(x, y, intercept, slope, degree),
-                   'sigmoid': lambda x, y: self.sigmoidKernel(x, y, intercept, slope),
-                   'linear': lambda x, y: self.linearKernel(x, y, c)}
+        # kernels = {'gaussian': lambda x, y: self.gaussianKernel(x, y, sigma),
+        #            'laplace': lambda x, y: self.laplaceKernel(x, y, sigma),
+        #            'exponential': lambda x, y: self.exponentialKernel(x, y, sigma),
+        #            'polynomial': lambda x, y: self.polynomialKernel(x, y, intercept, slope, degree),
+        #            'sigmoid': lambda x, y: self.sigmoidKernel(x, y, intercept, slope),
+        #            'linear': lambda x, y: self.linearKernel(x, y, c)}
+
+        kernels = {'gaussian': GaussianKernel(sigma=sigma),
+                   'laplace': 2,
+                   'exponential': 3,
+                   'polynomial': 4,
+                   'sigmoid': 5,
+                   'linear': LinearKernel(c=c)}
 
         if name in ('gaussian', 'laplace', 'exponential'):
             if sigma is None:
@@ -55,38 +106,46 @@ class Kernel(object):
         return self.fn(x, y)
 
     def kernelMapping(self, x):
-        # return a callable as a kernel mapping for
-        # the given point x, under the given kernel
-        # function
-        return lambda y: self.fn(x, y)
+        kmap = KernelMapping(x, self.fn)
+        return kmap
+
+    # def kernelMapping(self, x):
+    #     # return a callable as a kernel mapping for
+    #     # the given point x, under the given kernel
+    #     # function
+    #     return lambda y: self.fn(x, y)
 
     def kernelSpan(self, x, coef):
-        """
-        Construct linear combination of kernel mapping
-        of a given set of points (in the form of a 2d
-        array, each row is a data point). The function
-        returns a callable.
-
-        :type x: 2d array
-        :param x: data points, each row is a data point
-
-        :type coef: 1d array
-        :param coef: expansion loadings
-
-        :rtype: callable
-        :return: a function as a linear combination of
-                 the kernel mappings.
-        """
-        def kspan(y):
-            if y.ndim == 1:  # y is a data point
-                keval = pairwise_distances(x, y.reshape(1, -1), self.eval).squeeze()
-                return keval.dot(coef)
-            elif y.ndim == 2:  # y is a 2d array, each row is a data point
-                keval = pairwise_distances(x, y, self.eval)  # (nrow_x * nrow_y) matrix
-                return keval.T.dot(coef)
-            else:
-                raise ValueError("** [ERROR] the shape of y is not conformable! **")
+        kspan = KernelSpan(x, coef, self.fn)  # callable
         return kspan
+
+    # def kernelSpan(self, x, coef):
+    #     """
+    #     Construct linear combination of kernel mapping
+    #     of a given set of points (in the form of a 2d
+    #     array, each row is a data point). The function
+    #     returns a callable.
+    #
+    #     :type x: 2d array
+    #     :param x: data points, each row is a data point
+    #
+    #     :type coef: 1d array
+    #     :param coef: expansion loadings
+    #
+    #     :rtype: callable
+    #     :return: a function as a linear combination of
+    #              the kernel mappings.
+    #     """
+    #     def kspan(y):
+    #         if y.ndim == 1:  # y is a data point
+    #             keval = pairwise_distances(x, y.reshape(1, -1), self.eval).squeeze()
+    #             return keval.dot(coef)
+    #         elif y.ndim == 2:  # y is a 2d array, each row is a data point
+    #             keval = pairwise_distances(x, y, self.eval)  # (nrow_x * nrow_y) matrix
+    #             return keval.T.dot(coef)
+    #         else:
+    #             raise ValueError("** [ERROR] the shape of y is not conformable! **")
+    #     return kspan
 
     def gram(self, x, centered=True):
         # x must be a 2d array
@@ -129,20 +188,20 @@ class Kernel(object):
         nystroem = Nystroem(self.fn, n_components=nComponents, random_state=seed)
         return nystroem.fit_transform(x)
 
-    @staticmethod
-    def linearKernel(x, y, c=0):
-        # inner product of <x,y>
-        return np.sum(x * y) + c
+    # @staticmethod
+    # def linearKernel(x, y, c=0):
+    #     # inner product of <x,y>
+    #     return np.sum(x * y) + c
 
-    @staticmethod
-    def gaussianKernel(x, y, sigma):
-        # sigma is a numercial number,
-        # x and y are vectors of same length (dimension)
-        if len(x) != len(y):
-            raise ValueError("** [ERROR] x and y have different dimensions! **")
-        else:
-            norm2 = np.power(x - y, 2).sum()
-            return np.exp(- sigma * norm2)
+    # @staticmethod
+    # def gaussianKernel(x, y, sigma):
+    #     # sigma is a numercial number,
+    #     # x and y are vectors of same length (dimension)
+    #     if len(x) != len(y):
+    #         raise ValueError("** [ERROR] x and y have different dimensions! **")
+    #     else:
+    #         norm2 = np.power(x - y, 2).sum()
+    #         return np.exp(- sigma * norm2)
 
     @staticmethod
     def laplaceKernel(x, y, sigma):

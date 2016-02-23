@@ -94,24 +94,21 @@ from okgtreg.Parameters import Parameters
 ### fully additive
 ### h = 2*x1 + x2**2 + x3**3 + sin(x4*pi) + log(x5+5) + |x6|
 ### y = ln(h^2)
-def model3(n):
+def model1(n):
     p = 6
-    x = np.random.standard_normal((n, p))
+    x = np.random.standard_normal((n, p)) * np.sqrt(3)
     e = np.random.standard_normal((n,)) * 0.01
-    h = 2. * x[:, 0] + \
-        x[:, 1] ** 2 + \
-        x[:, 2] ** 3 + \
-        np.sin(x[:, 3] * np.pi) + \
-        np.log(np.abs(x[:, 4] + 5.)) + \
-        np.abs(x[:, 5]) + \
+    h = np.sqrt(np.abs(x[:, 0] * x[:, 1])) + \
+        np.sin(np.pi * x[:, 2:4].sum(axis=1)) + \
+        np.cos(np.pi * x[:, 4:].sum(axis=1)) + \
         e
-    y = np.log(h ** 2)
-    return Data(y, x), Group([1], [2], [3], [4], [5], [6]), h
+    y = 1. / (1. + h ** 2)
+    return Data(y, x), Group([1, 2], [3, 4], [5, 6]), h
 
 
 ### generate data
 np.random.seed(25)
-data, group, h = model3(500)
+data, group, h = model1(500)
 
 # Kernel
 kernel = Kernel('gaussian', sigma=0.5)
@@ -119,8 +116,8 @@ kernel = Kernel('gaussian', sigma=0.5)
 # OKGT
 # okgt = OKGTReg2(data, kernel=kernel, group=group, eps=1e-6)
 # okgt = OKGTReg2(data, kernel=kernel, group=Group([1,2,3,4,5,6]), eps=1e-6)
-okgt = OKGTReg2(data, kernel=kernel, group=Group([1, 2, 3], [4, 5, 6]), eps=1e-6)
-# okgt = OKGTReg2(data, kernel=kernel, group=Group([1,2], [3,4], [5,6]), eps=1e-6)
+# okgt = OKGTReg2(data, kernel=kernel, group=Group([1, 2, 3], [4, 5, 6]), eps=1e-6)
+okgt = OKGTReg2(data, kernel=kernel, group=Group([1, 2], [3, 4], [5, 6]), eps=1e-6)
 ## Fit
 start = time.time()
 # fit = okgt._train_Vanilla2(h)
@@ -144,17 +141,20 @@ print 'Elapsed time =', stop - start, 'sec'
 
 ### Now we generate a test set, and evaluate the prediction error
 np.random.seed(3)
-test_data, test_group, test_h = model3(500)
+test_data, test_group, test_h = model1(500)
 # test_group = Group([1,2,3,4,5,6]) # not true group structure
-test_group = Group([1, 2, 3], [4, 5, 6])
-# test_group = Group([1,2], [3,4], [5,6])
+# test_group = Group([1, 2, 3], [4, 5, 6])
+test_group = Group([1, 2], [3, 4], [5, 6])
 parameters = Parameters(test_group, kernel, [kernel] * test_group.size)
 parameterizedTestData = ParameterizedData(test_data, parameters)
-test_h_pred_list = [fit['f_call'][i](parameterizedTestData.getXFromGroup(i)) for i in range(1, test_group.size + 1)]
+test_h_pred_list = [fit['f_call'][i](parameterizedTestData.getXFromGroup(i))
+                    for i in range(1, test_group.size + 1)]
 test_h_pred = np.column_stack(test_h_pred_list).sum(axis=1)
 # plt.scatter(test_h, test_h_pred)
-test_R2 = 1 - sum((test_h - test_h_pred) ** 2) / sum((test_h - np.mean(test_h)) ** 2)
-print "Test R2 =", test_R2
+test_error = sum((test_h - test_h_pred) ** 2) / 500
+print "Test error =", test_error
+# test_R2 = 1 - sum((test_h - test_h_pred) ** 2) / sum((test_h - np.mean(test_h)) ** 2)
+# print "Test R2 =", test_R2
 
 ## using the f callables (new output)
 # x = np.linspace(-3., 3., 100)
@@ -164,3 +164,13 @@ print "Test R2 =", test_R2
 #         f_fit = fit['f_call'][i*3+j+1](x[:,np.newaxis])
 #         # f_fit_norm = np.linalg.norm(f_fit, ord=2)
 #         axarr[i,j].scatter(x, f_fit, s=0.8)
+
+
+import pickle
+
+filepath = 'okgtreg/simulation/sim_02052016/tmp/pickled_f_est.pkl'
+# pickle.dump(fit['f_call'], open(filepath, 'wb'))
+pickle.dump(kernel, open(filepath, 'wb'))
+
+with open(filepath, 'rb') as f:
+    unpickle_file = pickle.load(f)
