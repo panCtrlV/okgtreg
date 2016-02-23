@@ -3,6 +3,8 @@ import pickle
 import glob
 from collections import defaultdict, OrderedDict
 import numpy as np
+import operator
+import matplotlib.pyplot as plt
 
 from okgtreg import *
 
@@ -94,6 +96,21 @@ class ValidateExhaustiveProcessor(object):
         for gstruct_str in amiables_str:
             rank_dict[gstruct_str] = sorted_gstruct_str.index(gstruct_str) + 1
         return rank_dict
+
+    def testR2ForAllParameters(self, ordered=True, plotting=True):
+        res_select = self.res['select']
+        res_test = self.res['test']
+
+        testR2ForAllParameters_dict = {k: res_test[v] for k, v in res_select.items()}
+        if ordered:
+            testR2ForAllParameters_orderdict = OrderedDict(
+                sorted(testR2ForAllParameters_dict.items(), key=operator.itemgetter(1), reverse=True)
+            )
+            if plotting:
+                plt.scatter(np.arange(50), testR2ForAllParameters_orderdict.values())
+            return testR2ForAllParameters_orderdict
+        else:
+            return testR2ForAllParameters_dict
 
 
 # Processor for all .pkl for a given model
@@ -194,11 +211,15 @@ class ValidateExhaustiveProcessorAll(object):
 
 
 if __name__ == "__main__":
-    # Unpickle a .pkl file
+    ########################
+    # Unpickle a .pkl file #
+    ########################
+
     model_id = 1
-    sim_folder = "/home/panc/research/OKGT/software/okgtreg/okgtreg/simulation/sim_02052016"
+    # sim_folder = "/home/panc/research/OKGT/software/okgtreg/okgtreg/simulation/sim_02052016"
+    sim_folder = "okgtreg/simulation/sim_02052016"
     pkl_folder = "validate_exhaustive_model" + str(model_id)
-    file_name = "validate_exhaustive-model1-seed10-201602121503.pkl"
+    file_name = "validate_exhaustive-model1-seed100-201602190127.pkl"
     true_group_struct = Group([1, 2], [3, 4], [5, 6])  # model 1
     # true_group_struct = Group([1],[2,3],[4,5,6]) # model 2
     # true_group_struct = Group([1],[2],[3],[4],[5],[6]) # model 3
@@ -221,8 +242,13 @@ if __name__ == "__main__":
     Res.printAmiableRankingInTrainingWithoutPenalty()
     ## and list the ranks for each amiable group structure
     Res.rankOfAmiableGroupStructuresInTrainingWithoutPenalty()
+    ## Plot test R2 for each (mu, alpha) in decreasing order
+    Res.testR2ForAllParameters()
 
-    # Unpickle all ,pkl files in a folder
+    #######################################
+    # Unpickle all ,pkl files in a folder #
+    #######################################
+
     # construct the object for all pkl files
     ResAll = ValidateExhaustiveProcessorAll(sim_folder + '/' + pkl_folder, true_group_struct)
     ## all best group structures
@@ -263,6 +289,9 @@ if __name__ == "__main__":
     selection_freq_dict_orderByKey = OrderedDict(sorted(selection_freq_dict.items()))
     ## Print latex table
     for k, v in selection_freq_dict_orderByKey.iteritems():
-        print "{0:10} & {1:5} & {2:5} & {3:5} & {4:5} & {5:5} & {6:5} & {7:5} \\\\".format("%.4e" % (k[0]),
-                                                                                           "%.02f" % (k[1]), v[0], v[1],
-                                                                                           v[2], v[3], v[4], v[5])
+        print "{0:10} & {1:5} & {2:5} & {3:5} & {4:5} & {5:5} & {6:5} & {7:5} \\\\".format(
+            "%.4e" % (k[0]), "%.02f" % (k[1]), v[0], v[1], v[2], v[3], v[4], v[5])
+
+
+        # Extract a list of the test R2 for all (mu, alpha)
+        # then make a plot
