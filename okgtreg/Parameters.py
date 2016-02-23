@@ -5,9 +5,10 @@ class Parameters(object):
     """
     Encapsulating the model parameters: group structure and kernels
     """
+
+    # TODO: allow variable number of x kernel functions via **kwargs
     def __init__(self, group, ykernel, xkernels):
         """
-
         :type group: Group
         :param group:
         :type kernels: list of Kernel objects
