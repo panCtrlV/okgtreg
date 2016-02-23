@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.kernel_approximation import Nystroem
 
+# pairwise_distances(x, y, kernel.eval)
 
 """
 Kernel class object contains a kernel function (callable) and related information.
@@ -49,6 +50,10 @@ class Kernel(object):
         else:
             raise NotImplementedError("** %s kernel is not yet implemented. **" % name)
 
+    def eval(self, x, y):
+        # evaluate the kernel at two data points
+        return self.fn(x, y)
+
     def kernelMapping(self, x):
         # return a callable as a kernel mapping for
         # the given point x, under the given kernel
@@ -72,11 +77,15 @@ class Kernel(object):
         :return: a function as a linear combination of
                  the kernel mappings.
         """
-
         def kspan(y):
-            # y is a data point
-            return np.sum(self.fn(x[i, :], y) for i in range(x.shape[1]))
-
+            if y.ndim == 1:  # y is a data point
+                keval = pairwise_distances(x, y.reshape(1, -1), self.eval).squeeze()
+                return keval.dot(coef)
+            elif y.ndim == 2:  # y is a 2d array, each row is a data point
+                keval = pairwise_distances(x, y, self.eval)  # (nrow_x * nrow_y) matrix
+                return keval.T.dot(coef)
+            else:
+                raise ValueError("** [ERROR] the shape of y is not conformable! **")
         return kspan
 
     def gram(self, x, centered=True):
@@ -127,9 +136,13 @@ class Kernel(object):
 
     @staticmethod
     def gaussianKernel(x, y, sigma):
-        # sigma is a numercial number, x and y are col vectors of same length
-        norm2 = np.power(x - y, 2).sum()
-        return np.exp(- sigma * norm2)
+        # sigma is a numercial number,
+        # x and y are vectors of same length (dimension)
+        if len(x) != len(y):
+            raise ValueError("** [ERROR] x and y have different dimensions! **")
+        else:
+            norm2 = np.power(x - y, 2).sum()
+            return np.exp(- sigma * norm2)
 
     @staticmethod
     def laplaceKernel(x, y, sigma):

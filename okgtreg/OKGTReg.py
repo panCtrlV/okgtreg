@@ -99,7 +99,7 @@ class OKGTReg(object):
         n = self.getSampleSize()
         l = self.getGroupSize()
 
-        # print "** Start OKGT Training (Vanilla)**"
+        # print "** Start OKGT Training (Vanilla) ... **"
 
         Rxx, Gx = self.parameterizedData.covarianceOperatorForX(returnAll=True)
         Ryy, Gy = self.parameterizedData.covarianceOperatorForY(returnAll=True)
@@ -319,8 +319,10 @@ class OKGTReg2(object):
         """
         if yOrX is 'y':
             return self.parameterizedData.ykernel
-        else:
+        elif yOrX is 'x':
             return self.parameterizedData.xkernels
+        else:
+            raise ValueError("** [ERROR] the parameter value is not recognized! **")
 
     def getPartition(self):
         return self.parameterizedData.partition
@@ -462,7 +464,8 @@ class OKGTReg2(object):
         the kernel for y is fixed to be linear (inner-product)
         kernel.
 
-        :param h:
+        :param h: the fixed response or fixed transformation of
+                  the response.
         :return:
         """
         # print "** Start OKGT Training (Vanilla) with Known h **"
@@ -490,26 +493,52 @@ class OKGTReg2(object):
         VyxVxy = reduce(np.dot, [Gy_inv, Ryx, Rxx_inv, Ryx.T, Gy_inv.T])
 
         # g: optimal transformation for y
-        r2, beta = slin.eigh(VyxVxy, eigvals=(n - 1, n - 1))  # only need the largest eigen value and vector
+        ## only need the largest eigen value and vector
+        r2, beta = slin.eigh(VyxVxy, eigvals=(n - 1, n - 1))
         _zeta = D_inv.dot(beta)
         zeta = P.dot(_zeta)
-        g_opt = Gy.dot(zeta)
+        gval = Gy.dot(zeta)  # discrete
+
+        # Note: Since this training function is for the case when the response
+        # transformation is known (given by h), there is no need to estimate
+        # the function of g.
 
         # f: optimal transformation for x
-        # TODO: use matrix multiplication to replace the following loop
-        _alpha_i = Ryx.T.dot(g_opt)
+        ## TODO: use matrix multiplication to replace the following loop
+        _alpha_i = Ryx.T.dot(gval)
         alpha_i = Rxx_inv.dot(_alpha_i)
-        f_opt_ls = []
+        fval_ls = []  # to collect predicted values
+
+        ## collect transformation functions as callables
+        ## and the predicted values
+        xKernelList = self.getKernels('x')
+        f_opt_callable_dict = {}
         for i in range(l):
+            # TODO: there are normlization and centering issue in the
+            # todo: callable functions. Need to be addressed before they
+            # todo: be used to calculated the predicted value.
+            ### Construct transformation functions as callables
+            #### In the following, self.parameterizedData.getXFromGroup(i+1)
+            #### returns a 2d array even for univariate group.
+            #### A 2d array is the required type for the first argument of kernelSpan
+            xkernelSpan = xKernelList[i].kernelSpan(self.parameterizedData.getXFromGroup(i + 1), alpha_i)
+            # ### Centering (speed killer)
+            # xgrams_nocenter_list = self.parameterizedData._getGramsForX(centered=False)
+            # offset = ( xgrams_nocenter_list[i] * alpha_i[:, np.newaxis] ).sum() / n
+            # f_opt_callable_dict[i+1] = (lambda x: xkernelSpan(x) - offset)
+            f_opt_callable_dict[i + 1] = xkernelSpan
+
+            ### The predicted value for the currrent data set
             f_i_opt = Gx_list[i].dot(alpha_i)
             f_i_norm = np.sqrt(alpha_i.T.dot(f_i_opt))
-            f_i_opt = f_i_opt / f_i_norm
-            f_opt_ls.append(f_i_opt)
-        f_opt = np.column_stack(f_opt_ls)
+            f_i_opt = f_i_opt / f_i_norm  # discrete
+            fval_ls.append(f_i_opt)
+        fval = np.column_stack(fval_ls)
 
         # print "** Success **"
 
-        return dict(g=g_opt, f=f_opt, r2=float(r2))
+        # return dict(g=g_opt, f=f_opt, r2=float(r2))
+        return dict(g=gval, f=fval, r2=float(r2), f_call=f_opt_callable_dict)
 
     def _train_lr(self, h):
         '''
@@ -523,12 +552,14 @@ class OKGTReg2(object):
         '''
         n = self.getSampleSize()
         l = self.getGroupSize()
-        # normalize and center h
-        h = h - np.mean(h)
-        h = h / np.linalg.norm(h, ord=2)
+
+        # # normalize and center h
+        # h = h - np.mean(h)
+        # h = h / np.linalg.norm(h, ord=2)
+
         # construct the additive kernel matrix,
         # all component matrices are centered
-        Kx_list = self.parameterizedData._getGramsForX()
+        Kx_list = self.parameterizedData._getGramsForX(centered=False)
         Kx_add = sum(Kx_list)
         # construct linear regressor
         # Reference:
@@ -543,7 +574,14 @@ class OKGTReg2(object):
         h_pred = sum(f_list)
         r2 = 1 - sum((h - h_pred) ** 2) / sum((h - np.mean(h)) ** 2)
 
-        return dict(g=h, f=np.vstack(f_list).T, r2=r2)
+        # Collect transformation functions as callables
+        xKernelList = self.getKernels('x')
+        f_opt_callable_dict = {}
+        for i in range(l):
+            xkernelSpan = xKernelList[i].kernelSpan(self.parameterizedData.getXFromGroup(i + 1), alpha)
+            f_opt_callable_dict[i + 1] = xkernelSpan
+
+        return dict(g=h, f=np.column_stack(f_list), r2=r2, f_call=f_opt_callable_dict)
 
 
 
