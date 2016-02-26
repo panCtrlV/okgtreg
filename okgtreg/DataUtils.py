@@ -40,3 +40,36 @@ def readSkillCraft1():
     scData.setXNames(names[2:])
 
     return scData
+
+
+def readCrimeData():
+    crimeDF = pd.read_csv('okgtreg/data/crime/communities.data', header=None)
+    n1 = len(crimeDF.index)
+    names = crimeDF.columns.values  # integers as header names
+    # Remove rows with missing values
+    for c in crimeDF.columns:
+        if crimeDF[c].dtype == object:
+            crimeDF = crimeDF[crimeDF[c] != '?']
+    n2 = len(crimeDF.index)
+    pass
+
+
+def readHousingData():
+    # Reference: delimiter
+    # http://stackoverflow.com/questions/15026698/how-to-make-separator-in-read-csv-more-flexible-wrt-whitespace
+    # No missing value in this data set
+    houseDF = pd.read_csv('okgtreg/data/housing/housing.data', header=None, delimiter='\s+')
+    names = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAZ',
+             'PTRATIO', 'B', 'LSTAT', 'MEDV']
+    houseDF.columns = names
+    # Separate response and predictors
+    y = houseDF['MEDV']
+    x = houseDF.ix[:, 0:13]
+    houseData = Data(np.array(y), np.array(x))
+    houseData.setYName(names[-1])
+    houseData.setXNames(names[:-1])
+    return houseData
+
+
+if __name__ == '__main__':
+    houseData = readHousingData()
