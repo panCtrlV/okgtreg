@@ -41,7 +41,7 @@ class Group(object):
             # 1. choose one of two characters, i.e. \( or \[ in this script
             #    http://stackoverflow.com/questions/6863518/regex-match-one-of-two-words
             groupStrList = re.findall('(?:\(|\[)\d[^(?:\)|\])]*(?:\)|\])', self.group_struct_string)
-            groupTuple = tuple([[int(d) for d in re.findall('\d', s)] for s in groupStrList])
+            groupTuple = tuple([[int(d) for d in re.findall('\d+', s)] for s in groupStrList])
             args = groupTuple
 
         # group with one covariate must input explicitly
@@ -656,3 +656,9 @@ if __name__=='__main__':
 
     group_structure_string = '([1], [2,3], [4,5,6])'
     gs = Group(group_struct_string=group_structure_string)
+
+    import re
+
+    gstruct_str = '([1], [2], [3], [4,24], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23])'
+    groupStrList = re.findall('(?:\(|\[)\d[^(?:\)|\])]*(?:\)|\])', gstruct_str)
+    tuple([[int(d) for d in re.findall('\d+', s)] for s in groupStrList])
