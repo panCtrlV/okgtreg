@@ -21,6 +21,9 @@ okgtreg/application/bostonHousing_02252016/housing_backward_cvalidate_lra0/*.sh.
 **/*.out
 **/*.err
 
+# Exclude data folder
+data/
+
 # ------------------------------------------------------------------------------
 # The following covers JetBrains IDEs: 
 #   IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, 
