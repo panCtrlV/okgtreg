@@ -558,30 +558,34 @@ class OKGTReg2(object):
         # h = h / np.linalg.norm(h, ord=2)
 
         # construct the additive kernel matrix,
-        # all component matrices are centered
+        # all component matrices are NOT CENTERED
         Kx_list = self.parameterizedData._getGramsForX(centered=False)
         Kx_add = sum(Kx_list)
-        # construct linear regressor
-        # Reference:
-        # http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
-        clf = linear_model.LinearRegression(fit_intercept=False)
+        # Linear regression (with intercept)
+        ## Reference:
+        ## http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+        # clf = linear_model.LinearRegression(fit_intercept=False)
+        clf = linear_model.LinearRegression(fit_intercept=True)
         clf.fit(Kx_add + self.eps * np.identity(n), h)  # TODO: over-fitting?
         # clf.fit(Kx_add, h)  # TODO: over-fitting?
+        a0 = clf.intercept_
         alpha = clf.coef_
         # construct covariate transformations
-        f_list = [Kx_list[j].dot(alpha) for j in range(l)]
+        f_est_list = [Kx_list[j].dot(alpha) for j in range(l)]
         # calculate R2
-        h_pred = sum(f_list)
-        r2 = 1 - sum((h - h_pred) ** 2) / sum((h - np.mean(h)) ** 2)
+        h_hat = sum(f_est_list) + a0
+        r2 = 1 - sum((h - h_hat) ** 2) / sum((h - np.mean(h)) ** 2)  # usual R2 for LR
 
         # Collect transformation functions as callables
         xKernelList = self.getKernels('x')
-        f_opt_callable_dict = {}
+        f_callable_dict = {}
+        f_callable_dict[0] = a0  # save intercept
         for i in range(l):
+            # each f_j is a kernel span
             xkernelSpan = xKernelList[i].kernelSpan(self.parameterizedData.getXFromGroup(i + 1), alpha)
-            f_opt_callable_dict[i + 1] = xkernelSpan
+            f_callable_dict[i + 1] = xkernelSpan
 
-        return dict(g=h, f=np.column_stack(f_list), r2=r2, f_call=f_opt_callable_dict)
+        return dict(g=h, f=np.column_stack(f_est_list), r2=r2, f_call=f_callable_dict)
 
 
 

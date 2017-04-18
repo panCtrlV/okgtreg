@@ -9,5 +9,5 @@ from okgtreg.Data import Data, ParameterizedData, ParameterizedDataWithAdditiveK
 from okgtreg.Group import Group, RandomGroup
 from okgtreg.Kernel import Kernel
 from okgtreg.OKGTReg import OKGTReg, OKGTReg2, OKGTRegForDetermineGroupStructure
-from Parameters import Parameters
-from DataUtils import readSkillCraft1
+from okgtreg.Parameters import Parameters
+from okgtreg.DataUtils import readSkillCraft1, readHousingData

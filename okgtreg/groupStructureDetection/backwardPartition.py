@@ -45,6 +45,8 @@ pool.
 """
 
 
+# from okgtreg.groupStructureDetection.utility import rkhsCapacity
+
 def rkhsCapacity(group, alpha):
     return sum([alpha ** len(g) for g in group.partition])
 
@@ -191,6 +193,7 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
 
     :param data:
     :param kernel:
+    :param g: response vector
     :param method:
     :param rank:
     :param seed:
@@ -198,13 +201,26 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
     :param alpha: the second tuning parameter for capacity penalty in $\lambda * a^d$
     :return:
     '''
+    # TODO: need to train the most general group structure ?
+    # todo: Seems it is not trained now.
+
     covariatesPool = list(np.arange(data.p) + 1)
     oldGroup = Group(covariatesPool)  # start with a large single group
+    newGroup = oldGroup
+    # fit the group structure, and calculate
+    #   the penalized R2
+    print("** === Step 0 === **")
+    print("Initial group structure: %s" % (oldGroup.getPartitions(),))
+    currentOKGT = OKGTReg2(data, kernel=kernel, group=oldGroup)
+    keep_res = currentOKGT._train_lr(g)
+    capacity = rkhsCapacity(oldGroup, alpha)
+    bestR2 = keep_res['r2'] - mu * capacity
+    print("\t initial R2 (penalized) =\t\t %.10f \n" % bestR2)
     p = oldGroup.p
     # bestR2 = 0.
-    bestR2 = -np.inf
+    # bestR2 = -np.inf
     bestCovariateIndex = None
-
+    # keep_res = None
     counter = 0
 
     while len(covariatesPool) > 1:
@@ -223,9 +239,8 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
             # currentOKGT = OKGTReg2(data, parameters)
             currentOKGT = OKGTReg2(data, kernel=kernel, group=currentGroup)
             # Train OKGT
-            res = currentOKGT._train_Vanilla2(g)
-            # currentR2 = res['r2']
-            # capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
+            # res = currentOKGT._train_Vanilla2(g)
+            res = currentOKGT._train_lr(g)
             capacity = rkhsCapacity(currentGroup, alpha)
             print("\t\t current group structure: %s with capacity: %.04f" %
                   (currentGroup.getPartitions(), capacity))
@@ -236,6 +251,7 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
                 bestR2 = currentR2
                 newGroup = currentGroup
                 bestCovariateIndex = covariateInd
+                keep_res = res
             else:
                 # print("\t\t current R2 =\t %.10f" % currentR2)
                 print("\t\t current R2 (penalized) =\t %.10f" % currentR2)
@@ -246,13 +262,13 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
         # print("** Updated group structure is: %s \n" % (newGroup.partition, ))
         # print '\n'
         # If there are already new groups, a chosen variable can join one of the
-        # new groups instead of creating a new group.
+        #   new groups instead of creating a new group.
         print "** Add to an existing group: **"
         if oldGroup.size > 1:
             for covariateInd in covariatesPool:
                 print("\t try adding covariate %d " % covariateInd)
                 # Remove `covariateInd`-th covariate from the pool,
-                # which will be added into one of the other groups.
+                #   which will be added into one of the other groups.
                 updatedCovariatesPool = copy.deepcopy(covariatesPool)
                 updatedCovariatesPool.remove(covariateInd)
                 # Get the group number of the chosen `covariateInd`
@@ -275,7 +291,8 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
                     currentOKGT = OKGTReg2(data, kernel=kernel, group=currentGroup)
                     # Train OKGT
                     # res = currentOKGT.train(method, rank, seed)
-                    res = currentOKGT._train_Vanilla2(g)
+                    # res = currentOKGT._train_Vanilla2(g)
+                    res = currentOKGT._train_lr(g)
                     # currentR2 = res['r2']
                     # capacity = sum([len(g) ** len(g) for g in currentGroup.partition])
                     capacity = rkhsCapacity(currentGroup, alpha)
@@ -289,6 +306,7 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
                         bestR2 = currentR2
                         newGroup = currentGroup
                         bestCovariateIndex = covariateInd
+                        keep_res = res
                     else:
                         # print("\t\t current R2 =\t %.10f" % currentR2)
                         print("\t\t current R2 (penalized) =\t %.10f" % currentR2)
@@ -304,6 +322,8 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
         # print "covariate pool: ", covariatesPool
         # print "best covariate index so far: ", bestCovariateIndex
 
+        # If the best covariate index is updated,
+        #   then it should be removed from the pool
         if bestCovariateIndex in covariatesPool:
             covariatesPool.remove(bestCovariateIndex)
             oldGroup = newGroup
@@ -319,7 +339,8 @@ def backwardPartitionWithKnownResponse(data, kernel, g, method='vanilla',
     print ("** SELECTED GROUP STRUCTURE: %s with R2 (penalized) = %f ** \n" %
            (oldGroup.getPartitions(), bestR2))
     # return dict(group=oldGroup, r2=bestR2)
-    return dict(group=oldGroup, r2=bestR2)
+    # return dict(group=oldGroup, r2=bestR2)
+    return dict(group=oldGroup, r2=bestR2, f_call=keep_res['f_call'])
 
 
 if __name__ == "__main__":

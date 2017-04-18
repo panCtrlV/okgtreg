@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.special import cbrt
 
-from .Data import Data
+from okgtreg.Data import Data
 from okgtreg.Group import Group
 
 """
