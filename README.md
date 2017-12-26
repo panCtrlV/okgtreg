@@ -3,14 +3,15 @@ Optimal Kernel Group Transformation for Exploratory Regression and Graphics Pyth
 
 # Introduction
 
-This Python package implements our paper accepted by SIGKDD 2015 (ID: fp410)
+This Python package implements our KDD 2015 and NIPS 2017 papers.
 
-The main functionality of this package is to estimate an OKGT given a data set, desired group structure and kernel
-functions. 
+The main functionality of this package is to 
+- estimate an OKGT given a data set, desired group structure and kernel functions. 
+- estimate the optional group structure if the desired group structure is not known.
 
-# Installation
+~~# Installation~~
 
-`pip install okgtreg`
+~~`pip install okgtreg`~~
 
 # Usage
 
@@ -23,7 +24,8 @@ n = 500
 l = 5
 """
 
-y, X = DataSimulator.SimData_Wang04(500)  # Simulate data
+data_simulator = DataSimulator(seed=123)
+y, X = data_simulator.SimData_Wang04(500)  # Simulate data
 data = Data(y, X)  # construct data object
 group = Group([1], [2], [3], [4], [5])  # construct group object
 ykernel = Kernel('gaussian', sigma=0.1)
@@ -48,14 +50,12 @@ from okgtreg.forwardSelection import *
 from okgtreg.backwardSelection import *
 
 # Simulate data
-np.random.seed(25)
-# y, x = DataSimulator.SimData_Wang04(500)
-y, x = DataSimulator.SimData_Wang04WithInteraction(500)
+data_simulator = DataSimulator(seed=123)
+y, x = data_simulator.SimData_Wang04WithInteraction(500)
 data = Data(y, x)
 
 # Same kernel for all groups
 kernel = Kernel('gaussian', sigma=0.5)
-
 
 # Forward selection (with low rank approximation for Gram matrix)
 fGroup = forwardSelection(data, kernel, True, 10)
