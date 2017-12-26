@@ -1,5 +1,5 @@
 __author__ = 'panc'
 
-from okgtreg.groupStructureDetection.splitAndMergeWithRandomInitial import splitAndMergeWithRandomInitial, splitAndMergeWithRandomInitial2
-from okgtreg.groupStructureDetection.backwardPartition import backwardPartition
-from okgtreg.groupStructureDetection.forwardSelection import forwardInclusion
+# from okgtreg.gasi.splitAndMergeWithRandomInitial import splitAndMergeWithRandomInitial, splitAndMergeWithRandomInitial2
+# from okgtreg.gasi.backwardPartition import backwardPartition
+# from okgtreg.gasi.forwardSelection import forwardInclusion

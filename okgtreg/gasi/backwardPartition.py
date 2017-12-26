@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+# @Author: Pan Chao
+# @Date:   2017-05-12 23:57:19
+# @Last Modified by:   Pan Chao
+# @Last Modified time: 2017-12-26 10:25:27
+
 import numpy as np
 import copy
 
@@ -52,24 +58,27 @@ from okgtreg.gasi.utility import rkhsCapacity
 # def rkhsCapacity(group, alpha):
 #     return sum([alpha ** len(g) for g in group.partition])
 
-# ------------------------
-# Start forward selection
-# ------------------------
+
 def backwardPartition(data, kernel, method='vanilla', rank=10, seed=None,
                       mu=1e-4, alpha=np.e, logger=None):
-    '''
-    Backward stepwise algorithm for identifying group additive structure.
+    """Backward stepwise algorithm for identifying group additive structure.
 
-    :param data:
-    :param kernel:
-    :param method:
-    :param rank:
-    :param seed:
+    :param data: Dataset from which the group structure is learned.
+    :type data: okgtreg.Data.Data
+    :param kernel: Kernel function used for kernel nonparametric regression.
+    :param method: okgtreg.Kernel.Kernel
+    :param rank: Number of components when 'nystroem' method is used for OKGT regression.
+    :type rank: int
+    :param seed: Seed for the random number generator for Nystroem method.
+    :type seed: int
     :param mu: the first tuning parameter for the capacity penalty $\lambda * a^d$
+    :type mu: float
     :param alpha: the second tuning parameter for capacity penalty in $\lambda * a^d$
+    :type alpha: float
     :param logger:
-    :return:
-    '''
+    :return: Estimated group structure and R^2.
+    :rtype: dict
+    """
     covariates_pool = list( np.arange(data.p) + 1 )
     oldGroup = Group(covariates_pool)  # start with a large single group
     p = oldGroup.p

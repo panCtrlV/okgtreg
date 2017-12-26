@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+# @Author: Pan Chao
+# @Date:   2017-12-26 10:19:32
+# @Last Modified by:   Pan Chao
+# @Last Modified time: 2017-12-26 10:20:11
+
+
 import numpy as np
 import scipy as sp
 import scipy.linalg as slin
@@ -224,7 +231,7 @@ class OKGTReg(object):
             print("** Method \"%s\" could not be found. **" % method)
 
 
-# The following OKGTReg2 class has the same functions as
+# The following OKGTReg2 class has the same methods as those in
 # OKGTReg class. The difference lies in how the covariance
 # operator of $R_{XX}$ and cross-covariance operator $R_{XY}$
 # are constructed.
