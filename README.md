@@ -67,4 +67,7 @@ bGroup = backwardSelection(data, kernel, True, 10)
 
 # Reference
 
-[Chao, Pan, Qiming Huang, and Michael Zhu. "Optimal Kernel Group Transformation for Exploratory Regression Analysis and Graphics." In Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, pp. 905-914. ACM, 2015.](http://www.stat.purdue.edu/~panc/research/publication/okgt_paper.pdf)  
+Pan Chao, Qiming Huang, and Michael Zhu. [Optimal Kernel Group Transformation for Exploratory Regression Analysis and Graphics.](http://www.stat.purdue.edu/~panc/research/publication/okgt_paper.pdf)  KDD 2015
+
+Pan Chao and Michael Zhu. [Group Additive Structure Identification for Kernel Nonparametric Regression](http://papers.nips.cc/paper/7076-group-additive-structure-identification-for-kernel-nonparametric-regression.pdf%7D) NIPS 2017
+
