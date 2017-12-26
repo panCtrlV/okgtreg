@@ -11,7 +11,7 @@ class Parameters(object):
         """
         :type group: Group
         :param group:
-        :type kernels: list of Kernel objects
+        :type kernels: list of okgtreg.Kernel objects
         :param kernels:
         :return:
         """

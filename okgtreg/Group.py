@@ -5,7 +5,7 @@ import warnings
 import random
 import re
 
-from okgtreg.utility import partitions
+from okgtreg.utility import partitions, deprecated
 
 
 class Group(object):
@@ -69,7 +69,7 @@ class Group(object):
         else:
             self.partition = tuple(list(np.sort(filteredArgs[i])) for i in xrange(n))
 
-        self.size = n
+        self.size = n  # number of groups in the group structure
 
         # accept number of covariates from keyword argument
         # or set automatically as the size of the flattened args if not given
@@ -205,10 +205,9 @@ class Group(object):
     def __repr__(self):
         return "Group structure %s" % (self.partition,)
 
+    @deprecated('Use getPartition() instead.')
     def getPartition(self, partitionNumber=None):
         """
-        Deprecated. Use `getPartitions` instead.
-
         Return one partition from the group structure as a list, e.g. [1] or [1,2].
         The `partitionNumber` start from 1.
 
@@ -294,7 +293,7 @@ class Group(object):
         partitionList = list(self.partition)
         partitionList[groupNumber - 1] = updatedPart
         updatedPartition = tuple(partitionList)
-        return Group(*updatedPartition)
+        return Group( *updatedPartition )
 
         # print "updatedGroup: ", updatedGroup
         #
@@ -308,20 +307,27 @@ class Group(object):
 
     def addNewCovariateAsGroup(self, covariateIndex):
         """
-        Add a new covariate as a new group in the structure, where
-        covariateIndex starts from 1.
+        Add one or multiple new covariates to the existing group structure as a new 
+        univariate or multivariate group. The index of <covariateIndex> starts from 1.
 
-        :type covariateIndex: int
-        :param covariateIndex: the index of the new covaraite to be added into the exsiting
-                               group structure as a new (univariate) group.
+        :type covariateIndex: int or list of int
+        :param covariateIndex: If the argument value is an integer, then the new covariate is 
+                               added to the existing group structure as a new univariate group. 
+                               If the argument value is a list, then the new covariates in the list 
+                               are added as a new multivariate group.
 
         :rtype: Group
         :return: a new group structure with the new covariate added as a new group.
         """
-        if covariateIndex in [i for g in self.partition for i in g]:
-            raise ValueError("** Covariate %d is already in the partition. **" % covariateIndex)
-
-        return Group(*(self.partition + ([covariateIndex],)) )
+        if isinstance(covariateIndex, int):
+            if covariateIndex in [i for g in self.partition for i in g]:
+                raise ValueError("** Covariate %d is already in the partition. **" % covariateIndex)
+            return Group( *(self.partition + ([covariateIndex],)) )
+        elif isinstance(covariateIndex, list):
+            for j in covariateIndex:
+                if j in [i for g in self.partition for i in g]:
+                    raise ValueError("** Covariate %d is already in the partition. **" % i)
+            return Group( *(self.partition + (covariateIndex, )) )
 
     def removeOneCovariate(self, covariateIndex):
         """
@@ -427,8 +433,7 @@ class Group(object):
                 return Group(*tuple(partitionList))
 
     def _splitOneCovariate(self, covariateIndex):
-        """
-        Split the given covariate into a new univariate group in
+        """Split the given covariate into a new univariate group in
         the current group structure.
 
         :type covariateIndex: int
@@ -441,9 +446,8 @@ class Group(object):
         # partNumber = [i for i,v in enumerate(self.getPartitions()) if covariateIndex in v][0]
         return self.removeOneCovariate(covariateIndex).addNewCovariateAsGroup(covariateIndex)
 
-    def _randomSplitOneGroup(self, partitionNumber, seed=None, splitSize=1):
-        """
-        Randomly separate a or multiple covariates from `partitionNumber`-th group
+    def _randomSplitOneGroup(self, partitionNumber, seed=None, splitSize=1, complete_split=True):
+        """Randomly separate one or multiple covariates from <partitionNumber>-th group
         in the current group structure, and form new univariate group(s).
 
         :type partitionNumber: int
@@ -460,7 +464,7 @@ class Group(object):
                  the chosen group.
         """
         selectedPart = self.getPartitions(partitionNumber)[0]  # list
-        print selectedPart
+        # print selectedPart
         partSize = len(selectedPart)
 
         if partitionNumber > self.size or partitionNumber < 1:
@@ -481,15 +485,23 @@ class Group(object):
             else:
                 rg = random.Random(seed)
 
-            covariatesToSplit = rg.sample(selectedPart, splitSize)
+            covariates_to_split = rg.sample(selectedPart, splitSize)
 
-            group = copy.copy(self)
-            for i in covariatesToSplit:
-                group = group.removeOneCovariate(i).addNewCovariateAsGroup(i)
+            group = copy.copy(self)  # create a new copy
+            if complete_split:
+                # Each split covariate forms its own group
+                for i in covariates_to_split:
+                    group = group.removeOneCovariate(i).addNewCovariateAsGroup(i)
+            else:
+                # All split covariates form one group
+                # print covariates_to_split
+                for i in covariates_to_split:
+                    group = group.removeOneCovariate(i)
+                group = group.addNewCovariateAsGroup( covariates_to_split )
 
             return group
 
-    def split(self, partNumber, randomSplit=False, seed=None, splitSize=1):
+    def split(self, partNumber, randomSplit=False, seed=None, splitSize=1, complete_split=True):
         """
         Split a grouped set of covariates from the current group structure.
         There are three possibilities:
@@ -498,12 +510,13 @@ class Group(object):
                univariate group by itself. For example, [1,2,3] -> [1],[2],[3].
             2) Deterministic splitting. The user specifies the covariate id(s)
                to split and form a new group. For example, given the current
-               group [1,2,3], we cah choose to separate 3 from the other two,
+               group [1,2,3], we can choose to separate 3 from the other two,
                thus having ([1,2],[3]).
             3) Random splitting one covariate. A randomly chosen covariate is
                split from a multivariate group.
             4) Random splitting multiple covariates. Several randomly chosen
-               chosen covariates are split from a multivariate group.
+               covariates are split from a multivariate group. Each chosen covariate
+               forms its own univariate group.
 
         :type partNumber: int
         :param partNumber: which group / part in the current group structure to be split
@@ -516,7 +529,8 @@ class Group(object):
         :param randomSplit: whether a covariate is split randomly
 
         :type seed: int
-        :param seed: seeding the random number generator for random splitting.
+        :param seed: Seeding the random number generator for random splitting. It affects 
+                     what covariates are selected for splitting.
 
         :type splitSize: int
         :param splitSize: if randomly splitting, what is the maximum number of covariates in
@@ -534,7 +548,7 @@ class Group(object):
         """
         # TODO: (2) has not implemented yet.
         if randomSplit:
-            return self._randomSplitOneGroup(partNumber, seed, splitSize)
+            return self._randomSplitOneGroup(partNumber, seed, splitSize, complete_split)
         else:
             return self._splitOneGroup(partNumber)
 
@@ -548,12 +562,12 @@ class Group(object):
         """
         # Check if two partition numbers are identical
         if partitionNumber1 == partitionNumber2:
-            raise ValueError("** Partition numbers must be different. **")
+            raise ValueError( "** Partition numbers must be different. **" )
 
         # Check if partition numbers are out of bounds
         if np.any(np.array([partitionNumber1, partitionNumber2]) < 1) or \
                 np.any(np.array([partitionNumber1, partitionNumber2]) > self.size):
-            raise ValueError("** Partition numbers are out of bounds. **")
+            raise ValueError( "** Partition numbers are out of bounds. **" )
 
         # Merger two groups
         part1 = self.getPartition(partitionNumber1)
@@ -566,7 +580,7 @@ class Group(object):
         mergedPart = part1 + part2
 
         remainingParts.append(mergedPart)
-        return Group(*tuple(remainingParts))
+        return Group( *tuple(remainingParts) )
 
 
 class RandomGroup(Group):

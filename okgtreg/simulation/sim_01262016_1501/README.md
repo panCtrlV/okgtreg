@@ -1,1 +1,0 @@
-This is the same simulation as that of "sim_01252016_1017", except that the data are normalized.

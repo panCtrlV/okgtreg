@@ -3,6 +3,7 @@ from scipy.special import cbrt
 
 from okgtreg.Data import Data
 from okgtreg.Group import Group
+from okgtreg.utility import deprecated
 
 """
 Create synthetic data
@@ -13,6 +14,9 @@ Reference:
 """
 
 class DataSimulator(object):
+    def __init__(self, seed=25):
+        self.seed = seed
+
     @staticmethod
     def SimData_Breiman1(n, sigma=1):
         """
@@ -27,6 +31,7 @@ class DataSimulator(object):
         :param sigma:
         :return:
         """
+        np.random.seed(self.seed)  # set seed 
         epsilon = sigma * np.random.randn(n)
         x3 = np.random.randn(n)
         y = np.exp(x3 + epsilon)
@@ -41,6 +46,7 @@ class DataSimulator(object):
         :param n:
         :return:
         """
+        np.random.seed(self.seed)  # set seed 
         x = np.random.normal(0, 1, 2*n).reshape((n,2))
         noise = np.random.standard_normal(n)
         y = x[:,0] + x[:,1] * noise
@@ -61,6 +67,7 @@ class DataSimulator(object):
         :param n:
         :return:
         """
+        np.random.seed(self.seed)  # set seed 
         # _x = [np.array([np.random.random() * 2.0 - 1.0 for i in range(n)]) for _i in range(0, 5)]
         x = np.vstack(np.random.random(n) * 2.0 - 1.0 for j in range(0, 5)).T
         noise = np.random.standard_normal(n)
@@ -81,6 +88,7 @@ class DataSimulator(object):
         :param n:
         :return:
         """
+        np.random.seed(self.seed)  # set seed 
         group = Group([1], [2], [3], [4], [5], [6,7])
 
         # x = np.vstack(np.random.random(n) * 2.0 - 1.0 for j in range(7)).T
@@ -110,6 +118,7 @@ class DataSimulator(object):
         :param n:
         :return:
         """
+        np.random.seed(self.seed)  # set seed 
         x = np.random.uniform(-1., 1., (n, 8))
         noise = np.random.standard_normal(n)
         y = np.log(4.0 +
@@ -137,6 +146,7 @@ class DataSimulator(object):
         :rtype: tuple(Data, Group)
         :return: data and the true group structure
         """
+        np.random.seed(self.seed)  # set seed 
         p = 9
         # x = (np.random.random(n*p) * 2.0 - 1.0).reshape((n, p))
         x = np.random.uniform(-np.pi, np.pi, n*p).reshape((n, p))
@@ -156,6 +166,7 @@ class DataSimulator(object):
         return Data(y, x), group
 
     @staticmethod
+    @deprecated('Use Wang04WithInteraction2_100() instead.')
     def SimData_Wang04WithInteraction2_100(n):
         """
         Modification of Wang04WithInteraction where the interaction is 3-way:
@@ -167,6 +178,30 @@ class DataSimulator(object):
         :param n:
         :return:
         """
+        x = np.random.uniform(-1., 1., (n, 8))
+        noise = np.random.standard_normal(n)
+        y = np.log(4.0 +
+                   np.sin(4 * x[:, 0]) +
+                   np.abs(x[:, 1]) +
+                   x[:, 2]**2 +
+                   x[:, 3]**3 +
+                   x[:, 4] +
+                   100. * abs(x[:, 5] * x[:, 6] * x[:, 7]) +
+                   0.1 * noise)
+        return Data(y, x)
+
+    def Wang04WithInteraction2_100(self, n):
+        """
+        Modification of Wang04WithInteraction where the interaction is 3-way:
+
+            y=log(4 + sin(4 * X1) + |X2| + X3^2 + X4^3 + X5 + X6*X7*X8 0.1*\epsilon)
+            Xi ~ Unif(-1, 1)
+            \epsilon ~ N(0, 1)
+
+        :param n:
+        :return:
+        """
+        np.random.seed(self.seed)  # set seed 
         x = np.random.uniform(-1., 1., (n, 8))
         noise = np.random.standard_normal(n)
         y = np.log(4.0 +

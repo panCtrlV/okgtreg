@@ -1,13 +1,27 @@
+"""
+This script implemented the following classes related to data for okgtreg.
+
+Data class. The response vector (as a 1d numpy array) and the covariate
+matrix (as a 2d numpy array) are stored separated in two fields. Besides,
+the class object also stores the meta data such as: sample size, dimension
+(number of covariates), literal name of the response (if provided otherwise 
+None), and literal names of the covariates (if provided otherwise None).
+
+ParameterizedData class. 
+
+ParameterizedDataWithAdditiveKernel. 
+
+@author: panc
+@time: 2017-05-07
+"""
+
+
 import numpy as np
 import traceback, sys
 import collections
 
 from okgtreg.Group import Group
 
-
-"""
-Classes for data
-"""
 
 class Data(object):
     """
@@ -16,7 +30,6 @@ class Data(object):
     """
     def __init__(self, y, X):
         """
-
         :type y: 1d array
         :param y:
 
@@ -233,7 +246,6 @@ class Data(object):
 class ParameterizedData(object):
     def __init__(self, data, parameters):
         """
-
         :type data: Data
         :param data:
 
