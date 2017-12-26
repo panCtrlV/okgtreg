@@ -17,8 +17,8 @@ class DataSimulator(object):
     def __init__(self, seed=25):
         self.seed = seed
 
-    @staticmethod
-    def SimData_Breiman1(n, sigma=1):
+    # @staticmethod
+    def SimData_Breiman1(self, n, sigma=1):
         """
         Breiman 1 model
         This is a 1-d model.
@@ -39,8 +39,8 @@ class DataSimulator(object):
         # return y, x
         return Data(y, x)
 
-    @staticmethod
-    def SimData_MultiplyNoise(n):
+    # @staticmethod
+    def SimData_MultiplyNoise(self, n):
         """
         Y = X1 + X2 * eps
         :param n:
@@ -53,8 +53,8 @@ class DataSimulator(object):
         # return y, x
         return Data(y, x)
 
-    @staticmethod
-    def SimData_Wang04(n):
+    # @staticmethod
+    def SimData_Wang04(eslf, n):
         """
         Model Name: Wang04
 
@@ -76,8 +76,8 @@ class DataSimulator(object):
         # return y, x
         return Data(y, x)
 
-    @staticmethod
-    def SimData_Wang04WithInteraction(n):
+    # @staticmethod
+    def SimData_Wang04WithInteraction(self, n):
         """
         Model Name: Wang04 With Interaction
 
@@ -106,8 +106,8 @@ class DataSimulator(object):
 
         return Data(y, x), group, h
 
-    @staticmethod
-    def SimData_Wang04WithInteraction2(n):
+    # @staticmethod
+    def SimData_Wang04WithInteraction2(self, n):
         """
         Modification of Wang04WithInteraction where the interaction is 3-way:
 
@@ -131,8 +131,8 @@ class DataSimulator(object):
                    0.1 * noise)
         return Data(y, x)
 
-    @staticmethod
-    def SimData_Wang04WithTwoBivariateGroups(n):
+    # @staticmethod
+    def SimData_Wang04WithTwoBivariateGroups(self, n):
         """
         Model Name: Wang04 With Two Bivariate Groups
 
@@ -165,9 +165,9 @@ class DataSimulator(object):
 
         return Data(y, x), group
 
-    @staticmethod
+    # @staticmethod
     @deprecated('Use Wang04WithInteraction2_100() instead.')
-    def SimData_Wang04WithInteraction2_100(n):
+    def SimData_Wang04WithInteraction2_100(self, n):
         """
         Modification of Wang04WithInteraction where the interaction is 3-way:
 

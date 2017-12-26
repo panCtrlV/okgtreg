@@ -1,4 +1,11 @@
-"""
+# -*- coding: utf-8 -*-
+# @Author: Pan Chao
+# @Date:   2015-12-23 11:34:34
+# @Last Modified by:   Pan Chao
+# @Last Modified time: 2017-12-26 11:46:46
+
+
+'''
 In this experiment, we experiment a modified group structure detection procedure where
 each time the fitting residual is used to fit a new OKGT. The idea is as follows.
 
@@ -14,7 +21,8 @@ order to evaluate the contribution / detriment the split causes on the overall f
 OKGT,
 
 By merging a covariate with another group, we can combine [1] and [2,3] as [1,2,3].
-"""
+'''
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,14 +34,14 @@ from okgtreg.Parameters import Parameters
 from okgtreg.OKGTReg import OKGTReg
 from okgtreg.Data import Data
 
+
 """
 First, we fit an OKGT with the fully additive group structure.
 """
 # Simulate data
 n = 500
-
-np.random.seed(25)
-data = DataSimulator.SimData_Wang04WithInteraction2(n)
+data_simulator = DataSimulator(seed=123)
+data = data_simulator.SimData_Wang04WithInteraction2(n)
 
 # Kernel
 kernel = Kernel('gaussian', sigma=0.5)
@@ -52,6 +60,7 @@ resid = fit['g'].reshape((n,)) - fit['f'].sum(1)
 
 # Plot the residual
 plt.scatter(np.arange(n), resid)
+plt.show()
 
 # Var(X_{6,7,8} | Y) under the current OKGT:
 np.var(fit['f'][:,-3:].sum(1))
