@@ -77,36 +77,42 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-
+# Customized exclusion
 .DS_Store
 .idea
-okgtreg/simulation_study/sim1_11052015
-okgtreg/simulation_study/sim2_11052015
-okgtreg/simulation_study/sim3_11182015
-okgtreg/simulation_study/sim4_11212015
-okgtreg/simulation_study/sim5_12062016
-okgtreg/simulation_study/sim6_12062015
-okgtreg/simulation_study/sim7_12062015
-okgtreg/simulation_study/sim8_12072015
-okgtreg/simulation_study/sim9_12182015
-okgtreg/simulation_study/sim10_12192015
-okgtreg/simulation_study/sim11_12252015
-okgtreg/simulation_study/sim12_12262015
-okgtreg/simulation_study/sim13_12262015
-okgtreg/simulation_study/sim14_12272015
-okgtreg/simulation_study/sim_01022016
-okgtreg/simulation_study/sim_01032016
-okgtreg/simulation_study/sim_01032016_2
-okgtreg/simulation_study/sim_01032016_3
-okgtreg/simulation_study/sim_01172016
-okgtreg/simulation_study/sim_01192016
-okgtreg/simulation_study/sim_01202016_1636
-okgtreg/simulation_study/sim_01212016_2043
-okgtreg/simulation_study/sim_01212016_2139
-okgtreg/simulation_study/sim_01252016_1017
-okgtreg/simulation_study/sim_01252016_1118
-okgtreg/simulation_study/sim_01262016_1501
-okgtreg/simulation_study/sim_01312016_1023
-okgtreg/simulation_study/sim_02042016
-okgtreg/simulation_study/sim_02052016
+# okgtreg/simulation_study/sim1_11052015
+# okgtreg/simulation_study/sim2_11052015
+# okgtreg/simulation_study/sim3_11182015
+# okgtreg/simulation_study/sim4_11212015
+# okgtreg/simulation_study/sim5_12062016
+# okgtreg/simulation_study/sim6_12062015
+# okgtreg/simulation_study/sim7_12062015
+# okgtreg/simulation_study/sim8_12072015
+# okgtreg/simulation_study/sim9_12182015
+# okgtreg/simulation_study/sim10_12192015
+# okgtreg/simulation_study/sim11_12252015
+# okgtreg/simulation_study/sim12_12262015
+# okgtreg/simulation_study/sim13_12262015
+# okgtreg/simulation_study/sim14_12272015
+# okgtreg/simulation_study/sim_01022016
+# okgtreg/simulation_study/sim_01032016
+# okgtreg/simulation_study/sim_01032016_2
+# okgtreg/simulation_study/sim_01032016_3
+# okgtreg/simulation_study/sim_01172016
+# okgtreg/simulation_study/sim_01192016
+# okgtreg/simulation_study/sim_01202016_1636
+# okgtreg/simulation_study/sim_01212016_2043
+# okgtreg/simulation_study/sim_01212016_2139
+# okgtreg/simulation_study/sim_01252016_1017
+# okgtreg/simulation_study/sim_01252016_1118
+# okgtreg/simulation_study/sim_01262016_1501
+# okgtreg/simulation_study/sim_01312016_1023
+# okgtreg/simulation_study/sim_02042016
+# okgtreg/simulation_study/sim_02052016
 
+*.pkl
+*.pkl.duplicate
+*.out
+*.out.*
+*.sh.o*
+*.sh.e*
